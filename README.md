@@ -16,3 +16,7 @@ Dependecies:
 --------------
 - KiCad to see schematic and layout
 - avr-gcc for compiling the firmware
+
+3D Picture:
+--------------
+<img align="left" width="300" height="300" src="nunchuk64.png">
