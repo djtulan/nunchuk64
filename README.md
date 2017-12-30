@@ -19,4 +19,4 @@ Dependecies:
 
 3D Picture:
 --------------
-<img align="left" width="300" height="300" src="nunchuk64.png">
+<img align="left" width="300" height="300" src="./nunchuk64.png">
