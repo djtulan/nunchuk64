@@ -1,7 +1,7 @@
 Nunchuk64
 ==============
 Converter to connect for Wii Nunchuk or Nindendo NES Classic Mini Controller 
-to a Commodore 64.
+to a Commodore 64. The circuit converts two Nintendo Controllers to two Commodore 64 ones.
 
 ![Work in Progress](work.gif)
 
