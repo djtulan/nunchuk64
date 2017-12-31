@@ -1,6 +1,6 @@
 Nunchuk64
 ==============
-![#f03c15](https://placehold.it/15/f03c15/000000?text=NOTE: WORK IN PROGRESS)
+<span style=“color:red;”> NOTE: WORK IN PROGRESS</span>
 
 This is my very first project designing a PCB with a layouting tool.
 I introduces myself into KiCad which satisfed my needs perfectly.
