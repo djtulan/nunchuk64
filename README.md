@@ -1,6 +1,6 @@
 Nunchuk64
 ==============
-<span style=“color:red;”> NOTE: WORK IN PROGRESS</span>
+![Work in Progress](work.gif)
 
 This is my very first project designing a PCB with a layouting tool.
 I introduces myself into KiCad which satisfed my needs perfectly.
