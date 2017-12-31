@@ -20,4 +20,11 @@
 /// @date   December, 2017
 /// @brief  digital joystick part
 //=============================================================================
- 
+#ifndef _JOYSTICK_H_
+#define _JOYSTICK_H_
+
+#include <inttypes.h>
+
+void joystick_init(void);
+
+#endif

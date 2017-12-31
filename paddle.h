@@ -20,5 +20,14 @@
 /// @date   December, 2017
 /// @brief  analog paddle input part
 //=============================================================================
- 
+#ifndef _PADDLE_H_
+#define _PADDLE_H_
 
+#include <inttypes.h>
+
+/**
+* @brief init paddle-related IOs and interrupts
+*/
+void paddle_init(void);
+
+#endif

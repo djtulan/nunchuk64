@@ -38,7 +38,7 @@
 MCU = atmega328p
 FORMAT = ihex
 TARGET = nunchuck64
-SRC = $(TARGET).c
+SRC = $(TARGET).c paddle.c joystick.c
 ASRC =
 OPT = s
 
@@ -61,7 +61,7 @@ CSTANDARD = -std=gnu99
 CDEFS = -DF_CPU=16000000L
 
 # Place -I options here
-CINCS =
+CINCS = 
 
 
 CDEBUG = -g$(DEBUG)
