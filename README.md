@@ -1,12 +1,14 @@
 Nunchuk64
 ==============
+Converter to connect for Wii Nunchuk or Nindendo NES Classic Mini Controller 
+to a Commodore 64.
+
 ![Work in Progress](work.gif)
 
 This is my very first project designing a PCB with a layouting tool.
 I introduces myself into KiCad which satisfed my needs perfectly.
 
-The project is still in progress, because I need to finish the firmware for the ATMega chip I used.
-The PCB prototypes are in production at the moment.
+The project is still in progress, because I need to finish the firmware for the ATMega chip I used. The PCB prototypes are in production at the moment.
 
 My personal project goals:
 --------------
