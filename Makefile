@@ -38,7 +38,7 @@
 MCU = atmega328p
 FORMAT = ihex
 TARGET = nunchuck64
-SRC = $(TARGET).c paddle.c joystick.c
+SRC = $(TARGET).c paddle.c joystick.c i2c_master.c controller.c
 ASRC =
 OPT = s
 
@@ -58,7 +58,7 @@ DEBUG = stabs
 CSTANDARD = -std=gnu99
 
 # Place -D or -U options here
-CDEFS = -DF_CPU=16000000L
+CDEFS = -DF_CPU=1000000L
 
 # Place -I options here
 CINCS = 
@@ -112,12 +112,12 @@ LDFLAGS = $(EXTMEMOPTS) $(LDMAP) $(PRINTF_LIB) $(SCANF_LIB) $(MATH_LIB)
 
 # Programming support using avrdude. Settings and variables.
 
-AVRDUDE_PROGRAMMER = arduino
+AVRDUDE_PROGRAMMER = usbtiny
 AVRDUDE_PORT = /dev/ttyUSB0
 
 AVRDUDE_WRITE_FLASH = -U flash:w:$(TARGET).hex
 #AVRDUDE_WRITE_EEPROM = -U eeprom:w:$(TARGET).eep
-AVRDUDE_WRITE_FUSES = -U lfuse:w:e2:m -U hfuse:w:df:m -U efuse:w:ff:m
+AVRDUDE_WRITE_FUSES = -U lfuse:w:0xd2:m -U hfuse:w:0xd9:m -U efuse:w:0xfc:m
 
 
 # Uncomment the following if you want avrdude's erase cycle counter.
@@ -132,9 +132,10 @@ AVRDUDE_WRITE_FUSES = -U lfuse:w:e2:m -U hfuse:w:df:m -U efuse:w:ff:m
 # Increase verbosity level.  Please use this when submitting bug
 # reports about avrdude. See <http://savannah.nongnu.org/projects/avrdude>
 # to submit bug reports.
-#AVRDUDE_VERBOSE = -v -v
+AVRDUDE_VERBOSE = -v
 
-AVRDUDE_BASIC = -p $(MCU) -c $(AVRDUDE_PROGRAMMER) -P $(AVRDUDE_PORT) -b 57600
+#AVRDUDE_BASIC = -p $(MCU) -c $(AVRDUDE_PROGRAMMER) -P $(AVRDUDE_PORT) -b 57600
+AVRDUDE_BASIC = -p $(MCU) -c $(AVRDUDE_PROGRAMMER) -F -v
 AVRDUDE_FLAGS = $(AVRDUDE_BASIC) $(AVRDUDE_NO_VERIFY) $(AVRDUDE_VERBOSE) $(AVRDUDE_ERASE_COUNTER)
 
 

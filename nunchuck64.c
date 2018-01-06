@@ -20,7 +20,7 @@
 /// @date   December, 2017
 /// @brief  main
 //=============================================================================
- 
+
 #include <inttypes.h>
 #include <avr/io.h>
 #include <avr/interrupt.h>
@@ -31,22 +31,44 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "ioconfig.h"
+#include "controller.h"
+#include "joystick.h"
+#include "paddle.h"
+
 void init(void) {
-        PORTB |= _BV(5);   // enable POTX/POTY as outputs
-        DDRB  |= _BV(5);   // output "1" on both
-  
+  DDR_LED |= _BV(BIT_LED);    // enable output
+  PORT_LED |= _BV(BIT_LED);   // set to 1 => LED ON
+
+  DDR_SEL1 |= _BV(BIT_SEL1);    // enable output
+  PORT_SEL1 &= ~_BV(BIT_SEL1);   // set to 1
+
+  DDR_SEL2 |= _BV(BIT_SEL2);    // enable output
+  PORT_SEL2 |= _BV(BIT_SEL2);   // set to 0
+
+  nunchuck_init();
+  joystick_init();
+  paddle_init();
 }
+
+struct ContollerData cd;
 
 int main(void) {
   init();
-  
-  while(1) {
-    PORTB |= _BV(5);   // enable POTX/POTY as outputs
-    _delay_ms(1000);
 
-    PORTB &= ~_BV(5);   // enable POTX/POTY as outputs
-    _delay_ms(1000);
+  while (1) {
+
+    //_delay_ms(40);
+    nunchuck_read(&cd);
+    joystick_poll(&cd);
+
+    if (cd.byte5 & _BV(6)) {
+      PORT_LED |= _BV(BIT_LED);
+    } else {
+      PORT_LED &= ~_BV(BIT_LED);
+      _delay_ms(1);
+    }
   }
-    
+
   return 0;
 }

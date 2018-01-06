@@ -15,22 +15,24 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //=============================================================================
-/// @file   joystick.h
+/// @file   controller.h
 /// @author Robert Grasböck (robert.grasboeck@gmail.com)
 /// @date   December, 2017
 /// @brief  digital joystick part
 //=============================================================================
-#ifndef _JOYSTICK_H_
-#define _JOYSTICK_H_
+#ifndef _CONTROLLER_H_
+#define _CONTROLLER_H_
 
-#include <inttypes.h>
+struct ContollerData {
+  uint8_t byte0;
+  uint8_t byte1;
+  uint8_t byte2;
+  uint8_t byte3;
+  uint8_t byte4;
+  uint8_t byte5;
+};
 
-#include "controller.h"
-
-void joystick_init(void);
-
-void joystick_poll(struct ContollerData *cd);
-
-void joystick_toggle(void);
+uint8_t nunchuck_init(void);
+uint8_t nunchuck_read(struct ContollerData *n);
 
 #endif
