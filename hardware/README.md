@@ -6,11 +6,11 @@ Commodore 64 ones.
 
 The ready PCBs
 --------------
-![PCB](pcbs.jpg)
+![PCB](pcb.jpg)
 
 PCB with parts
 --------------
-![PCB with parts](pcbs_with_parts.jpg)
+![PCB with parts](pcb_with_parts.jpg)
 
 connected to C64:
 --------------
