@@ -16,10 +16,11 @@ ATMega328p chip I made us of.
 
 My personal project goals:
 --------------
-☑ learn KiCad design workflow
-☑ learn how to layout PCBs with SMD parts
-☑ learn about SMD sizes and packages types
-☑ order a PCB from a professional manufactorer
+-☑ learn KiCad design workflow
+-☑ learn how to layout PCBs with SMD parts
+-☑ learn about SMD sizes and packages types
+-☑ order a PCB from a professional manufactorer
+
 
 Dependecies:
 --------------
