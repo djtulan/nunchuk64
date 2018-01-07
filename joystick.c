@@ -20,9 +20,13 @@
 /// @date   December, 2017
 /// @brief  digital joystick part
 //=============================================================================
+#include <string.h>
+
 #include "ioconfig.h"
 
 #include "joystick.h"
+
+static ContollerData last_data[2];
 
 void joystick_init(void) {
 
@@ -51,81 +55,136 @@ void joystick_init(void) {
   DDR_JOY_B2    &= ~_BV(BIT_JOY_B2);
   DDR_JOY_B3    &= ~_BV(BIT_JOY_B3);
   DDR_BUTTON_B  &= ~_BV(BIT_BUTTON_B);
+
+  memset(last_data, 0, sizeof(last_data));
 }
 
-void joystick_poll(struct ContollerData *cd) {
-/*
-  // UP
-  if (cd->byte5 & _BV(0)) {
-    DDR_JOY_A1 |= _BV(BIT_JOY_A1);
-  } else {
-    DDR_JOY_A1 &= ~(_BV(BIT_JOY_A1));
+void joystick_poll(ContollerData *cd, uint8_t port) {
+
+  if (memcmp(&last_data[port], cd, sizeof(ContollerData)) == 0)
+    return;
+
+  // update last data
+  memcpy(&last_data[port], cd, sizeof(ContollerData));
+
+
+  uint8_t up = 0;
+  uint8_t down = 0;
+  uint8_t left = 0;
+  uint8_t right = 0;
+  uint8_t button = 0;
+
+  switch (cd->byte5 & 0x0f) {
+    case 0x08:
+      up = 1;
+      break;
+
+    case 0x09:
+      left = 1;
+      break;
+
+    case 0x0a:
+      left = 1;
+      up = 1;
+      break;
   }
 
-  // DOWN
-  if (cd->byte4 & _BV(6)) {
-    DDR_JOY_A1 |= _BV(BIT_JOY_A1);
-  } else {
-    DDR_JOY_A1 &= ~(_BV(BIT_JOY_A1));
+  switch (cd->byte4 & 0xf0) {
+    case 0xb0:
+      down = 1;
+      break;
+
+    case 0x70:
+      right = 1;
+      break;
+
+    case 0x30:
+      right = 1;
+      down = 1;
+      break;
   }
 
-  // LEFT
-  if (cd->byte5 & _BV(1)) {
-    DDR_JOY_A2 |= _BV(BIT_JOY_A2);
-  } else {
-    DDR_JOY_A2 &= ~(_BV(BIT_JOY_A2));
+  switch (cd->byte5 & 0xf0) {
+    case 0xb0:
+      up = 1;
+      break;
+
+    case 0x80:
+      button = 1;
+      break;
   }
 
-  // RIGHT
-  if (cd->byte4 & _BV(7)) {
-    DDR_JOY_A3 |= _BV(BIT_JOY_A3);
+  if (port == 1) {
+    // UP
+    if (up == 0) {
+      DDR_JOY_A0 &= ~(_BV(BIT_JOY_A0));
+    } else {
+      DDR_JOY_A0 |= _BV(BIT_JOY_A0);
+    }
+
+    // DOWN
+    if (down == 0) {
+      DDR_JOY_A1 &= ~(_BV(BIT_JOY_A1));
+    } else {
+      DDR_JOY_A1 |= _BV(BIT_JOY_A1);
+    }
+
+    // LEFT
+    if (left == 0) {
+      DDR_JOY_A2 &= ~(_BV(BIT_JOY_A2));
+    } else {
+      DDR_JOY_A2 |= _BV(BIT_JOY_A2);
+    }
+
+    // RIGHT
+    if (right == 0) {
+      DDR_JOY_A3 &= ~(_BV(BIT_JOY_A3));
+    } else {
+      DDR_JOY_A3 |= _BV(BIT_JOY_A3);
+    }
+
+    // BUTTON
+    if (button == 0) {
+      DDR_BUTTON_A &= ~(_BV(BIT_BUTTON_A));
+    } else {
+      DDR_BUTTON_A |= _BV(BIT_BUTTON_A);
+    }
+
   } else {
-    DDR_JOY_A3 &= ~(_BV(BIT_JOY_A3));
-  }
+    // UP
+    if (up == 0) {
+      DDR_JOY_B0 &= ~(_BV(BIT_JOY_B0));
+    } else {
+      DDR_JOY_B0 |= _BV(BIT_JOY_B0);
+    }
 
-  // BUTTON
-  if ((cd->byte5 & _BV(6)) || (cd->byte5 & _BV(5))) {
-    DDR_BUTTON_A |= _BV(BIT_BUTTON_A);
-  } else {
-    DDR_BUTTON_A &= ~(_BV(BIT_BUTTON_A));
-  }
-*/
+    // DOWN
+    if (down == 0) {
+      DDR_JOY_B1 &= ~(_BV(BIT_JOY_B1));
+    } else {
+      DDR_JOY_B1 |= _BV(BIT_JOY_B1);
+    }
 
+    // LEFT
+    if (left == 0) {
+      DDR_JOY_B2 &= ~(_BV(BIT_JOY_B2));
+    } else {
+      DDR_JOY_B2 |= _BV(BIT_JOY_B2);
+    }
 
+    // RIGHT
+    if (right == 0) {
+      DDR_JOY_B3 &= ~(_BV(BIT_JOY_B3));
+    } else {
+      DDR_JOY_B3 |= _BV(BIT_JOY_B3);
+    }
 
-  // UP
-  if (cd->byte5 & _BV(0)) {
-    DDR_JOY_B1 |= _BV(BIT_JOY_B1);
-  } else {
-    DDR_JOY_B1 &= ~(_BV(BIT_JOY_B1));
-  }
-
-  // DOWN
-  if (cd->byte4 & _BV(6)) {
-    DDR_JOY_B1 |= _BV(BIT_JOY_B1);
-  } else {
-    DDR_JOY_B1 &= ~(_BV(BIT_JOY_B1));
-  }
-
-  // LEFT
-  if (cd->byte5 & _BV(1)) {
-    DDR_JOY_B2 |= _BV(BIT_JOY_B2);
-  } else {
-    DDR_JOY_B2 &= ~(_BV(BIT_JOY_B2));
-  }
-
-  // RIGHT
-  if (cd->byte4 & _BV(7)) {
-    DDR_JOY_B3 |= _BV(BIT_JOY_B3);
-  } else {
-    DDR_JOY_B3 &= ~(_BV(BIT_JOY_B3));
-  }
-
-  // BUTTON
-  if ((cd->byte5 & _BV(6)) || (cd->byte5 & _BV(5))) {
-    DDR_BUTTON_B |= _BV(BIT_BUTTON_B);
-  } else {
-    DDR_BUTTON_B &= ~(_BV(BIT_BUTTON_B));
+    // BUTTON
+    if (button == 0) {
+      DDR_BUTTON_B &= ~(_BV(BIT_BUTTON_B));
+    } else {
+      DDR_BUTTON_B |= _BV(BIT_BUTTON_B);
+    }
   }
 }
 

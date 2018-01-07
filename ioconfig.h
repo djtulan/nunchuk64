@@ -20,35 +20,37 @@
 /// @date   December, 2017
 /// @brief  main
 //=============================================================================
-#ifndef _IOCONFIG_H
-#define _IOCONFIG_H
+#ifndef _IOCONFIG_H_
+#define _IOCONFIG_H_
 
 #include <avr/io.h>
 
-#define PORT_LED        PORTD // PD4
-#define DDR_LED         DDRD  // PD4
-#define BIT_LED         4     // PD4
+// led port, ddr and bit
+#define PORT_LED       PORTD // PD4
+#define DDR_LED         DDRD // PD4
+#define BIT_LED            4 // PD4
 
-#define PORT_SEL1       PORTC // PC0
-#define DDR_SEL1        DDRC  // PC0
-#define BIT_SEL1        0     // PC0
+// select1 port, ddr and bit
+#define PORT_SEL1      PORTC // PC0
+#define DDR_SEL1        DDRC // PC0
+#define BIT_SEL1           0 // PC0
 
-#define PORT_SEL2       PORTC // PC1
-#define DDR_SEL2        DDRC  // PC1
-#define BIT_SEL2        0     // PC0
-
+// select2 port, ddr and bit
+#define PORT_SEL2      PORTC // PC1
+#define DDR_SEL2        DDRC // PC1
+#define BIT_SEL2           1 // PC1
 
 // dataregister for joystick outputs
-#define PORT_JOY_A0     PORTD // PD1
-#define PORT_JOY_A1     PORTD // PD0
-#define PORT_JOY_A2     PORTC // PC3
-#define PORT_JOY_A3     PORTC // PC2
-#define PORT_BUTTON_A   PORTB // PB7
-#define PORT_JOY_B0     PORTB // PB5
-#define PORT_JOY_B1     PORTB // PB3
-#define PORT_JOY_B2     PORTB // PB0
-#define PORT_JOY_B3     PORTD // PD7
-#define PORT_BUTTON_B   PORTB // PB4
+#define PORT_JOY_A0    PORTD // PD1
+#define PORT_JOY_A1    PORTD // PD0
+#define PORT_JOY_A2    PORTC // PC3
+#define PORT_JOY_A3    PORTC // PC2
+#define PORT_BUTTON_A  PORTB // PB7
+#define PORT_JOY_B0    PORTB // PB5
+#define PORT_JOY_B1    PORTB // PB3
+#define PORT_JOY_B2    PORTB // PB0
+#define PORT_JOY_B3    PORTD // PD7
+#define PORT_BUTTON_B  PORTB // PB4
 
 // ddr for joystick outputs
 #define DDR_JOY_A0      DDRD // PD1
@@ -63,15 +65,15 @@
 #define DDR_BUTTON_B    DDRB // PB4
 
 // bits for joystick outputs
-#define BIT_JOY_A0      1 // PD1
-#define BIT_JOY_A1      0 // PD0
-#define BIT_JOY_A2      3 // PC3
-#define BIT_JOY_A3      2 // PC2
-#define BIT_BUTTON_A    7 // PB7
-#define BIT_JOY_B0      5 // PB5
-#define BIT_JOY_B1      3 // PB3
-#define BIT_JOY_B2      0 // PB0
-#define BIT_JOY_B3      7 // PD7
-#define BIT_BUTTON_B    4 // PB4
+#define BIT_JOY_A0         1 // PD1
+#define BIT_JOY_A1         0 // PD0
+#define BIT_JOY_A2         3 // PC3
+#define BIT_JOY_A3         2 // PC2
+#define BIT_BUTTON_A       7 // PB7
+#define BIT_JOY_B0         5 // PB5
+#define BIT_JOY_B1         3 // PB3
+#define BIT_JOY_B2         0 // PB0
+#define BIT_JOY_B3         7 // PD7
+#define BIT_BUTTON_B       4 // PB4
 
 #endif

@@ -18,21 +18,22 @@
 /// @file   controller.h
 /// @author Robert Grasböck (robert.grasboeck@gmail.com)
 /// @date   December, 2017
-/// @brief  digital joystick part
+/// @brief  i2c controller
 //=============================================================================
 #ifndef _CONTROLLER_H_
 #define _CONTROLLER_H_
 
-struct ContollerData {
-  uint8_t byte0;
-  uint8_t byte1;
-  uint8_t byte2;
-  uint8_t byte3;
-  uint8_t byte4;
-  uint8_t byte5;
-};
+/// \brief 6 byte data
+typedef struct {
+  uint8_t byte0;  ///< databyte 0
+  uint8_t byte1;  ///< databyte 1
+  uint8_t byte2;  ///< databyte 2
+  uint8_t byte3;  ///< databyte 3
+  uint8_t byte4;  ///< databyte 4
+  uint8_t byte5;  ///< databyte 5
+} ContollerData;
 
-uint8_t nunchuck_init(void);
-uint8_t nunchuck_read(struct ContollerData *n);
+uint8_t controller_init(void);
+uint8_t controller_read(ContollerData *n);
 
 #endif

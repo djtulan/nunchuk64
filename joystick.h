@@ -27,9 +27,14 @@
 
 #include "controller.h"
 
+enum {
+  PORT_A, ///< select Port A
+  PORT_B, ///< select Port A
+};
+
 void joystick_init(void);
 
-void joystick_poll(struct ContollerData *cd);
+void joystick_poll(ContollerData *cd, uint8_t port);
 
 void joystick_toggle(void);
 

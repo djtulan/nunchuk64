@@ -1,2 +1,6 @@
 .directory
 *.kdev4
+*.o
+*.eep
+*.elf
+*.hex

@@ -18,7 +18,7 @@
 /// @file   controller.c
 /// @author Robert Grasböck (robert.grasboeck@gmail.com)
 /// @date   December, 2017
-/// @brief  digital joystick part
+/// @brief  i2c controller
 //=============================================================================
 #include <stdint.h>
 #include <util/delay.h>
@@ -26,75 +26,80 @@
 #include "i2c_master.h"
 #include "controller.h"
 
-#define NUNCHUCK_ADDR (0x52<<1) //device address
+#define CONTROLLER_ADDR (0x52<<1) //device address
 
-uint8_t nunchuck_init(void) {
-  i2c_init();
-  _delay_us(100);
-
-  i2c_start_wait(NUNCHUCK_ADDR | I2C_WRITE);
+uint8_t controller_init(void) {
+  // ===========================================
+  // init controller
+  i2c_start_wait(CONTROLLER_ADDR | I2C_WRITE);
   i2c_write(0xf0);
   i2c_write(0x55);
   i2c_stop();
+  _delay_ms(1);
 
-  _delay_us(1);
-
-  i2c_start_wait(NUNCHUCK_ADDR | I2C_WRITE);
+  i2c_start_wait(CONTROLLER_ADDR | I2C_WRITE);
   i2c_write(0xfb);
   i2c_write(0x00);
   i2c_stop();
+  _delay_ms(1);
+  // ===========================================
 
-  _delay_us(1);
+  // ===========================================
+  // deactivate encryption
 
+  // send 0xf0 0xaa
+  i2c_start_wait(CONTROLLER_ADDR | I2C_WRITE);
+  i2c_write(0xf0);
+  i2c_write(0xaa);
+  i2c_stop();
+  _delay_ms(1);
 
-//   // Signale entschlüsseln
-//   i2c_start_wait(NUNCHUCK_ADDR | I2C_WRITE);
-//   i2c_write(0xfb);
-//   i2c_write(0xaa);
-//   i2c_stop();
-//
-//   i2c_start_wait(NUNCHUCK_ADDR | I2C_WRITE);
-//   i2c_write(0x00);
-//   i2c_write(0x00);
-//   i2c_write(0x00);
-//   i2c_write(0x00);
-//   i2c_write(0x00);
-//   i2c_write(0x00);
-//   i2c_stop();
-//
-//   i2c_start_wait(NUNCHUCK_ADDR | I2C_WRITE);
-//   i2c_write(0x00);
-//   i2c_write(0x00);
-//   i2c_write(0x00);
-//   i2c_write(0x00);
-//   i2c_write(0x00);
-//   i2c_write(0x00);
-//   i2c_stop();
-//
-//   i2c_start_wait(NUNCHUCK_ADDR | I2C_WRITE);
-//   i2c_write(0x00);
-//   i2c_write(0x00);
-//   i2c_write(0x00);
-//   i2c_write(0x00);
-//   i2c_stop();
+  // send 0x40 + 6 zero bytes
+  i2c_start_wait(CONTROLLER_ADDR | I2C_WRITE);
+  i2c_write(0x40);
+
+  for (uint8_t i = 0; i < 6; i++)
+    i2c_write(0x00);
+
+  i2c_stop();
+  _delay_ms(1);
+
+  // send 0x40 + 6 zero bytes
+  i2c_start_wait(CONTROLLER_ADDR | I2C_WRITE);
+  i2c_write(0x40);
+
+  for (uint8_t i = 0; i < 6; i++)
+    i2c_write(0x00);
+
+  i2c_stop();
+  _delay_ms(1);
+
+  // send 0x40 + 4 zero bytes
+  i2c_start_wait(CONTROLLER_ADDR | I2C_WRITE);
+  i2c_write(0x40);
+
+  for (uint8_t i = 0; i < 4; i++)
+    i2c_write(0x00);
+
+  i2c_stop();
+  _delay_ms(1);
+  // ===========================================
 
   return 0;
 }
 
-uint8_t nunchuck_read(struct ContollerData *n) {
-  i2c_start_wait(NUNCHUCK_ADDR | I2C_WRITE);
+uint8_t controller_read(ContollerData *n) {
+  i2c_start_wait(CONTROLLER_ADDR | I2C_WRITE);
   i2c_write(0x00);
   i2c_stop();
 
-  i2c_start_wait(NUNCHUCK_ADDR | I2C_READ);
-
-  n->byte0 = i2c_readAck(); // i2c_read(I2C_ACK);
-  n->byte1 = i2c_readAck(); // i2c_read(I2C_ACK);
-  n->byte2 = i2c_readAck(); // i2c_read(I2C_ACK);
-  n->byte3 = i2c_readAck(); // i2c_read(I2C_ACK);
-  n->byte4 = i2c_readAck(); // i2c_read(I2C_ACK);
-  n->byte5 = i2c_readNak(); // i2c_read(I2C_NOACK);
-
+  i2c_start_wait(CONTROLLER_ADDR | I2C_READ);
+  n->byte3 = (i2c_readAck()); // i2c_read(I2C_ACK);
+  n->byte0 = (i2c_readAck()); // i2c_read(I2C_ACK);
+  n->byte1 = (i2c_readAck()); // i2c_read(I2C_ACK);
+  n->byte2 = (i2c_readAck()); // i2c_read(I2C_ACK);
+  n->byte4 = (i2c_readAck()); // i2c_read(I2C_ACK);
+  n->byte5 = (i2c_readNak()); // i2c_read(I2C_NOACK);
   i2c_stop();
 
   return 0;

@@ -20,54 +20,93 @@
 /// @date   December, 2017
 /// @brief  main
 //=============================================================================
-
 #include <inttypes.h>
-#include <avr/io.h>
-#include <avr/interrupt.h>
-//#include <avr/sleep.h>
-//#include <avr/pgmspace.h>
-#include <util/delay.h>
-
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <avr/io.h>
+#include <avr/interrupt.h>
+#include <util/delay.h>
+
+#include "i2c_master.h"
 #include "ioconfig.h"
 #include "controller.h"
 #include "joystick.h"
 #include "paddle.h"
 
-void init(void) {
-  DDR_LED |= _BV(BIT_LED);    // enable output
-  PORT_LED |= _BV(BIT_LED);   // set to 1 => LED ON
-
+void init_select(void) {
   DDR_SEL1 |= _BV(BIT_SEL1);    // enable output
-  PORT_SEL1 &= ~_BV(BIT_SEL1);   // set to 1
-
   DDR_SEL2 |= _BV(BIT_SEL2);    // enable output
-  PORT_SEL2 |= _BV(BIT_SEL2);   // set to 0
 
-  nunchuck_init();
-  joystick_init();
-  paddle_init();
+  PORT_SEL1 &= ~_BV(BIT_SEL1);  // set to 0 (selected)
+  PORT_SEL2 &= ~_BV(BIT_SEL2);  // set to 0 (selected)
 }
 
-struct ContollerData cd;
+void switch_select(uint8_t port) {
+  if (port == PORT_A) {
+    PORT_SEL2 &= ~_BV(BIT_SEL2);  // set to 0 (not selected)
+    PORT_SEL1 |= _BV(BIT_SEL1);   // set to 1 (selected)
+
+  } else if (port == PORT_B) {
+    PORT_SEL1 &= ~_BV(BIT_SEL1);  // set to 0 (not selected)
+    PORT_SEL2 |= _BV(BIT_SEL2);   // set to 1 (selected)
+  }
+}
+
+void init(void) {
+  DDR_LED |= _BV(BIT_LED);      // enable output
+  PORT_LED |= _BV(BIT_LED);     // set to 1 => LED ON
+
+  // init modules
+  i2c_init();
+  init_select();
+  joystick_init();
+  paddle_init();
+
+  _delay_ms(1);
+
+  // select i2c port A
+  switch_select(PORT_A);
+  _delay_ms(1);
+  controller_init();
+  _delay_ms(1);
+
+  // select i2c port B
+  switch_select(PORT_B);
+  _delay_ms(1);
+  controller_init();
+  _delay_ms(1);
+}
 
 int main(void) {
   init();
 
+  uint8_t port = PORT_A;
+  ContollerData cd;
+
+  // MAIN LOOP
   while (1) {
 
-    //_delay_ms(40);
-    nunchuck_read(&cd);
-    joystick_poll(&cd);
+    // select I2C port
+    switch_select(port);
 
-    if (cd.byte5 & _BV(6)) {
-      PORT_LED |= _BV(BIT_LED);
-    } else {
-      PORT_LED &= ~_BV(BIT_LED);
-      _delay_ms(1);
-    }
+    // get data from port
+    controller_read(&cd);
+
+    // give data to c64 joystick port
+    joystick_poll(&cd, port);
+
+    // toogle port
+    port = (port == PORT_A) ? PORT_B : PORT_A;
+
+    /*
+        if (cd.byte5 & _BV(6)) {
+          PORT_LED |= _BV(BIT_LED);
+        } else {
+          PORT_LED &= ~_BV(BIT_LED);
+          _delay_ms(1);
+        }
+    */
   }
 
   return 0;
