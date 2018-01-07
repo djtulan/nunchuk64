@@ -18,14 +18,21 @@ My personal project goals:
 --------------
 - ☑ learn KiCad design workflow
 - ☑ learn how to layout PCBs with SMD parts
-- ☑ learn about SMD sizes and packages types
+- ☑ learn about SMD sizes and package types
 - ☑ order a PCB from a professional manufactorer
 
 
 Dependecies:
 --------------
 - KiCad to see schematic and layout
-- avr-gcc for compiling the firmware
+- avr-gcc toolchain for compiling the firmware
+
+
+Milestones:
+--------------
+- ☑ Tested with "Nindendo NES Classic Mini Controller" replica
+- ☐ Analog input like Nunchuk or Analog Gamepad
+
 
 3D Picture:
 --------------
