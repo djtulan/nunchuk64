@@ -61,7 +61,7 @@ CSTANDARD = -std=gnu99
 CDEFS = -DF_CPU=1000000L
 
 # Place -I options here
-CINCS = 
+CINCS =
 
 
 CDEBUG = -g$(DEBUG)
@@ -117,8 +117,7 @@ AVRDUDE_PORT = /dev/ttyUSB0
 
 AVRDUDE_WRITE_FLASH = -U flash:w:$(TARGET).hex
 #AVRDUDE_WRITE_EEPROM = -U eeprom:w:$(TARGET).eep
-AVRDUDE_WRITE_FUSES = -U lfuse:w:0xd2:m -U hfuse:w:0xd9:m -U efuse:w:0xfc:m
-
+AVRDUDE_WRITE_FUSES = -U lfuse:w:e2:m -U hfuse:w:df:m -U efuse:w:ff:m
 
 # Uncomment the following if you want avrdude's erase cycle counter.
 # Note that this counter needs to be initialized first using -Yn,
