@@ -14,7 +14,7 @@ The KiCad project is provided inside subfolder "hardware".
 The project is still in progress, because I need to finish the firmware for the 
 ATMega328p chip I made us of.
 
-My personal project goals:
+My personal project goals
 --------------
 - ☑ learn KiCad design workflow
 - ☑ learn how to layout PCBs with SMD parts
@@ -22,18 +22,18 @@ My personal project goals:
 - ☑ order a PCB from a professional manufactorer
 
 
-Dependecies:
+Dependecies
 --------------
 - KiCad to see schematic and layout
 - avr-gcc toolchain for compiling the firmware
 
 
-Milestones:
+Milestones
 --------------
 - ☑ Tested with "Nindendo NES Classic Mini Controller" replica
 - ☐ Analog input like Nunchuk or Analog Gamepad
 
 
-3D Picture:
+3D Picture
 --------------
 ![3d Picture](nunchuk64.png)
