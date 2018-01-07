@@ -18,7 +18,7 @@
 /// @file   ioconfig.h
 /// @author Robert Grasböck (robert.grasboeck@gmail.com)
 /// @date   December, 2017
-/// @brief  main
+/// @brief  io pin configuration
 //=============================================================================
 #ifndef _IOCONFIG_H_
 #define _IOCONFIG_H_

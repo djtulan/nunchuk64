@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //=============================================================================
-/// @file   nunchuck64.c
+/// @file   nunchuk64.c
 /// @author Robert Grasböck (robert.grasboeck@gmail.com)
 /// @date   December, 2017
 /// @brief  main

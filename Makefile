@@ -37,7 +37,7 @@
 
 MCU = atmega328p
 FORMAT = ihex
-TARGET = nunchuck64
+TARGET = nunchuk64
 SRC = $(TARGET).c paddle.c joystick.c i2c_master.c controller.c
 ASRC =
 OPT = s
