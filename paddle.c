@@ -20,7 +20,206 @@
 /// @date   December, 2017
 /// @brief  analog paddle input part
 //=============================================================================
- 
+#include <inttypes.h>
+#include <avr/interrupt.h>
+
+#include "ioconfig.h"
+#include "enums.h"
+
+#include "paddle.h"
+
+static volatile uint16_t ocr1a_load;    ///< precalculated OCR1A value (A XPOT)
+static volatile uint16_t ocr1b_load;    ///< precalculated OCR1B value (A YPOT)
+static volatile uint16_t ocr0a_load;    ///< precalculated OCR0A value (B XPOT)
+static volatile uint16_t ocr0b_load;    ///< precalculated OCR0B value (B YPOT)
+
 void paddle_init(void) {
+  // SID sensing port
+  DDR_SENSE_A  &= ~_BV(BIT_SENSE_A); // SENSE is input
+  PORT_SENSE_A &= ~_BV(BIT_SENSE_A); // pullup off, hi-biased by OC1B
+
+  // SID POTX/POTY port
+  PORT_PADDLE_A_X &= ~(_BV(BIT_PADDLE_A_X) | _BV(BIT_PADDLE_A_Y)); // = PORT_PADDLE_A_Y
+  DDR_PADDLE_A_X  &= ~(_BV(BIT_PADDLE_A_X) | _BV(BIT_PADDLE_A_Y)); // = DDR_PADDLE_A_Y
+
+  // SID POTX/POTY port
+  PORT_PADDLE_B_X &= ~(_BV(BIT_PADDLE_B_X) | _BV(BIT_PADDLE_B_Y)); // = PORT_PADDLE_B_Y
+  DDR_PADDLE_B_X  &= ~(_BV(BIT_PADDLE_B_X) | _BV(BIT_PADDLE_B_Y)); // = DDR_PADDLE_B_Y
+
+  // interrupt
+  EIMSK &= ~_BV(INT1);                // disable INT1
+  EICRA &= ~(_BV(ISC11) | _BV(ISC10));
+  EICRA |= _BV(ISC11);                // ISC11:ISC10 == 10, @negedge
+
+
+  // Initialize Timer1 and use OC1A/OC1B to output values
+  // don't count yet
+  TCCR1B = 0;
+
+  TCCR0B = 0;
+
+
+
+  // POTX/Y normally controlled by output compare unit
+  // initially should be pulled up to provide high bias on SENSE pin
+  DDR_PADDLE_A_X  |= _BV(BIT_PADDLE_A_X) | _BV(BIT_PADDLE_A_Y);   // enable POTX/POTY as outputs
+  PORT_PADDLE_A_X |= _BV(BIT_PADDLE_A_X) | _BV(BIT_PADDLE_A_Y);   // output "1" on both
+
+  DDR_PADDLE_B_X  |= _BV(BIT_PADDLE_B_X) | _BV(BIT_PADDLE_B_Y);   // enable POTX/POTY as outputs
+  PORT_PADDLE_B_X |= _BV(BIT_PADDLE_B_X) | _BV(BIT_PADDLE_B_Y);   // output "1" on both
+
+  EIFR  |= _BV(INTF1);  // clear INT1 flag
+  EIMSK |= _BV(INT1);   // enable INT1
 }
 
+void paddle_poll(ContollerData *cd, uint8_t port) {
+  uint8_t up = 0;
+  uint8_t down = 0;
+  uint8_t left = 0;
+  uint8_t right = 0;
+
+  switch (cd->byte5 & 0x0f) {
+    case 0x08:
+      up = 1;
+      break;
+
+    case 0x09:
+      left = 1;
+      break;
+
+    case 0x0a:
+      left = 1;
+      up = 1;
+      break;
+  }
+
+  switch (cd->byte4 & 0xf0) {
+    case 0xb0:
+      down = 1;
+      break;
+
+    case 0x70:
+      right = 1;
+      break;
+
+    case 0x30:
+      right = 1;
+      down = 1;
+      break;
+  }
+
+  ocr1a_load = 128;  // (A XPOT)
+  ocr1b_load = 128;  // (A YPOT)
+  ocr0a_load = 128;  // (B XPOT)
+  ocr0b_load = 128;  // (B YPOT)
+
+  if (port == PORT_A) {
+    if (up == 1) {
+      ocr1a_load = 0;
+    }
+
+    if (down == 1) {
+      ocr1a_load = 255;
+    }
+
+    if (left == 1) {
+      ocr1b_load = 0;
+    }
+
+    if (right == 1) {
+      ocr1b_load = 255;
+    }
+  } else {
+    if (up == 1) {
+      ocr0a_load = 0;
+    }
+
+    if (down == 1) {
+      ocr0a_load = 255;
+    }
+
+    if (left == 1) {
+      ocr0b_load = 0;
+    }
+
+    if (right == 1) {
+      ocr0b_load = 255;
+    }
+  }
+}
+
+
+/// SID measuring cycle detected.
+///
+/// 1. SID pulls POTX low\n
+/// 2. SID waits 256 cycles us\n
+/// 3. SID releases POTX\n
+/// 4. 0 to 255 cycles until the cap is charged\n
+///
+/// This handler stops the Timer1, clears OC1A/OC1B outputs,
+/// loads the timer with values precalculated in potmouse_movt()
+/// and starts the timer.
+///
+/// OC1A/OC1B (YPOT/XPOT) lines will go up by hardware.
+/// Normal SID cycle is 512us. Timer will overflow not before 65535us.
+/// Next cycle will begin before that so there's no need to stop the timer.
+/// Output compare match interrupts are thus not used.
+
+ISR(INT1_vect) {
+
+  // ===========================================================
+  // SID started to measure the pots, uuu
+  // disable INT1 until the measurement cycle is complete
+
+
+  // ===========================================================
+  // stop the timer
+  TCCR0B = 0;
+
+  // clear OC0A/OC0B:
+  // 1. set output compare to clear OC0A/OC0B ("10" in table 37 on page 97)
+  TCCR0A = _BV(COM0A1) | _BV(COM0B1);
+  // 2. force output compare to make it happen
+  TCCR0B |= _BV(FOC0A) | _BV(FOC0B);
+
+  // Set OC0A/OC0B on Compare Match (Set output to high level)
+  // WGM13:0 = 00, normal mode: count from BOTTOM to MAX
+  TCCR0A = _BV(COM0A1) | _BV(COM0A0) | _BV(COM0B1) | _BV(COM0B0);
+
+  // load the timer
+  TCNT0 = 0;
+
+  // init the output compare values
+  OCR0A = ocr0a_load;
+  OCR0B = ocr0b_load;
+
+  // start timer with prescaler clk/8 (1 count = 1us)
+  // TCCR0B |= _BV(CS01) | _BV(CS00);
+  TCCR0B |= _BV(CS01);
+
+
+  // ===========================================================
+  // stop the timer
+  TCCR1B = 0;
+
+  // clear OC1A/OC1B:
+  // 1. set output compare to clear OC1A/OC1B ("10" in table 37 on page 97)
+  TCCR1A = _BV(COM1A1) | _BV(COM1B1);
+  // 2. force output compare to make it happen
+  TCCR1C |= _BV(FOC1A) | _BV(FOC1B);
+
+  // Set OC1A/OC1B on Compare Match (Set output to high level)
+  // WGM13:0 = 00, normal mode: count from BOTTOM to MAX
+  TCCR1A = _BV(COM1A1) | _BV(COM1A0) | _BV(COM1B1) | _BV(COM1B0);
+
+  // load the timer
+  TCNT1 = 0;
+
+  // init the output compare values
+  OCR1A = ocr1a_load;
+  OCR1B = ocr1b_load;
+
+  // start timer with prescaler clk/8 (1 count = 1us)
+  // TCCR1B |= _BV(CS11) | _BV(CS10);
+  TCCR1B |= _BV(CS11);
+}

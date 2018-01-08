@@ -25,9 +25,13 @@
 
 #include <inttypes.h>
 
+#include "controller.h"
+
 /**
 * @brief init paddle-related IOs and interrupts
 */
 void paddle_init(void);
+
+void paddle_poll(ContollerData *cd, uint8_t port);
 
 #endif

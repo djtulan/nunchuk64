@@ -33,6 +33,7 @@
 #include "controller.h"
 #include "joystick.h"
 #include "paddle.h"
+#include "enums.h"
 
 void init_select(void) {
   DDR_SEL1 |= _BV(BIT_SEL1);    // enable output
@@ -44,12 +45,12 @@ void init_select(void) {
 
 void switch_select(uint8_t port) {
   if (port == PORT_A) {
-    PORT_SEL2 &= ~_BV(BIT_SEL2);  // set to 0 (not selected)
-    PORT_SEL1 |= _BV(BIT_SEL1);   // set to 1 (selected)
+    PORT_SEL1 &= ~_BV(BIT_SEL1);  // set to 0
+    PORT_SEL2 |= _BV(BIT_SEL2);   // set to 1
 
   } else if (port == PORT_B) {
-    PORT_SEL1 &= ~_BV(BIT_SEL1);  // set to 0 (not selected)
-    PORT_SEL2 |= _BV(BIT_SEL2);   // set to 1 (selected)
+    PORT_SEL2 &= ~_BV(BIT_SEL2);  // set to 0
+    PORT_SEL1 |= _BV(BIT_SEL1);   // set to 1
   }
 }
 

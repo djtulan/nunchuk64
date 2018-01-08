@@ -23,6 +23,7 @@
 #include <string.h>
 
 #include "ioconfig.h"
+#include "enums.h"
 
 #include "joystick.h"
 
@@ -114,7 +115,7 @@ void joystick_poll(ContollerData *cd, uint8_t port) {
       break;
   }
 
-  if (port == 1) {
+  if (port == PORT_A) {
     // UP
     if (up == 0) {
       DDR_JOY_A0 &= ~(_BV(BIT_JOY_A0));
