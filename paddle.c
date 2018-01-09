@@ -28,10 +28,12 @@
 
 #include "paddle.h"
 
-static volatile uint16_t ocr1a_load;    ///< precalculated OCR1A value (A XPOT)
-static volatile uint16_t ocr1b_load;    ///< precalculated OCR1B value (A YPOT)
-static volatile uint16_t ocr0a_load;    ///< precalculated OCR0A value (B XPOT)
-static volatile uint16_t ocr0b_load;    ///< precalculated OCR0B value (B YPOT)
+static volatile uint16_t ocr1a_load = 160; ///< precalculated OCR1A value (A XPOT)
+static volatile uint16_t ocr1b_load = 160; ///< precalculated OCR1B value (A YPOT)
+static volatile uint16_t ocr0a_load = 160; ///< precalculated OCR0A value (B XPOT)
+static volatile uint16_t ocr0b_load = 160; ///< precalculated OCR0B value (B YPOT)
+
+static uint16_t diff = 0;
 
 void paddle_init(void) {
   // SID sensing port
@@ -42,23 +44,31 @@ void paddle_init(void) {
   PORT_PADDLE_A_X &= ~(_BV(BIT_PADDLE_A_X) | _BV(BIT_PADDLE_A_Y)); // = PORT_PADDLE_A_Y
   DDR_PADDLE_A_X  &= ~(_BV(BIT_PADDLE_A_X) | _BV(BIT_PADDLE_A_Y)); // = DDR_PADDLE_A_Y
 
+
+  // SID sensing port
+  DDR_SENSE_B  &= ~_BV(BIT_SENSE_B); // SENSE is input
+  PORT_SENSE_B &= ~_BV(BIT_SENSE_B); // pullup off, hi-biased by OC1B
+
   // SID POTX/POTY port
   PORT_PADDLE_B_X &= ~(_BV(BIT_PADDLE_B_X) | _BV(BIT_PADDLE_B_Y)); // = PORT_PADDLE_B_Y
   DDR_PADDLE_B_X  &= ~(_BV(BIT_PADDLE_B_X) | _BV(BIT_PADDLE_B_Y)); // = DDR_PADDLE_B_Y
 
   // interrupt
+  EIMSK &= ~_BV(INT0);                // disable INT0
+  EICRA &= ~(_BV(ISC01) | _BV(ISC00));
+  EICRA |= _BV(ISC01);                // ISC11:ISC10 == 10, @negedge
+
+  // interrupt
   EIMSK &= ~_BV(INT1);                // disable INT1
   EICRA &= ~(_BV(ISC11) | _BV(ISC10));
   EICRA |= _BV(ISC11);                // ISC11:ISC10 == 10, @negedge
+}
 
-
+void paddle_start(void) {
   // Initialize Timer1 and use OC1A/OC1B to output values
   // don't count yet
   TCCR1B = 0;
-
   TCCR0B = 0;
-
-
 
   // POTX/Y normally controlled by output compare unit
   // initially should be pulled up to provide high bias on SENSE pin
@@ -68,11 +78,28 @@ void paddle_init(void) {
   DDR_PADDLE_B_X  |= _BV(BIT_PADDLE_B_X) | _BV(BIT_PADDLE_B_Y);   // enable POTX/POTY as outputs
   PORT_PADDLE_B_X |= _BV(BIT_PADDLE_B_X) | _BV(BIT_PADDLE_B_Y);   // output "1" on both
 
+  EIFR  |= _BV(INTF0);  // clear INT1 flag
+  EIMSK |= _BV(INT0);   // enable INT1
+
   EIFR  |= _BV(INTF1);  // clear INT1 flag
   EIMSK |= _BV(INT1);   // enable INT1
 }
 
+
 void paddle_poll(ContollerData *cd, uint8_t port) {
+
+  diff ++;
+
+  if (diff > 200)
+    diff = 100;
+
+//   ocr1a_load = diff; ///< precalculated OCR1A value (A XPOT)
+//   ocr1b_load = diff; ///< precalculated OCR1B value (A YPOT)
+//   ocr0a_load = diff; ///< precalculated OCR0A value (B XPOT)
+//   ocr0b_load = diff; ///< precalculated OCR0B value (B YPOT)
+
+  /*
+
   uint8_t up = 0;
   uint8_t down = 0;
   uint8_t left = 0;
@@ -108,44 +135,58 @@ void paddle_poll(ContollerData *cd, uint8_t port) {
       break;
   }
 
-  ocr1a_load = 128;  // (A XPOT)
-  ocr1b_load = 128;  // (A YPOT)
-  ocr0a_load = 128;  // (B XPOT)
-  ocr0b_load = 128;  // (B YPOT)
+   ocr1a_load = 320;
+   ocr1b_load = 320;
+   ocr0a_load = 320;
+   ocr0b_load = 320;
 
-  if (port == PORT_A) {
+  if (port == PORT_B) {
     if (up == 1) {
-      ocr1a_load = 0;
+//       ocr1a_load = 0 + 320;
+      ocr1a_load += 128;
     }
 
     if (down == 1) {
-      ocr1a_load = 255;
+      // ocr1a_load = 255 + 320;
+      ocr1a_load -= 128;
     }
 
     if (left == 1) {
-      ocr1b_load = 0;
+//       ocr1b_load = 0 + 320;
+      ocr1b_load += 128;
     }
 
     if (right == 1) {
-      ocr1b_load = 255;
+//       ocr1b_load = 255 + 320;
+      ocr1b_load -= 128;
     }
+
+
   } else {
     if (up == 1) {
-      ocr0a_load = 0;
+//       ocr0a_load = 0 + 320;
+      ocr0a_load += 128;
     }
 
     if (down == 1) {
-      ocr0a_load = 255;
+//       ocr0a_load = 255 + 320;
+      ocr0a_load -= 128;
     }
 
     if (left == 1) {
-      ocr0b_load = 0;
+//       ocr0b_load = 0 + 320;
+      ocr0b_load += 128;
     }
 
     if (right == 1) {
-      ocr0b_load = 255;
+//       ocr0b_load = 255 + 320;
+      ocr0b_load -= 128;
     }
   }
+
+  */
+
+
 }
 
 
@@ -169,7 +210,7 @@ ISR(INT1_vect) {
 
   // ===========================================================
   // SID started to measure the pots, uuu
-  // disable INT1 until the measurement cycle is complete
+  // disable INT0 until the measurement cycle is complete
 
 
   // ===========================================================
@@ -194,8 +235,14 @@ ISR(INT1_vect) {
   OCR0B = ocr0b_load;
 
   // start timer with prescaler clk/8 (1 count = 1us)
-  // TCCR0B |= _BV(CS01) | _BV(CS00);
+  //TCCR0B |= _BV(CS01) | _BV(CS00);
   TCCR0B |= _BV(CS01);
+}
+
+ISR(INT0_vect) {
+  // ===========================================================
+  // SID started to measure the pots, uuu
+  // disable INT1 until the measurement cycle is complete
 
 
   // ===========================================================

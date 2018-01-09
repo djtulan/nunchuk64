@@ -32,6 +32,8 @@
 */
 void paddle_init(void);
 
+void paddle_start(void);
+
 void paddle_poll(ContollerData *cd, uint8_t port);
 
 #endif

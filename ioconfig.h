@@ -96,6 +96,7 @@
 #define PORT_SENSE_A       PORTD // PD2
 #define PORT_PADDLE_A_X    PORTB // PB1
 #define PORT_PADDLE_A_Y    PORTB // PB2
+
 #define PORT_SENSE_B       PORTD // PD3
 #define PORT_PADDLE_B_X    PORTD // PD6
 #define PORT_PADDLE_B_Y    PORTD // PD5
@@ -104,6 +105,7 @@
 #define DDR_SENSE_A         DDRD // PD2
 #define DDR_PADDLE_A_X      DDRB // PB1
 #define DDR_PADDLE_A_Y      DDRB // PB2
+
 #define DDR_SENSE_B         DDRD // PD3
 #define DDR_PADDLE_B_X      DDRD // PD6
 #define DDR_PADDLE_B_Y      DDRD // PD5
@@ -112,6 +114,7 @@
 #define BIT_SENSE_A            2 // PD2
 #define BIT_PADDLE_A_X         1 // PB1
 #define BIT_PADDLE_A_Y         2 // PB2
+
 #define BIT_SENSE_B            3 // PD3
 #define BIT_PADDLE_B_X         6 // PD6
 #define BIT_PADDLE_B_Y         5 // PD5

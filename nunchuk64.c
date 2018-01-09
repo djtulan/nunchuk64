@@ -77,6 +77,11 @@ void init(void) {
   _delay_ms(1);
   controller_init();
   _delay_ms(1);
+
+    // enable interrupts
+    sei();
+
+  paddle_start();
 }
 
 int main(void) {
@@ -97,17 +102,19 @@ int main(void) {
     // give data to c64 joystick port
     joystick_poll(&cd, port);
 
+//     _delay_ms(10);
+
+    // give data to c64 paddle port
+    paddle_poll(&cd, port);
+
     // toogle port
     port = (port == PORT_A) ? PORT_B : PORT_A;
 
-    /*
-        if (cd.byte5 & _BV(6)) {
-          PORT_LED |= _BV(BIT_LED);
-        } else {
-          PORT_LED &= ~_BV(BIT_LED);
-          _delay_ms(1);
-        }
-    */
+//     if (port == PORT_A) {
+//       PORT_LED |= _BV(BIT_LED);
+//     } else {
+//       PORT_LED &= ~_BV(BIT_LED);
+//     }
   }
 
   return 0;
