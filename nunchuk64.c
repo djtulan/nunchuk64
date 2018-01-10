@@ -78,8 +78,8 @@ void init(void) {
   controller_init();
   _delay_ms(1);
 
-    // enable interrupts
-    sei();
+  // enable interrupts
+  sei();
 
   paddle_start();
 }

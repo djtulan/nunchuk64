@@ -28,12 +28,10 @@
 
 #include "paddle.h"
 
-static volatile uint16_t ocr1a_load = 160; ///< precalculated OCR1A value (A XPOT)
-static volatile uint16_t ocr1b_load = 160; ///< precalculated OCR1B value (A YPOT)
-static volatile uint16_t ocr0a_load = 160; ///< precalculated OCR0A value (B XPOT)
-static volatile uint16_t ocr0b_load = 160; ///< precalculated OCR0B value (B YPOT)
-
-static uint16_t diff = 0;
+static volatile uint16_t ocr1a_load = 41; ///< precalculated OCR1A value (A XPOT)
+static volatile uint16_t ocr1b_load = 41; ///< precalculated OCR1B value (A YPOT)
+static volatile uint16_t ocr0a_load = 41; ///< precalculated OCR0A value (B XPOT)
+static volatile uint16_t ocr0b_load = 41; ///< precalculated OCR0B value (B YPOT)
 
 void paddle_init(void) {
   // SID sensing port
@@ -85,20 +83,20 @@ void paddle_start(void) {
   EIMSK |= _BV(INT1);   // enable INT1
 }
 
-
 void paddle_poll(ContollerData *cd, uint8_t port) {
 
-  diff ++;
-
-  if (diff > 200)
-    diff = 100;
-
-//   ocr1a_load = diff; ///< precalculated OCR1A value (A XPOT)
-//   ocr1b_load = diff; ///< precalculated OCR1B value (A YPOT)
-//   ocr0a_load = diff; ///< precalculated OCR0A value (B XPOT)
-//   ocr0b_load = diff; ///< precalculated OCR0B value (B YPOT)
-
+  // ocrXY_load should be in range of 20 - 53
   /*
+  diff += adder;
+
+  if (diff >= 53) {
+    adder = -1;
+  }
+
+  if (diff <= 20) {
+    adder = 1;
+  }
+  */
 
   uint8_t up = 0;
   uint8_t down = 0;
@@ -135,60 +133,53 @@ void paddle_poll(ContollerData *cd, uint8_t port) {
       break;
   }
 
-   ocr1a_load = 320;
-   ocr1b_load = 320;
-   ocr0a_load = 320;
-   ocr0b_load = 320;
-
-  if (port == PORT_B) {
+  if (port == PORT_A) {
     if (up == 1) {
-//       ocr1a_load = 0 + 320;
-      ocr1a_load += 128;
+      ocr1a_load += 1;
     }
 
     if (down == 1) {
-      // ocr1a_load = 255 + 320;
-      ocr1a_load -= 128;
+      ocr1a_load -= 1;
     }
 
     if (left == 1) {
-//       ocr1b_load = 0 + 320;
-      ocr1b_load += 128;
+      ocr1b_load += 1;
     }
 
     if (right == 1) {
-//       ocr1b_load = 255 + 320;
-      ocr1b_load -= 128;
+      ocr1b_load -= 1;
     }
-
 
   } else {
     if (up == 1) {
-//       ocr0a_load = 0 + 320;
-      ocr0a_load += 128;
+      ocr0a_load += 1;
     }
 
     if (down == 1) {
-//       ocr0a_load = 255 + 320;
-      ocr0a_load -= 128;
+      ocr0a_load -= 1;
     }
 
     if (left == 1) {
-//       ocr0b_load = 0 + 320;
-      ocr0b_load += 128;
+      ocr0b_load += 1;
     }
 
     if (right == 1) {
-//       ocr0b_load = 255 + 320;
-      ocr0b_load -= 128;
+      ocr0b_load -= 1;
     }
   }
 
-  */
+  if (ocr1a_load < 20) ocr1a_load = 20;
+  else if (ocr1a_load > 53) ocr1a_load = 53;
 
+  if (ocr1b_load < 20) ocr1b_load = 20;
+  else if (ocr1b_load > 53) ocr1b_load = 53;
 
+  if (ocr0a_load < 20) ocr0a_load = 20;
+  else if (ocr0a_load > 53) ocr0a_load = 53;
+
+  if (ocr0b_load < 20) ocr0b_load = 20;
+  else if (ocr0b_load > 53) ocr0b_load = 53;
 }
-
 
 /// SID measuring cycle detected.
 ///
