@@ -31,34 +31,37 @@
 #include "i2c_master.h"
 #include "ioconfig.h"
 #include "controller.h"
+#include "driver_nes_classic.h"
 #include "joystick.h"
 #include "paddle.h"
 #include "enums.h"
 
 void init_select(void) {
-  DDR_SEL1 |= _BV(BIT_SEL1);    // enable output
-  DDR_SEL2 |= _BV(BIT_SEL2);    // enable output
+  BIT_SET(DDR_SEL1, BIT_SEL1);    // enable output
+  BIT_SET(DDR_SEL2, BIT_SEL2);    // enable output
 
-  PORT_SEL1 &= ~_BV(BIT_SEL1);  // set to 0 (selected)
-  PORT_SEL2 &= ~_BV(BIT_SEL2);  // set to 0 (selected)
+  BIT_CLEAR(PORT_SEL1, BIT_SEL1); // set to 0 (unselected)
+  BIT_CLEAR(PORT_SEL2, BIT_SEL2); // set to 0 (unselected)
 }
 
 void switch_select(uint8_t port) {
   if (port == PORT_A) {
-    PORT_SEL1 &= ~_BV(BIT_SEL1);  // set to 0
-    PORT_SEL2 |= _BV(BIT_SEL2);   // set to 1
+    BIT_CLEAR(PORT_SEL1, BIT_SEL1);   // set to 0
+    BIT_SET(PORT_SEL2, BIT_SEL2);     // set to 1
 
   } else if (port == PORT_B) {
-    PORT_SEL2 &= ~_BV(BIT_SEL2);  // set to 0
-    PORT_SEL1 |= _BV(BIT_SEL1);   // set to 1
+    BIT_CLEAR(PORT_SEL2, BIT_SEL2);   // set to 0
+    BIT_SET(PORT_SEL1, BIT_SEL1);     // set to 1
   }
 }
 
 void init(void) {
-  DDR_LED |= _BV(BIT_LED);      // enable output
-  PORT_LED |= _BV(BIT_LED);     // set to 1 => LED ON
+  BIT_SET(DDR_LED, BIT_LED);   // enable output
+  BIT_SET(PORT_LED, BIT_LED);  // set to 1 => LED ON
 
+  // ===================================
   // init modules
+  // ===================================
   i2c_init();
   init_select();
   joystick_init();
@@ -66,49 +69,70 @@ void init(void) {
 
   _delay_ms(1);
 
+  // ===================================
   // select i2c port A
+  // ===================================
   switch_select(PORT_A);
   _delay_ms(1);
   controller_init();
   _delay_ms(1);
 
+  // ===================================
   // select i2c port B
+  // ===================================
   switch_select(PORT_B);
   _delay_ms(1);
   controller_init();
   _delay_ms(1);
 
+  // ===================================
   // enable interrupts
+  // ===================================
   sei();
 
+  // ===================================
+  // start paddle routines
+  // ===================================
   paddle_start();
 }
 
 int main(void) {
   init();
 
-  uint8_t port = PORT_A;
-  ContollerData cd;
+  Driver *driver = &nes_classic; // current default driver
+  ContollerData cd[NUMBER_PORTS];
+  uint8_t joystick[NUMBER_PORTS];
 
   // MAIN LOOP
   while (1) {
 
     // select I2C port
-    switch_select(port);
-
+    switch_select(PORT_A);
     // get data from port
-    controller_read(&cd);
+    controller_read(&cd[PORT_A]);
+
+    // select I2C port
+    switch_select(PORT_B);
+    // get data from port
+    controller_read(&cd[PORT_B]);
+
+
+    // translate the controller date to joystick data
+    driver->get_joystick_state(cd, joystick);
+
+    joystick_update(joystick[PORT_A], joystick[PORT_B]);
+
 
     // give data to c64 joystick port
-    joystick_poll(&cd, port);
+    // joystick_poll(&cd, port);
 
 //     _delay_ms(10);
 
     // give data to c64 paddle port
-    paddle_poll(&cd, port);
+    // paddle_poll(&cd, port);
 
     // toogle port
-    port = (port == PORT_A) ? PORT_B : PORT_A;
+    // port = (port == PORT_A) ? PORT_B : PORT_A;
 
 //     if (port == PORT_A) {
 //       PORT_LED |= _BV(BIT_LED);

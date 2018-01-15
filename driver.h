@@ -15,19 +15,30 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //=============================================================================
-/// @file   enums.h
+/// @file   driver.h
 /// @author Robert Grasböck (robert.grasboeck@gmail.com)
 /// @date   December, 2017
-/// @brief  all globally used enums
+/// @brief  template for joystick driver
 //=============================================================================
-#ifndef _ENUMS_H_
-#define _ENUMS_H_
+#ifndef _DRIVER_H_
+#define _DRIVER_H_
 
-enum {
-  PORT_A, ///< select Port A
-  PORT_B, ///< select Port A
+#include "controller.h"
+#include "joystick.h"
+#include "paddle.h"
 
-  NUMBER_PORTS ///< number of ports
-};
+/// \driver struct
+typedef struct {
+  /**
+  * @brief get the joystick state from controller data
+  */
+  void (*get_joystick_state)(const ContollerData cd[2], Joystick joystick[2]);
+
+  /**
+  * @brief get the paddle state from controller data
+  */
+  void (*get_paddle_state)(const ContollerData cd[2], uint8_t paddle[2]);
+
+} Driver;
 
 #endif

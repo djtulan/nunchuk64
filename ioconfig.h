@@ -25,6 +25,11 @@
 
 #include <avr/io.h>
 
+#define BIT_GET(ADR,BIT)   ((ADR) & (_BV(BIT)))
+#define BIT_SET(ADR,BIT)   ((ADR) |= (_BV(BIT)))
+#define BIT_CLEAR(ADR,BIT) ((ADR) &= ~(_BV(BIT)))
+#define BIT_FLIP(ADR,BIT)  ((ADR) ^= (_BV(BIT)))
+
 // ========================================================
 //   LED
 // ========================================================

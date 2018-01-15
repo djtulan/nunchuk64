@@ -15,19 +15,16 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //=============================================================================
-/// @file   enums.h
+/// @file   driver_nes_classic.h
 /// @author Robert Grasböck (robert.grasboeck@gmail.com)
 /// @date   December, 2017
-/// @brief  all globally used enums
+/// @brief  driver nes classic
 //=============================================================================
-#ifndef _ENUMS_H_
-#define _ENUMS_H_
+#ifndef _DRIVER_NES_CLASSIC_H_
+#define _DRIVER_NES_CLASSIC_H_
 
-enum {
-  PORT_A, ///< select Port A
-  PORT_B, ///< select Port A
+#include "driver.h"
 
-  NUMBER_PORTS ///< number of ports
-};
+Driver nes_classic;
 
 #endif

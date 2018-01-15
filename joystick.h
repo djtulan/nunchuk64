@@ -27,10 +27,34 @@
 
 #include "controller.h"
 
+enum Joystick_State {
+  UP     = (1 << 0), ///< up
+  DOWN   = (1 << 1), ///< down
+  LEFT   = (1 << 2), ///< left
+  RIGHT  = (1 << 3), ///< right
+  BUTTON = (1 << 4)  ///< fire button
+};
+
+/// \brief Joystick holds the state of one joystick
+typedef uint8_t Joystick;
+
+/**
+* @brief Init Joystick Ports
+*
+* All joystick output bits are set to zero
+* All joystick ddr bits are set to zero (Tri-state)
+* Should be default anyway
+*/
 void joystick_init(void);
 
-void joystick_poll(ContollerData *cd, uint8_t port);
-
-void joystick_toggle(void);
+/**
+* @brief Update Joystick state
+*
+* @param [in] port_a byte representing the state of Port A
+* @param [in] port_b byte representing the state of Port A
+*
+* The bit (see Joystick_State) are set inside the respective parameter
+*/
+void joystick_update(Joystick port_a, Joystick port_b);
 
 #endif

@@ -20,174 +20,119 @@
 /// @date   December, 2017
 /// @brief  digital joystick part
 //=============================================================================
-#include <string.h>
-
 #include "ioconfig.h"
-#include "enums.h"
 
 #include "joystick.h"
 
-static ContollerData last_data[2];
-
 void joystick_init(void) {
+  // NOTE not needed, default after reset
 
+  /*
   // dataregister for joystick outputs
-  PORT_JOY_A0   &= ~_BV(BIT_JOY_A0); // UP
-  PORT_JOY_A1   &= ~_BV(BIT_JOY_A1); // DOWN
-  PORT_JOY_A2   &= ~_BV(BIT_JOY_A2); // LEFT
-  PORT_JOY_A3   &= ~_BV(BIT_JOY_A3); // RIGHT
-  PORT_BUTTON_A &= ~_BV(BIT_BUTTON_A);
+  BIT_CLEAR(PORT_JOY_A0,   BIT_JOY_A0);   // UP
+  BIT_CLEAR(PORT_JOY_A1,   BIT_JOY_A1);   // DOWN
+  BIT_CLEAR(PORT_JOY_A2,   BIT_JOY_A2);   // LEFT
+  BIT_CLEAR(PORT_JOY_A3,   BIT_JOY_A3);   // RIGHT
+  BIT_CLEAR(PORT_BUTTON_A, BIT_BUTTON_A);
 
-  PORT_JOY_B0   &= ~_BV(BIT_JOY_B0); // UP
-  PORT_JOY_B1   &= ~_BV(BIT_JOY_B1); // DOWN
-  PORT_JOY_B2   &= ~_BV(BIT_JOY_B2); // LEFT
-  PORT_JOY_B3   &= ~_BV(BIT_JOY_B3); // RIGHT
-  PORT_BUTTON_B &= ~_BV(BIT_BUTTON_B);
+  BIT_CLEAR(PORT_JOY_B0,   BIT_JOY_B0);   // UP
+  BIT_CLEAR(PORT_JOY_B1,   BIT_JOY_B1);   // DOWN
+  BIT_CLEAR(PORT_JOY_B2,   BIT_JOY_B2);   // LEFT
+  BIT_CLEAR(PORT_JOY_B3,   BIT_JOY_B3);   // RIGHT
+  BIT_CLEAR(PORT_BUTTON_B, BIT_BUTTON_B);
 
   // ddr for joystick outputs
-  DDR_JOY_A0    &= ~_BV(BIT_JOY_A0);
-  DDR_JOY_A1    &= ~_BV(BIT_JOY_A1);
-  DDR_JOY_A2    &= ~_BV(BIT_JOY_A2);
-  DDR_JOY_A3    &= ~_BV(BIT_JOY_A3);
-  DDR_BUTTON_A  &= ~_BV(BIT_BUTTON_A);
+  BIT_CLEAR(DDR_JOY_A0,   BIT_JOY_A0);
+  BIT_CLEAR(DDR_JOY_A1,   BIT_JOY_A1);
+  BIT_CLEAR(DDR_JOY_A2,   BIT_JOY_A2);
+  BIT_CLEAR(DDR_JOY_A3,   BIT_JOY_A3);
+  BIT_CLEAR(DDR_BUTTON_A, BIT_BUTTON_A);
 
-  DDR_JOY_B0    &= ~_BV(BIT_JOY_B0);
-  DDR_JOY_B1    &= ~_BV(BIT_JOY_B1);
-  DDR_JOY_B2    &= ~_BV(BIT_JOY_B2);
-  DDR_JOY_B3    &= ~_BV(BIT_JOY_B3);
-  DDR_BUTTON_B  &= ~_BV(BIT_BUTTON_B);
-
-  memset(last_data, 0, sizeof(last_data));
+  BIT_CLEAR(DDR_JOY_B0,   BIT_JOY_B0);
+  BIT_CLEAR(DDR_JOY_B1,   BIT_JOY_B1);
+  BIT_CLEAR(DDR_JOY_B2,   BIT_JOY_B2);
+  BIT_CLEAR(DDR_JOY_B3,   BIT_JOY_B3);
+  BIT_CLEAR(DDR_BUTTON_B, BIT_BUTTON_B);
+  */
 }
 
-void joystick_poll(ContollerData *cd, uint8_t port) {
+void joystick_update(Joystick port_a, Joystick port_b) {
 
-  if (memcmp(&last_data[port], cd, sizeof(ContollerData)) == 0)
-    return;
+  // ===================================
+  //  CONTROL PORT A
+  // ===================================
 
-  // update last data
-  memcpy(&last_data[port], cd, sizeof(ContollerData));
-
-
-  uint8_t up = 0;
-  uint8_t down = 0;
-  uint8_t left = 0;
-  uint8_t right = 0;
-  uint8_t button = 0;
-
-  switch (cd->byte5 & 0x0f) {
-    case 0x08:
-      up = 1;
-      break;
-
-    case 0x09:
-      left = 1;
-      break;
-
-    case 0x0a:
-      left = 1;
-      up = 1;
-      break;
-  }
-
-  switch (cd->byte4 & 0xf0) {
-    case 0xb0:
-      down = 1;
-      break;
-
-    case 0x70:
-      right = 1;
-      break;
-
-    case 0x30:
-      right = 1;
-      down = 1;
-      break;
-  }
-
-  switch (cd->byte5 & 0xf0) {
-    case 0xb0:
-      up = 1;
-      break;
-
-    case 0x80:
-      button = 1;
-      break;
-  }
-
-  if (port == PORT_A) {
-    // UP
-    if (up == 0) {
-      DDR_JOY_A0 &= ~(_BV(BIT_JOY_A0));
-    } else {
-      DDR_JOY_A0 |= _BV(BIT_JOY_A0);
-    }
-
-    // DOWN
-    if (down == 0) {
-      DDR_JOY_A1 &= ~(_BV(BIT_JOY_A1));
-    } else {
-      DDR_JOY_A1 |= _BV(BIT_JOY_A1);
-    }
-
-    // LEFT
-    if (left == 0) {
-      DDR_JOY_A2 &= ~(_BV(BIT_JOY_A2));
-    } else {
-      DDR_JOY_A2 |= _BV(BIT_JOY_A2);
-    }
-
-    // RIGHT
-    if (right == 0) {
-      DDR_JOY_A3 &= ~(_BV(BIT_JOY_A3));
-    } else {
-      DDR_JOY_A3 |= _BV(BIT_JOY_A3);
-    }
-
-    // BUTTON
-    if (button == 0) {
-      DDR_BUTTON_A &= ~(_BV(BIT_BUTTON_A));
-    } else {
-      DDR_BUTTON_A |= _BV(BIT_BUTTON_A);
-    }
-
+  // UP
+  if (port_a & UP) {
+    BIT_SET(DDR_JOY_A0, BIT_JOY_A0);
   } else {
-    // UP
-    if (up == 0) {
-      DDR_JOY_B0 &= ~(_BV(BIT_JOY_B0));
-    } else {
-      DDR_JOY_B0 |= _BV(BIT_JOY_B0);
-    }
-
-    // DOWN
-    if (down == 0) {
-      DDR_JOY_B1 &= ~(_BV(BIT_JOY_B1));
-    } else {
-      DDR_JOY_B1 |= _BV(BIT_JOY_B1);
-    }
-
-    // LEFT
-    if (left == 0) {
-      DDR_JOY_B2 &= ~(_BV(BIT_JOY_B2));
-    } else {
-      DDR_JOY_B2 |= _BV(BIT_JOY_B2);
-    }
-
-    // RIGHT
-    if (right == 0) {
-      DDR_JOY_B3 &= ~(_BV(BIT_JOY_B3));
-    } else {
-      DDR_JOY_B3 |= _BV(BIT_JOY_B3);
-    }
-
-    // BUTTON
-    if (button == 0) {
-      DDR_BUTTON_B &= ~(_BV(BIT_BUTTON_B));
-    } else {
-      DDR_BUTTON_B |= _BV(BIT_BUTTON_B);
-    }
+    BIT_CLEAR(DDR_JOY_A0, BIT_JOY_A0);
   }
-}
 
-void joystick_toggle(void) {
+  // DOWN
+  if (port_a & DOWN) {
+    BIT_SET(DDR_JOY_A1, BIT_JOY_A1);
+  } else {
+    BIT_CLEAR(DDR_JOY_A1, BIT_JOY_A1);
+  }
+
+  // LEFT
+  if (port_a & LEFT) {
+    BIT_SET(DDR_JOY_A2, BIT_JOY_A2);
+  } else {
+    BIT_CLEAR(DDR_JOY_A2, BIT_JOY_A2);
+  }
+
+  // RIGHT
+  if (port_a & RIGHT) {
+    BIT_SET(DDR_JOY_A3, BIT_JOY_A3);
+  } else {
+    BIT_CLEAR(DDR_JOY_A3, BIT_JOY_A3);
+  }
+
+  // BUTTON
+  if (port_a & BUTTON) {
+    BIT_SET(DDR_BUTTON_A, BIT_BUTTON_A);
+  } else {
+    BIT_CLEAR(DDR_BUTTON_A, BIT_BUTTON_A);
+  }
+
+  // ===================================
+  //  CONTROL PORT B
+  // ===================================
+
+  // UP
+  if (port_b & UP) {
+    BIT_SET(DDR_JOY_B0, BIT_JOY_B0);
+  } else {
+    BIT_CLEAR(DDR_JOY_B0, BIT_JOY_B0);
+  }
+
+  // DOWN
+  if (port_b & DOWN) {
+    BIT_SET(DDR_JOY_B1, BIT_JOY_B1);
+  } else {
+    BIT_CLEAR(DDR_JOY_B1, BIT_JOY_B1);
+  }
+
+  // LEFT
+  if (port_b & LEFT) {
+    BIT_SET(DDR_JOY_B2, BIT_JOY_B2);
+  } else {
+    BIT_CLEAR(DDR_JOY_B2, BIT_JOY_B2);
+  }
+
+  // RIGHT
+  if (port_b & RIGHT) {
+    BIT_SET(DDR_JOY_B3, BIT_JOY_B3);
+  } else {
+    BIT_CLEAR(DDR_JOY_B3, BIT_JOY_B3);
+  }
+
+  // BUTTON
+  if (port_b & BUTTON) {
+    BIT_SET(DDR_BUTTON_B, BIT_BUTTON_B);
+  } else {
+    BIT_CLEAR(DDR_BUTTON_B, BIT_BUTTON_B);
+  }
 }
