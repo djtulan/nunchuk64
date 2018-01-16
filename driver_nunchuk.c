@@ -15,65 +15,57 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //=============================================================================
-/// @file   driver_nes_classic.c
+/// @file   driver_nunchuk.c
 /// @author Robert Grasböck (robert.grasboeck@gmail.com)
-/// @date   December, 2017
-/// @brief  driver nes classic
+/// @date   January, 2018
+/// @brief  driver nunchuk
 //=============================================================================
 #include "enums.h"
 #include "joystick.h"
 
-#include "driver_nes_classic.h"
+#include "driver_nunchuk.h"
 
-static void get_joystick_state_nes(const ContollerData *cd, Joystick *joystick) {
+static void get_joystick_state_nunchuk(const ContollerData *cd, Joystick *joystick) {
+
+  // see: http://wiibrew.org/wiki/Wiimote/Extension_Controllers/Nunchuck
+  // Analog stick X returns data from around 35 (fully left) to 228(fully right),
+  // while analog stick Y returns from around 27 to 220. Center for both is around 128.
+
   (*joystick) = 0;
 
-  // Cross up, left
-  switch (cd->byte5 & 0x0f) {
-    case 0x08:
-      (*joystick) |= UP;
-      break;
+  // Analog Joystick X
+  uint8_t sx = cd->byte0;
 
-    case 0x09:
-      (*joystick) |= LEFT;
-      break;
-
-    case 0x0a:
-      (*joystick) |= LEFT | UP;
-      break;
+  if (sx > 180) {
+    (*joystick) |= RIGHT;
+  } else if (sx < 76) {
+    (*joystick) |= LEFT;
   }
 
-  // Cross down, right
-  switch (cd->byte4 & 0xf0) {
-    case 0xb0:
-      (*joystick) |= DOWN;
-      break;
+  // Analog Joystick Y
+  uint8_t sy = cd->byte1;
 
-    case 0x70:
-      (*joystick) |= RIGHT;
-      break;
-
-    case 0x30:
-      (*joystick) |= RIGHT | DOWN;
-      break;
+  if (sy > 180) {
+    (*joystick) |= UP;
+  } else if (sy < 76) {
+    (*joystick) |= DOWN;
   }
 
-  // A, B, A+, B+
-  switch (cd->byte5 & 0xf0) {
-    case 0xb0:
-      (*joystick) |= BUTTON;
-      break;
+  // Z Button
+  if ((cd->byte5 & 0x01) == 0) {
+    (*joystick) |= BUTTON;
+  }
 
-    case 0x80:
-      (*joystick) |= UP;
-      break;
+  // C Button
+  if ((cd->byte5 & 0x02) == 0) {
+    (*joystick) |= UP;
   }
 }
 
-static void get_paddle_state_nes(const ContollerData *cd, uint8_t *paddle) {
+static void get_paddle_state_nunchuk(const ContollerData *cd, uint8_t *paddle) {
 }
 
-Driver nes_classic = {
-  get_joystick_state_nes,
-  get_paddle_state_nes
+Driver drv_nunchuk = {
+  get_joystick_state_nunchuk,
+  get_paddle_state_nunchuk
 };

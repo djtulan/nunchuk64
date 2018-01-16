@@ -15,32 +15,16 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //=============================================================================
-/// @file   controller.h
+/// @file   driver_nunchuk.h
 /// @author Robert Grasböck (robert.grasboeck@gmail.com)
-/// @date   December, 2017
-/// @brief  i2c controller
+/// @date   January, 2018
+/// @brief  driver nunchuk
 //=============================================================================
-#ifndef _CONTROLLER_H_
-#define _CONTROLLER_H_
+#ifndef _DRIVER_NUNCHUK_H_
+#define _DRIVER_NUNCHUK_H_
 
-/// \brief 6 byte data
-typedef struct {
-  uint8_t byte0;  ///< databyte 0
-  uint8_t byte1;  ///< databyte 1
-  uint8_t byte2;  ///< databyte 2
-  uint8_t byte3;  ///< databyte 3
-  uint8_t byte4;  ///< databyte 4
-  uint8_t byte5;  ///< databyte 5
-} ContollerData;
+#include "driver.h"
 
-typedef enum {
-  ID_Nunchuck,  ///< 0 Nunchuck
-  ID_Classic,   ///< 1 Classic
-  MAX_IDs
-} ControllerID;
-
-uint8_t controller_init(void);
-uint8_t controller_read(ContollerData *n);
-ControllerID get_id(void);
+Driver drv_nunchuk;
 
 #endif

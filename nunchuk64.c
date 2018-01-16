@@ -32,9 +32,12 @@
 #include "ioconfig.h"
 #include "controller.h"
 #include "driver_nes_classic.h"
+#include "driver_nunchuk.h"
 #include "joystick.h"
 #include "paddle.h"
 #include "enums.h"
+
+#define DEBUG
 
 void init_select(void) {
   BIT_SET(DDR_SEL1, BIT_SEL1);    // enable output
@@ -99,9 +102,32 @@ void init(void) {
 int main(void) {
   init();
 
-  Driver *driver = &nes_classic; // current default driver
+  Driver *driver[NUMBER_PORTS] = {NULL, NULL};
+
   ContollerData cd[NUMBER_PORTS];
   uint8_t joystick[NUMBER_PORTS];
+
+  switch_select(PORT_A);
+  _delay_ms(1);
+
+  if (get_id() == ID_Nunchuck) {
+    driver[PORT_A] = &drv_nunchuk;
+  } else {
+    driver[PORT_A] = &nes_classic;
+  }
+
+  switch_select(PORT_B);
+  _delay_ms(1);
+
+  if (get_id() == ID_Nunchuck) {
+    driver[PORT_B] = &drv_nunchuk;
+  } else {
+    driver[PORT_B] = &nes_classic;
+  }
+
+#ifdef DEBUG
+  uint8_t toggle = 0;
+#endif
 
   // MAIN LOOP
   while (1) {
@@ -116,17 +142,14 @@ int main(void) {
     // get data from port
     controller_read(&cd[PORT_B]);
 
-
     // translate the controller date to joystick data
-    driver->get_joystick_state(cd, joystick);
+    driver[PORT_A]->get_joystick_state(&cd[PORT_A], &joystick[PORT_A]);
+    driver[PORT_B]->get_joystick_state(&cd[PORT_B], &joystick[PORT_B]);
 
     joystick_update(joystick[PORT_A], joystick[PORT_B]);
 
-
     // give data to c64 joystick port
     // joystick_poll(&cd, port);
-
-//     _delay_ms(10);
 
     // give data to c64 paddle port
     // paddle_poll(&cd, port);
@@ -134,11 +157,17 @@ int main(void) {
     // toogle port
     // port = (port == PORT_A) ? PORT_B : PORT_A;
 
-//     if (port == PORT_A) {
-//       PORT_LED |= _BV(BIT_LED);
-//     } else {
-//       PORT_LED &= ~_BV(BIT_LED);
-//     }
+#ifdef DEBUG
+    _delay_ms(100);
+
+     if (toggle == 1) {
+       PORT_LED |= _BV(BIT_LED);
+       toggle = 0;
+     } else {
+       PORT_LED &= ~_BV(BIT_LED);
+       toggle = 1;
+     }
+#endif
   }
 
   return 0;

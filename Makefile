@@ -38,7 +38,8 @@
 MCU = atmega328p
 FORMAT = ihex
 TARGET = nunchuk64
-SRC = $(TARGET).c paddle.c joystick.c i2c_master.c controller.c driver_nes_classic.c
+SRC = $(TARGET).c paddle.c joystick.c i2c_master.c controller.c driver_nes_classic.c \
+	driver_nunchuk.c
 ASRC =
 OPT = s
 

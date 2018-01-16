@@ -32,12 +32,12 @@ typedef struct {
   /**
   * @brief get the joystick state from controller data
   */
-  void (*get_joystick_state)(const ContollerData cd[2], Joystick joystick[2]);
+  void (*get_joystick_state)(const ContollerData *cd, Joystick *joystick);
 
   /**
   * @brief get the paddle state from controller data
   */
-  void (*get_paddle_state)(const ContollerData cd[2], uint8_t paddle[2]);
+  void (*get_paddle_state)(const ContollerData *cd, uint8_t *paddle);
 
 } Driver;
 

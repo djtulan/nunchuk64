@@ -21,6 +21,7 @@
 /// @brief  i2c controller
 //=============================================================================
 #include <stdint.h>
+#include <string.h>
 #include <util/delay.h>
 
 #include "i2c_master.h"
@@ -94,13 +95,43 @@ uint8_t controller_read(ContollerData *n) {
   i2c_stop();
 
   i2c_start_wait(CONTROLLER_ADDR | I2C_READ);
-  n->byte3 = (i2c_readAck()); // i2c_read(I2C_ACK);
   n->byte0 = (i2c_readAck()); // i2c_read(I2C_ACK);
   n->byte1 = (i2c_readAck()); // i2c_read(I2C_ACK);
   n->byte2 = (i2c_readAck()); // i2c_read(I2C_ACK);
+  n->byte3 = (i2c_readAck()); // i2c_read(I2C_ACK);
   n->byte4 = (i2c_readAck()); // i2c_read(I2C_ACK);
   n->byte5 = (i2c_readNak()); // i2c_read(I2C_NOACK);
   i2c_stop();
 
   return 0;
+}
+
+const uint8_t ID_MAP[MAX_IDs][6] = {
+  {0x00, 0x00, 0xa4, 0x20, 0x00, 0x00},
+  {0x00, 0x00, 0xa4, 0x20, 0x01, 0x01},
+};
+
+ControllerID get_id(void) {
+  i2c_start_wait(CONTROLLER_ADDR | I2C_WRITE);
+  i2c_write(0xFA);
+  i2c_stop();
+
+  uint8_t id[6];
+
+  i2c_start_wait(CONTROLLER_ADDR | I2C_READ);
+  id[0] = (i2c_readAck()); // i2c_read(I2C_ACK);
+  id[1] = (i2c_readAck()); // i2c_read(I2C_ACK);
+  id[2] = (i2c_readAck()); // i2c_read(I2C_ACK);
+  id[3] = (i2c_readAck()); // i2c_read(I2C_ACK);
+  id[4] = (i2c_readAck()); // i2c_read(I2C_ACK);
+  id[5] = (i2c_readNak()); // i2c_read(I2C_NOACK);
+  i2c_stop();
+
+  for (uint8_t i=0; i<MAX_IDs; i++) {
+    if (memcmp(&ID_MAP[i][0], &id[0], 6) == 0) {
+      return i;
+    }
+  }
+
+  return MAX_IDs; // not found
 }
