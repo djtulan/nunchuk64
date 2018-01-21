@@ -31,16 +31,26 @@
 #define BIT_FLIP(ADR,BIT)  ((ADR) ^= (_BV(BIT)))
 
 // ========================================================
-//   LED
+//  LED
 // ========================================================
 
 // led port, ddr and bit
-#define PORT_LED           PORTD  // PD4
+#define PORT_LED           PORTD // PD4
 #define DDR_LED             DDRD // PD4
 #define BIT_LED                4 // PD4
 
 // ========================================================
-//   I2C Select
+//  BUTTON
+// ========================================================
+
+// button port, ddr and bit
+#define PIN_BUTTON          PINB // PB6
+#define PORT_BUTTON        PORTB // PB6
+#define DDR_BUTTON          DDRB // PB6
+#define BIT_BUTTON             6 // PB6
+
+// ========================================================
+//  I2C Select
 // ========================================================
 
 // select1 port, ddr and bit
@@ -54,7 +64,7 @@
 #define BIT_SEL2               1 // PC1
 
 // ========================================================
-//   DIGITAL JOYSTICK OUTPUTS
+//  DIGITAL JOYSTICK OUTPUTS
 // ========================================================
 
 // io register for joystick outputs
@@ -94,7 +104,7 @@
 #define BIT_BUTTON_B           4 // PB4
 
 // ========================================================
-//   PADDLE INPUTS & OUTPUTS
+//  PADDLE INPUTS & OUTPUTS
 // ========================================================
 
 // io register for paddle inputs / outputs

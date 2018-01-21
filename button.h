@@ -15,19 +15,20 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //=============================================================================
-/// @file   enums.h
+/// @file   button.h
 /// @author Robert Grasböck (robert.grasboeck@gmail.com)
-/// @date   December, 2017
-/// @brief  all globally used enums
+/// @date   January, 2018
+/// @brief  button
 //=============================================================================
-#ifndef _ENUMS_H_
-#define _ENUMS_H_
+#ifndef _BUTTON_H_
+#define _BUTTON_H_
 
-typedef enum {
-  PORT_A, ///< select Port A
-  PORT_B, ///< select Port B
+#include <inttypes.h>
 
-  NUMBER_PORTS ///< number of ports
-} Port;
+void button_init(void);
+
+void button_debounce(void);
+
+uint8_t button_get(void);
 
 #endif

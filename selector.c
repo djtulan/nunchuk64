@@ -15,19 +15,30 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //=============================================================================
-/// @file   enums.h
+/// @file   selector.c
 /// @author Robert Grasböck (robert.grasboeck@gmail.com)
-/// @date   December, 2017
-/// @brief  all globally used enums
+/// @date   January, 2018
+/// @brief  selector for i2c bus
 //=============================================================================
-#ifndef _ENUMS_H_
-#define _ENUMS_H_
+#include "ioconfig.h"
 
-typedef enum {
-  PORT_A, ///< select Port A
-  PORT_B, ///< select Port B
+#include "selector.h"
 
-  NUMBER_PORTS ///< number of ports
-} Port;
+void init_selector(void) {
+  BIT_SET(DDR_SEL1, BIT_SEL1);    // enable output
+  BIT_SET(DDR_SEL2, BIT_SEL2);    // enable output
 
-#endif
+  BIT_CLEAR(PORT_SEL1, BIT_SEL1); // set to 0 (unselected)
+  BIT_CLEAR(PORT_SEL2, BIT_SEL2); // set to 0 (unselected)
+}
+
+void switch_selector(Port port) {
+  if (port == PORT_A) {
+    BIT_CLEAR(PORT_SEL1, BIT_SEL1);   // set to 0
+    BIT_SET(PORT_SEL2, BIT_SEL2);     // set to 1
+
+  } else if (port == PORT_B) {
+    BIT_CLEAR(PORT_SEL2, BIT_SEL2);   // set to 0
+    BIT_SET(PORT_SEL1, BIT_SEL1);     // set to 1
+  }
+}

@@ -15,19 +15,18 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //=============================================================================
-/// @file   enums.h
+/// @file   selector.h
 /// @author Robert Grasböck (robert.grasboeck@gmail.com)
-/// @date   December, 2017
-/// @brief  all globally used enums
+/// @date   January, 2018
+/// @brief  selector for i2c bus
 //=============================================================================
-#ifndef _ENUMS_H_
-#define _ENUMS_H_
+#ifndef _SELECTOR_H_
+#define _SELECTOR_H_
 
-typedef enum {
-  PORT_A, ///< select Port A
-  PORT_B, ///< select Port B
+#include "enums.h"
 
-  NUMBER_PORTS ///< number of ports
-} Port;
+void init_selector(void);
+
+void switch_selector(Port port);
 
 #endif

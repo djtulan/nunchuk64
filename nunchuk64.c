@@ -28,64 +28,48 @@
 #include <avr/interrupt.h>
 #include <util/delay.h>
 
+#include "led.h"
+#include "button.h"
 #include "i2c_master.h"
 #include "ioconfig.h"
+#include "enums.h"
+#include "selector.h"
 #include "controller.h"
-#include "driver_nes_classic.h"
-#include "driver_nunchuk.h"
 #include "joystick.h"
 #include "paddle.h"
-#include "enums.h"
+
+#include "driver_nes_classic.h"
+#include "driver_nunchuk.h"
 
 // #define DEBUG
 
-void init_select(void) {
-  BIT_SET(DDR_SEL1, BIT_SEL1);    // enable output
-  BIT_SET(DDR_SEL2, BIT_SEL2);    // enable output
-
-  BIT_CLEAR(PORT_SEL1, BIT_SEL1); // set to 0 (unselected)
-  BIT_CLEAR(PORT_SEL2, BIT_SEL2); // set to 0 (unselected)
-}
-
-void switch_select(uint8_t port) {
-  if (port == PORT_A) {
-    BIT_CLEAR(PORT_SEL1, BIT_SEL1);   // set to 0
-    BIT_SET(PORT_SEL2, BIT_SEL2);     // set to 1
-
-  } else if (port == PORT_B) {
-    BIT_CLEAR(PORT_SEL2, BIT_SEL2);   // set to 0
-    BIT_SET(PORT_SEL1, BIT_SEL1);     // set to 1
-  }
-}
-
 void init(void) {
-  BIT_SET(DDR_LED, BIT_LED);   // enable output
-  BIT_SET(PORT_LED, BIT_LED);  // set to 1 => LED ON
-
   // ===================================
   // init modules
   // ===================================
-  i2c_init();
-  init_select();
-  joystick_init();
-  paddle_init();
+  led_init();         // init led output
+  button_init();      // init button input
+  i2c_init();         // init i2c routines
+  init_selector();    // init i2c bus selector
+  joystick_init();    // init joystick outputs
+  paddle_init();      // init paddle outputs
 
   _delay_ms(1);
 
   // ===================================
   // select i2c port A
   // ===================================
-  switch_select(PORT_A);
+  switch_selector(PORT_A);
   _delay_ms(1);
-  controller_init();
+  controller_init();  // init controller A
   _delay_ms(1);
 
   // ===================================
   // select i2c port B
   // ===================================
-  switch_select(PORT_B);
+  switch_selector(PORT_B);
   _delay_ms(1);
-  controller_init();
+  controller_init();  // init controller B
   _delay_ms(1);
 
   // ===================================
@@ -97,6 +81,8 @@ void init(void) {
   // start paddle routines
   // ===================================
   paddle_start();
+
+  button_init();      // init button input
 }
 
 int main(void) {
@@ -107,7 +93,7 @@ int main(void) {
   ContollerData cd[NUMBER_PORTS];
   uint8_t joystick[NUMBER_PORTS];
 
-  switch_select(PORT_A);
+  switch_selector(PORT_A);
   _delay_ms(1);
 
   if (get_id() == ID_Nunchuck) {
@@ -116,7 +102,7 @@ int main(void) {
     driver[PORT_A] = &nes_classic;
   }
 
-  switch_select(PORT_B);
+  switch_selector(PORT_B);
   _delay_ms(1);
 
   if (get_id() == ID_Nunchuck) {
@@ -125,6 +111,8 @@ int main(void) {
     driver[PORT_B] = &nes_classic;
   }
 
+  uint8_t led_on = 0;
+
 #ifdef DEBUG
   uint8_t toggle = 0;
 #endif
@@ -132,13 +120,25 @@ int main(void) {
   // MAIN LOOP
   while (1) {
 
+    button_debounce();
+
+    if (button_get()) {
+      led_on = ~led_on;
+
+      if (led_on) {
+        led_switch(1);
+      } else {
+        led_switch(0);
+      }
+    }
+
     // select I2C port
-    switch_select(PORT_A);
+    switch_selector(PORT_A);
     // get data from port
     controller_read(&cd[PORT_A]);
 
     // select I2C port
-    switch_select(PORT_B);
+    switch_selector(PORT_B);
     // get data from port
     controller_read(&cd[PORT_B]);
 
@@ -149,25 +149,17 @@ int main(void) {
     joystick_update(joystick[PORT_A], joystick[PORT_B]);
     paddle_update(joystick[PORT_A], joystick[PORT_B]);
 
-    // give data to c64 joystick port
-    // joystick_poll(&cd, port);
-
-    // give data to c64 paddle port
-    // paddle_poll(&cd, port);
-
-    // toogle port
-    // port = (port == PORT_A) ? PORT_B : PORT_A;
-
 #ifdef DEBUG
     _delay_ms(100);
 
-     if (toggle == 1) {
-       PORT_LED |= _BV(BIT_LED);
-       toggle = 0;
-     } else {
-       PORT_LED &= ~_BV(BIT_LED);
-       toggle = 1;
-     }
+    if (toggle == 1) {
+      led_switch(0);
+      toggle = 0;
+    } else {
+      led_switch(1);
+      toggle = 1;
+    }
+
 #endif
   }
 

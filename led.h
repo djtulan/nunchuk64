@@ -15,19 +15,16 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //=============================================================================
-/// @file   enums.h
+/// @file   led.h
 /// @author Robert Grasböck (robert.grasboeck@gmail.com)
-/// @date   December, 2017
-/// @brief  all globally used enums
+/// @date   January, 2018
+/// @brief  led
 //=============================================================================
-#ifndef _ENUMS_H_
-#define _ENUMS_H_
+#ifndef _LED_H_
+#define _LED_H_
 
-typedef enum {
-  PORT_A, ///< select Port A
-  PORT_B, ///< select Port B
+void led_init(void);
 
-  NUMBER_PORTS ///< number of ports
-} Port;
+void led_switch(uint8_t on);
 
 #endif
