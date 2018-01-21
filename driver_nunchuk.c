@@ -34,7 +34,7 @@ static void get_joystick_state_nunchuk(const ContollerData *cd, Joystick *joysti
   (*joystick) = 0;
 
   // Analog Joystick X
-  uint8_t sx = cd->byte0;
+  uint8_t sx = cd->byte[0];
 
   if (sx > 180) {
     (*joystick) |= RIGHT;
@@ -43,7 +43,7 @@ static void get_joystick_state_nunchuk(const ContollerData *cd, Joystick *joysti
   }
 
   // Analog Joystick Y
-  uint8_t sy = cd->byte1;
+  uint8_t sy = cd->byte[1];
 
   if (sy > 180) {
     (*joystick) |= UP;
@@ -52,12 +52,12 @@ static void get_joystick_state_nunchuk(const ContollerData *cd, Joystick *joysti
   }
 
   // Z Button
-  if ((cd->byte5 & 0x01) == 0) {
+  if ((cd->byte[5] & 0x01) == 0) {
     (*joystick) |= BUTTON;
   }
 
   // C Button
-  if ((cd->byte5 & 0x02) == 0) {
+  if ((cd->byte[5] & 0x02) == 0) {
     (*joystick) |= UP;
   }
 }

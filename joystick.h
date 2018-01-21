@@ -25,8 +25,6 @@
 
 #include <inttypes.h>
 
-#include "controller.h"
-
 enum Joystick_State {
   UP     = (1 << 0), ///< up
   DOWN   = (1 << 1), ///< down
@@ -35,7 +33,7 @@ enum Joystick_State {
   BUTTON = (1 << 4)  ///< fire button
 };
 
-/// \brief Joystick holds the state of one joystick
+/// \brief Joystick, holds the state of one joystick
 typedef uint8_t Joystick;
 
 /**

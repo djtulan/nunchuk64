@@ -25,6 +25,7 @@
 
 #include "driver.h"
 
+/// \brief nunchuk driver
 Driver drv_nunchuk;
 
 #endif

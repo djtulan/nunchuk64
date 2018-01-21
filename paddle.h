@@ -26,14 +26,21 @@
 #include <inttypes.h>
 
 #include "controller.h"
+#include "joystick.h"
 
 /**
 * @brief init paddle-related IOs and interrupts
 */
 void paddle_init(void);
 
+/**
+* @brief state paddle hardware and interrupt routines
+*/
 void paddle_start(void);
 
-void paddle_poll(ContollerData *cd, uint8_t port);
+/**
+* @brief update paddle state
+*/
+void paddle_update(Joystick port_a, Joystick port_b);
 
 #endif

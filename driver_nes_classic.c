@@ -29,7 +29,7 @@ static void get_joystick_state_nes(const ContollerData *cd, Joystick *joystick) 
   (*joystick) = 0;
 
   // Cross up, left
-  switch (cd->byte5 & 0x0f) {
+  switch (cd->byte[5] & 0x0f) {
     case 0x08:
       (*joystick) |= UP;
       break;
@@ -44,7 +44,7 @@ static void get_joystick_state_nes(const ContollerData *cd, Joystick *joystick) 
   }
 
   // Cross down, right
-  switch (cd->byte4 & 0xf0) {
+  switch (cd->byte[4] & 0xf0) {
     case 0xb0:
       (*joystick) |= DOWN;
       break;
@@ -59,7 +59,7 @@ static void get_joystick_state_nes(const ContollerData *cd, Joystick *joystick) 
   }
 
   // A, B, A+, B+
-  switch (cd->byte5 & 0xf0) {
+  switch (cd->byte[5] & 0xf0) {
     case 0xb0:
       (*joystick) |= BUTTON;
       break;

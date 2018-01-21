@@ -31,11 +31,15 @@
 typedef struct {
   /**
   * @brief get the joystick state from controller data
+  * @param [in] cd controller data
+  * @param [out] joystick data
   */
   void (*get_joystick_state)(const ContollerData *cd, Joystick *joystick);
 
   /**
   * @brief get the paddle state from controller data
+  * @param [in] cd controller data
+  * @param [out] paddle data
   */
   void (*get_paddle_state)(const ContollerData *cd, uint8_t *paddle);
 

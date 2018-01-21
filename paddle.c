@@ -83,7 +83,53 @@ void paddle_start(void) {
   EIMSK |= _BV(INT1);   // enable INT1
 }
 
-void paddle_poll(ContollerData *cd, uint8_t port) {
+void paddle_update(Joystick port_a, Joystick port_b) {
+
+
+// UP
+  if (port_a & UP) {
+    ocr1a_load += 1;
+  }
+
+  // DOWN
+  if (port_a & DOWN) {
+    ocr1a_load -= 1;
+  }
+
+  // LEFT
+  if (port_a & LEFT) {
+    ocr1b_load += 1;
+  }
+
+  // RIGHT
+  if (port_a & RIGHT) {
+    ocr1b_load -= 1;
+  }
+
+  // ===================================
+  //  CONTROL PORT B
+  // ===================================
+
+  // UP
+  if (port_b & UP) {
+    ocr0a_load += 1;
+  }
+
+  // DOWN
+  if (port_b & DOWN) {
+    ocr0a_load -= 1;
+  }
+
+  // LEFT
+  if (port_b & LEFT) {
+    ocr0b_load += 1;
+  }
+
+  // RIGHT
+  if (port_b & RIGHT) {
+    ocr0b_load -= 1;
+  }
+
 
   // ocrXY_load should be in range of 20 - 53
   /*
@@ -97,7 +143,7 @@ void paddle_poll(ContollerData *cd, uint8_t port) {
     adder = 1;
   }
   */
-
+  /*
   uint8_t up = 0;
   uint8_t down = 0;
   uint8_t left = 0;
@@ -167,6 +213,7 @@ void paddle_poll(ContollerData *cd, uint8_t port) {
       ocr0b_load -= 1;
     }
   }
+  */
 
   if (ocr1a_load < 20) ocr1a_load = 20;
   else if (ocr1a_load > 53) ocr1a_load = 53;

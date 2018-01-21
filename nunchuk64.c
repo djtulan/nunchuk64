@@ -37,7 +37,7 @@
 #include "paddle.h"
 #include "enums.h"
 
-#define DEBUG
+// #define DEBUG
 
 void init_select(void) {
   BIT_SET(DDR_SEL1, BIT_SEL1);    // enable output
@@ -147,6 +147,7 @@ int main(void) {
     driver[PORT_B]->get_joystick_state(&cd[PORT_B], &joystick[PORT_B]);
 
     joystick_update(joystick[PORT_A], joystick[PORT_B]);
+    paddle_update(joystick[PORT_A], joystick[PORT_B]);
 
     // give data to c64 joystick port
     // joystick_poll(&cd, port);

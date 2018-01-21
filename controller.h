@@ -23,24 +23,41 @@
 #ifndef _CONTROLLER_H_
 #define _CONTROLLER_H_
 
-/// \brief 6 byte data
+#include <stdint.h>
+
+/// \brief 6 bytes of controller data
 typedef struct {
-  uint8_t byte0;  ///< databyte 0
-  uint8_t byte1;  ///< databyte 1
-  uint8_t byte2;  ///< databyte 2
-  uint8_t byte3;  ///< databyte 3
-  uint8_t byte4;  ///< databyte 4
-  uint8_t byte5;  ///< databyte 5
+  uint8_t byte[6];  ///< 6 data bytes
 } ContollerData;
 
+/// \brief enumeration of different controller IDs
 typedef enum {
-  ID_Nunchuck,  ///< 0 Nunchuck
-  ID_Classic,   ///< 1 Classic
-  MAX_IDs
+  ID_Nunchuck,      ///< 0 Nunchuck
+  ID_Classic,       ///< 1 Classic
+  // room for new IDs
+  MAX_IDs           ///< number of different supported ids
 } ControllerID;
 
+/**
+* @brief send init sequence to controller
+*
+* @return always 0
+*/
 uint8_t controller_init(void);
-uint8_t controller_read(ContollerData *n);
+
+/**
+* @brief read current controller data
+*
+* @param [out] cd a struct of 6 bytes to store data of the controller
+* @return always 0
+*/
+uint8_t controller_read(ContollerData *cd);
+
+/**
+* @brief get controller id
+*
+* @return ControllerID
+*/
 ControllerID get_id(void);
 
 #endif

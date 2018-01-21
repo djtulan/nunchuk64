@@ -20,42 +20,56 @@
 /// @date   December, 2017
 /// @brief  i2c controller
 //=============================================================================
-#include <stdint.h>
 #include <string.h>
 #include <util/delay.h>
 
 #include "i2c_master.h"
 #include "controller.h"
 
-#define CONTROLLER_ADDR (0x52<<1) //device address
+#define CONTROLLER_ADDR (0x52<<1) ///< device address
 
 uint8_t controller_init(void) {
   // ===========================================
   // init controller
+
+  // --------------------
+  // send 0x55 to register 0xf0
   i2c_start_wait(CONTROLLER_ADDR | I2C_WRITE);
   i2c_write(0xf0);
   i2c_write(0x55);
   i2c_stop();
+  // --------------------
+
   _delay_ms(1);
 
   i2c_start_wait(CONTROLLER_ADDR | I2C_WRITE);
+
+  // --------------------
+  // send 0x00 to register 0xfb
   i2c_write(0xfb);
   i2c_write(0x00);
   i2c_stop();
+  // --------------------
+
   _delay_ms(1);
   // ===========================================
+
 
   // ===========================================
   // deactivate encryption
 
-  // send 0xf0 0xaa
+  // --------------------
+  // send 0xaa to register 0xf0
   i2c_start_wait(CONTROLLER_ADDR | I2C_WRITE);
   i2c_write(0xf0);
   i2c_write(0xaa);
   i2c_stop();
+  // --------------------
+
   _delay_ms(1);
 
-  // send 0x40 + 6 zero bytes
+  // --------------------
+  // send 6 zero bytes to register 0x40
   i2c_start_wait(CONTROLLER_ADDR | I2C_WRITE);
   i2c_write(0x40);
 
@@ -63,9 +77,12 @@ uint8_t controller_init(void) {
     i2c_write(0x00);
 
   i2c_stop();
+  // --------------------
+
   _delay_ms(1);
 
-  // send 0x40 + 6 zero bytes
+  // --------------------
+  // send 6 zero bytes to register 0x40
   i2c_start_wait(CONTROLLER_ADDR | I2C_WRITE);
   i2c_write(0x40);
 
@@ -73,9 +90,12 @@ uint8_t controller_init(void) {
     i2c_write(0x00);
 
   i2c_stop();
+  // --------------------
+
   _delay_ms(1);
 
-  // send 0x40 + 4 zero bytes
+  // --------------------
+  // send 4 zero bytes to register 0x40
   i2c_start_wait(CONTROLLER_ADDR | I2C_WRITE);
   i2c_write(0x40);
 
@@ -83,55 +103,82 @@ uint8_t controller_init(void) {
     i2c_write(0x00);
 
   i2c_stop();
+  // --------------------
+
   _delay_ms(1);
   // ===========================================
 
   return 0;
 }
 
-uint8_t controller_read(ContollerData *n) {
+uint8_t controller_read(ContollerData *cd) {
+
+  // ===========================================
+  // get data bytes from controller
+
+  // --------------------
+  // send read request to 0x00 register
   i2c_start_wait(CONTROLLER_ADDR | I2C_WRITE);
   i2c_write(0x00);
   i2c_stop();
+  // --------------------
 
+  // --------------------
+  // read 6 bytes
   i2c_start_wait(CONTROLLER_ADDR | I2C_READ);
-  n->byte0 = (i2c_readAck()); // i2c_read(I2C_ACK);
-  n->byte1 = (i2c_readAck()); // i2c_read(I2C_ACK);
-  n->byte2 = (i2c_readAck()); // i2c_read(I2C_ACK);
-  n->byte3 = (i2c_readAck()); // i2c_read(I2C_ACK);
-  n->byte4 = (i2c_readAck()); // i2c_read(I2C_ACK);
-  n->byte5 = (i2c_readNak()); // i2c_read(I2C_NOACK);
+
+  uint8_t i = 0;
+
+  for (i = 0; i < 5; i++) {
+    cd->byte[i] = i2c_readAck(); // i2c_read(I2C_ACK);
+  }
+
+  cd->byte[i] = (i2c_readNak()); // i2c_read(I2C_NOACK);
   i2c_stop();
+  // --------------------
+
+  // ===========================================
 
   return 0;
 }
 
 const uint8_t ID_MAP[MAX_IDs][6] = {
-  {0x00, 0x00, 0xa4, 0x20, 0x00, 0x00},
-  {0x00, 0x00, 0xa4, 0x20, 0x01, 0x01},
+  {0x00, 0x00, 0xa4, 0x20, 0x00, 0x00}, // ID_Nunchuck
+  {0x00, 0x00, 0xa4, 0x20, 0x01, 0x01}, // ID_Classic
 };
 
 ControllerID get_id(void) {
+  // --------------------
+  // send read request to 0xfa register
   i2c_start_wait(CONTROLLER_ADDR | I2C_WRITE);
   i2c_write(0xFA);
   i2c_stop();
+  // --------------------
 
-  uint8_t id[6];
-
+  // --------------------
+  // read 6 bytes
   i2c_start_wait(CONTROLLER_ADDR | I2C_READ);
-  id[0] = (i2c_readAck()); // i2c_read(I2C_ACK);
-  id[1] = (i2c_readAck()); // i2c_read(I2C_ACK);
-  id[2] = (i2c_readAck()); // i2c_read(I2C_ACK);
-  id[3] = (i2c_readAck()); // i2c_read(I2C_ACK);
-  id[4] = (i2c_readAck()); // i2c_read(I2C_ACK);
-  id[5] = (i2c_readNak()); // i2c_read(I2C_NOACK);
-  i2c_stop();
+  uint8_t id[6];
+  uint8_t i = 0;
 
-  for (uint8_t i=0; i<MAX_IDs; i++) {
+  for (i = 0; i < 5; i++) {
+    id[i] = i2c_readAck(); // i2c_read(I2C_ACK);
+  }
+
+  id[i] = (i2c_readNak()); // i2c_read(I2C_NOACK);
+  i2c_stop();
+  // --------------------
+
+  // --------------------
+  // compair the 6 bytes with known IDs
+  for (uint8_t i = 0; i < MAX_IDs; i++) {
+
+    // known controller found?
     if (memcmp(&ID_MAP[i][0], &id[0], 6) == 0) {
       return i;
     }
   }
+  // --------------------
 
-  return MAX_IDs; // not found
+  return MAX_IDs; // no known controller found, return MAX_IDs
 }
