@@ -26,6 +26,6 @@
 #include "driver.h"
 
 /// \brief NES classic driver
-Driver nes_classic;
+Driver drv_nes_classic;
 
 #endif

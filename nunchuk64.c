@@ -43,12 +43,25 @@
 
 // #define DEBUG
 
+Driver *GetDriver(ControllerID id) {
+  switch (id) {
+    case ID_Nunchuck:
+      return &drv_nunchuk;
+
+    case ID_Classic:
+      return &drv_nes_classic;
+
+    default:
+      return &drv_nes_classic;
+  }
+}
+
 void init(void) {
   // ===================================
   // init modules
   // ===================================
   led_init();         // init led output
-  button_init();      // init button input
+  // button_init();      // init button input
   i2c_init();         // init i2c routines
   init_selector();    // init i2c bus selector
   joystick_init();    // init joystick outputs
@@ -95,21 +108,11 @@ int main(void) {
 
   switch_selector(PORT_A);
   _delay_ms(1);
-
-  if (get_id() == ID_Nunchuck) {
-    driver[PORT_A] = &drv_nunchuk;
-  } else {
-    driver[PORT_A] = &nes_classic;
-  }
+  driver[PORT_A] = GetDriver(get_id());
 
   switch_selector(PORT_B);
   _delay_ms(1);
-
-  if (get_id() == ID_Nunchuck) {
-    driver[PORT_B] = &drv_nunchuk;
-  } else {
-    driver[PORT_B] = &nes_classic;
-  }
+  driver[PORT_B] = GetDriver(get_id());
 
   uint8_t led_on = 0;
 
@@ -165,3 +168,4 @@ int main(void) {
 
   return 0;
 }
+

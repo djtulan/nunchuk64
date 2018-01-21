@@ -73,7 +73,7 @@ static void get_joystick_state_nes(const ContollerData *cd, Joystick *joystick) 
 static void get_paddle_state_nes(const ContollerData *cd, uint8_t *paddle) {
 }
 
-Driver nes_classic = {
+Driver drv_nes_classic = {
   get_joystick_state_nes,
   get_paddle_state_nes
 };

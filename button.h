@@ -25,10 +25,21 @@
 
 #include <inttypes.h>
 
+/**
+* @brief init button inputs
+*
+*/
 void button_init(void);
 
+/**
+* @brief read and debounce button
+*
+*/
 void button_debounce(void);
 
+/**
+* @brief get buttonpress
+*/
 uint8_t button_get(void);
 
 #endif

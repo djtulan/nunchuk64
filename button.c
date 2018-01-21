@@ -24,7 +24,7 @@
 
 #include "button.h"
 
-volatile uint8_t button_down;
+static volatile uint8_t button_down = 0;
 
 void button_init(void) {
   BIT_SET(PORT_BUTTON, BIT_BUTTON); // Enable internal pullup resistor on the input pin
@@ -65,7 +65,7 @@ void button_debounce(void) {
 }
 
 uint8_t button_get(void) {
-  if (button_down) {
+  if (button_down == 1) {
     button_down = 0;
     return 1;
   }
