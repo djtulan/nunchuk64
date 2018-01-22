@@ -70,14 +70,14 @@ void paddle_start(void) {
 
   // POTX/Y normally controlled by output compare unit
   // initially should be pulled up to provide high bias on SENSE pin
-  DDR_PADDLE_A_X  |= _BV(BIT_PADDLE_A_X) | _BV(BIT_PADDLE_A_Y);   // enable POTX/POTY as outputs
-  PORT_PADDLE_A_X |= _BV(BIT_PADDLE_A_X) | _BV(BIT_PADDLE_A_Y);   // output "1" on both
+  DDR_PADDLE_A_X  |= (_BV(BIT_PADDLE_A_X) | _BV(BIT_PADDLE_A_Y));   // enable POTX/POTY as outputs
+  PORT_PADDLE_A_X |= (_BV(BIT_PADDLE_A_X) | _BV(BIT_PADDLE_A_Y));   // output "1" on both
 
-  DDR_PADDLE_B_X  |= _BV(BIT_PADDLE_B_X) | _BV(BIT_PADDLE_B_Y);   // enable POTX/POTY as outputs
-  PORT_PADDLE_B_X |= _BV(BIT_PADDLE_B_X) | _BV(BIT_PADDLE_B_Y);   // output "1" on both
+  DDR_PADDLE_B_X  |= (_BV(BIT_PADDLE_B_X) | _BV(BIT_PADDLE_B_Y));   // enable POTX/POTY as outputs
+  PORT_PADDLE_B_X |= (_BV(BIT_PADDLE_B_X) | _BV(BIT_PADDLE_B_Y));   // output "1" on both
 
-  EIFR  |= _BV(INTF0);  // clear INT1 flag
-  EIMSK |= _BV(INT0);   // enable INT1
+  EIFR  |= _BV(INTF0);  // clear INT0 flag
+  EIMSK |= _BV(INT0);   // enable INT0
 
   EIFR  |= _BV(INTF1);  // clear INT1 flag
   EIMSK |= _BV(INT1);   // enable INT1
