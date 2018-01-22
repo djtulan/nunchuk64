@@ -33,15 +33,17 @@ Milestones
 - ☑ Tested with "Nindendo NES Classic Mini Controller" replica
 - ☐ Analog input like Nunchuk or Analog Gamepad
 
-Supported Hardware
---------------
-
-| Controller                                                | bought here                          |
-| ----------------------------------------------------------|--------------------------------------|
-| Wireless Controller for Nintendo Mini NES Classic Edition | https://www.ebay.com/itm/272765627224|
-| original Nintendo Nunchuck                                |                                      |
-
-
 3D Picture
 --------------
 ![3d Picture](nunchuk64.png)
+
+Supported Hardware
+--------------
+Currently the following hardware is supported:
+
+| Controller                                                | where to get?                        |
+| ----------------------------------------------------------|--------------------------------------|
+| Wireless Controller for Nintendo Mini NES Classic Edition | https://www.ebay.com/itm/272765627224|
+| original Nintendo Nunchuck                                | anywhere Nintendo stuff is sold      |
+
+
