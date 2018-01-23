@@ -40,7 +40,7 @@ FORMAT = ihex
 TARGET = nunchuk64
 SRC = $(TARGET).c led.c button.c paddle.c joystick.c \
 	i2c_master.c controller.c selector.c \
-	driver_nes_classic.c driver_nunchuk.c
+	driver_nes_classic.c driver_nunchuk.c driver_wii_classic.c
 ASRC =
 OPT = s
 

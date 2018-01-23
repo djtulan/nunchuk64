@@ -39,6 +39,7 @@
 #include "paddle.h"
 
 #include "driver_nes_classic.h"
+#include "driver_wii_classic.h"
 #include "driver_nunchuk.h"
 
 // #define DEBUG
@@ -48,8 +49,8 @@ Driver *GetDriver(ControllerID id) {
     case ID_Nunchuck:
       return &drv_nunchuk;
 
-    case ID_Classic:
-      return &drv_nes_classic;
+    case ID_Wii_Classic:
+      return &drv_wii_classic;
 
     default:
       return &drv_nes_classic;
@@ -103,16 +104,15 @@ int main(void) {
 
   Driver *driver[NUMBER_PORTS] = {NULL, NULL};
 
-  ContollerData cd[NUMBER_PORTS];
-  uint8_t joystick[NUMBER_PORTS];
+  ContollerData cd[NUMBER_PORTS];  // controller data
+  Joystick joystick[NUMBER_PORTS]; // joystick data
 
-  switch_selector(PORT_A);
-  _delay_ms(1);
-  driver[PORT_A] = GetDriver(get_id());
+  for (uint8_t p = PORT_A; p <= PORT_B; p++) {
+    switch_selector(p);
+    _delay_ms(1);
 
-  switch_selector(PORT_B);
-  _delay_ms(1);
-  driver[PORT_B] = GetDriver(get_id());
+    driver[p] = GetDriver(get_id());
+  }
 
   uint8_t led_on = 0;
 
@@ -120,6 +120,7 @@ int main(void) {
   uint8_t toggle = 0;
 #endif
 
+  // ===================================
   // MAIN LOOP
   while (1) {
 
@@ -135,19 +136,17 @@ int main(void) {
       }
     }
 
-    // select I2C port
-    switch_selector(PORT_A);
-    // get data from port
-    controller_read(&cd[PORT_A]);
+    // get data from controller and let translate it by the driver
+    for (uint8_t p = PORT_A; p <= PORT_B; p++) {
+      // select I2C port
+      switch_selector(p);
 
-    // select I2C port
-    switch_selector(PORT_B);
-    // get data from port
-    controller_read(&cd[PORT_B]);
+      // get data from port
+      controller_read(&cd[p]);
 
-    // translate the controller date to joystick data
-    driver[PORT_A]->get_joystick_state(&cd[PORT_A], &joystick[PORT_A]);
-    driver[PORT_B]->get_joystick_state(&cd[PORT_B], &joystick[PORT_B]);
+      // translate the controller date to joystick data
+      driver[p]->get_joystick_state(&cd[p], &joystick[p]);
+    }
 
     joystick_update(joystick[PORT_A], joystick[PORT_B]);
     paddle_update(joystick[PORT_A], joystick[PORT_B]);
@@ -165,6 +164,9 @@ int main(void) {
 
 #endif
   }
+
+  //  MAIN LOOP
+  // ===================================
 
   return 0;
 }

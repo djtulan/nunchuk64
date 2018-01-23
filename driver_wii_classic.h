@@ -15,49 +15,17 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //=============================================================================
-/// @file   controller.h
+/// @file   driver_wii_classic.h
 /// @author Robert Grasböck (robert.grasboeck@gmail.com)
-/// @date   December, 2017
-/// @brief  i2c controller
+/// @date   January, 2018
+/// @brief  driver wii classic
 //=============================================================================
-#ifndef _CONTROLLER_H_
-#define _CONTROLLER_H_
+#ifndef _DRIVER_WII_CLASSIC_H_
+#define _DRIVER_WII_CLASSIC_H_
 
-#include <stdint.h>
+#include "driver.h"
 
-/// \brief 6 bytes of controller data
-typedef struct {
-  uint8_t byte[6];  ///< 6 data bytes
-} ContollerData;
-
-/// \brief enumeration of different controller IDs
-typedef enum {
-  ID_Nunchuck,      ///< 0 Nunchuck
-  ID_Wii_Classic,   ///< 1 Wii Classic
-  // room for new IDs
-  MAX_IDs           ///< number of different supported ids
-} ControllerID;
-
-/**
-* @brief send init sequence to controller
-*
-* @return always 0
-*/
-uint8_t controller_init(void);
-
-/**
-* @brief read current controller data
-*
-* @param [out] cd a struct of 6 bytes to store data of the controller
-* @return always 0
-*/
-uint8_t controller_read(ContollerData *cd);
-
-/**
-* @brief get controller id
-*
-* @return ControllerID
-*/
-ControllerID get_id(void);
+/// \brief wii classic driver
+Driver drv_wii_classic;
 
 #endif
