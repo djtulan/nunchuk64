@@ -25,7 +25,7 @@
 
 #include "driver_wii_classic.h"
 
-static void get_joystick_state_nunchuk(const ContollerData *cd, Joystick *joystick) {
+static void get_joystick_state_wii_classic(const ContollerData *cd, Joystick *joystick) {
 
   // see: http://wiibrew.org/wiki/Wiimote/Extension_Controllers/Classic_Controller
 
@@ -86,10 +86,10 @@ static void get_joystick_state_nunchuk(const ContollerData *cd, Joystick *joysti
   }
 }
 
-static void get_paddle_state_nunchuk(const ContollerData *cd, uint8_t *paddle) {
+static void get_paddle_state_wii_classic(const ContollerData *cd, uint8_t *paddle) {
 }
 
 Driver drv_wii_classic = {
-  get_joystick_state_nunchuk,
-  get_paddle_state_nunchuk
+  get_joystick_state_wii_classic,
+  get_paddle_state_wii_classic
 };

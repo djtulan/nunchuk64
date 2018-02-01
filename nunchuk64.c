@@ -71,6 +71,8 @@ void init(void) {
   joystick_init();    // init joystick outputs
   paddle_init();      // init paddle outputs
 
+  led_switch(1); // diagnose
+
   _delay_ms(1);
 
   // ===================================
@@ -92,7 +94,7 @@ void init(void) {
   // ===================================
   // enable interrupts
   // ===================================
-  sei();
+  // sei();
 
   // ===================================
   // start paddle routines
@@ -100,6 +102,8 @@ void init(void) {
   paddle_start();
 
   button_init();      // init button input
+
+  led_switch(0); // diagnose
 }
 
 int main(void) {
