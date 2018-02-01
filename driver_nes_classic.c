@@ -28,44 +28,88 @@
 static void get_joystick_state_nes(const ContollerData *cd, Joystick *joystick) {
   (*joystick) = 0;
 
-  // Cross up, left
-  switch (cd->byte[5] & 0x0f) {
-    case 0x08:
-      (*joystick) |= UP;
-      break;
+  // Cross and Buttons are encoded into byte[4] & byte[5]
+  // Stupid thing, some of the codes use same bits
 
-    case 0x09:
-      (*joystick) |= LEFT;
-      break;
-
-    case 0x0a:
-      (*joystick) |= LEFT | UP;
-      break;
-  }
-
-  // Cross down, right
+  // Cross down, right  Button SELECT
   switch (cd->byte[4] & 0xf0) {
-    case 0xb0:
-      (*joystick) |= DOWN;
-      break;
-
+    // right
     case 0x70:
       (*joystick) |= RIGHT;
       break;
 
+      // down
+    case 0xb0:
+      (*joystick) |= DOWN;
+      break;
+
+    // SELECT Button
+    case 0x80:
+      (*joystick) |= BUTTON;
+      break;
+
+    // right and down
     case 0x30:
       (*joystick) |= RIGHT | DOWN;
       break;
+
+    // right and SELECT Button
+    case 0x00:
+      (*joystick) |= RIGHT | BUTTON;
+      break;
+
+    // right and SELECT Button
+    case 0x40:
+      (*joystick) |= DOWN | BUTTON;
+      break;
+
+    // right and SELECT Button
+    case 0xc0:
+      (*joystick) |= RIGHT | DOWN | BUTTON;
+      break;
   }
 
-  // A, B, A+, B+
+  // START
+  switch (cd->byte[4] & 0x0f) {
+    // START Button
+    case 0x0b:
+      // DO NOTHING :D
+      break;
+  }
+
+  // A, B, A+, B+ (A+ or B+ are rapid fire)
   switch (cd->byte[5] & 0xf0) {
+    // B  or  B+
     case 0xb0:
       (*joystick) |= BUTTON;
       break;
 
+    // A  or  A+
     case 0x80:
       (*joystick) |= UP;
+      break;
+
+    // Both A and B
+    case 0x40:
+      (*joystick) |= UP | BUTTON;
+      break;
+  }
+
+  // Cross up, left
+  switch (cd->byte[5] & 0x0f) {
+    // up
+    case 0x08:
+      (*joystick) |= UP;
+      break;
+
+    // left
+    case 0x09:
+      (*joystick) |= LEFT;
+      break;
+
+    // up and left
+    case 0x0a:
+      (*joystick) |= LEFT | UP;
       break;
   }
 }

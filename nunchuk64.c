@@ -52,8 +52,11 @@ Driver *GetDriver(ControllerID id) {
     case ID_Wii_Classic:
       return &drv_wii_classic;
 
-    default:
+    case ID_NES_Classic_Mini_Clone:
       return &drv_nes_classic;
+
+    default:
+      return &drv_nunchuk;
   }
 }
 
