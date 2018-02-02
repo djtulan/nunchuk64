@@ -24,15 +24,23 @@
 
 #include "led.h"
 
+static LED_State led_state = LED_OFF;
+
 void led_init(void) {
   BIT_SET(DDR_LED, BIT_LED);   // enable output
   BIT_CLEAR(PORT_LED, BIT_LED);  // set to 0 => LED OFF
 }
 
-void led_switch(uint8_t on) {
-  if (on) {
+void led_switch(LED_State state) {
+  led_state = state;
+
+  if (state) {
     BIT_SET(PORT_LED, BIT_LED);
   } else {
     BIT_CLEAR(PORT_LED, BIT_LED);
   }
+}
+
+LED_State led_get_state(void) {
+  return (led_state);
 }

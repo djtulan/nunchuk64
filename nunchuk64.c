@@ -65,13 +65,13 @@ void init(void) {
   // init modules
   // ===================================
   led_init();         // init led output
-  // button_init();      // init button input
-  i2c_init();         // init i2c routines
+  button_init();      // init button input
   init_selector();    // init i2c bus selector
+  i2c_init();         // init i2c routines
   joystick_init();    // init joystick outputs
   paddle_init();      // init paddle outputs
 
-  led_switch(1); // diagnose
+  led_switch(LED_ON); // diagnose (in init)
 
   _delay_ms(1);
 
@@ -94,21 +94,25 @@ void init(void) {
   // ===================================
   // enable interrupts
   // ===================================
-  // sei();
+  sei();
 
   // ===================================
   // start paddle routines
   // ===================================
   paddle_start();
 
-  button_init();      // init button input
-
-  led_switch(0); // diagnose
+  led_switch(LED_OFF); // diagnose (init done)
 }
 
 int main(void) {
+  // ===================================
+  // init everything
+  // ===================================
   init();
 
+  // ===================================
+  // get the correct driver
+  // ===================================
   Driver *driver[NUMBER_PORTS] = {NULL, NULL};
 
   ContollerData cd[NUMBER_PORTS];  // controller data
@@ -121,8 +125,6 @@ int main(void) {
     driver[p] = GetDriver(get_id());
   }
 
-  uint8_t led_on = 0;
-
 #ifdef DEBUG
   uint8_t toggle = 0;
 #endif
@@ -134,12 +136,11 @@ int main(void) {
     button_debounce();
 
     if (button_get()) {
-      led_on = ~led_on;
 
-      if (led_on) {
-        led_switch(1);
+      if (led_get_state() == LED_OFF) {
+        led_switch(LED_ON);
       } else {
-        led_switch(0);
+        led_switch(LED_OFF);
       }
     }
 

@@ -29,13 +29,13 @@
 * @brief init select outputs for i2c select
 *
 */
-void init_selector(void);
+extern void init_selector(void);
 
 /**
 * @brief select i2c device
 *
 * @param port PORT_A or PORT_B
 */
-void switch_selector(Port port);
+extern void switch_selector(Port port);
 
 #endif

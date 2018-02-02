@@ -44,7 +44,7 @@ typedef enum {
 *
 * @return always 0
 */
-uint8_t controller_init(void);
+extern uint8_t controller_init(void);
 
 /**
 * @brief read current controller data
@@ -52,13 +52,13 @@ uint8_t controller_init(void);
 * @param [out] cd a struct of 6 bytes to store data of the controller
 * @return always 0
 */
-uint8_t controller_read(ContollerData *cd);
+extern uint8_t controller_read(ContollerData *cd);
 
 /**
 * @brief get controller id
 *
 * @return ControllerID
 */
-ControllerID get_id(void);
+extern ControllerID get_id(void);
 
 #endif

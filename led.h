@@ -23,8 +23,30 @@
 #ifndef _LED_H_
 #define _LED_H_
 
-void led_init(void);
+#include <inttypes.h>
 
-void led_switch(uint8_t on);
+typedef enum {
+  LED_OFF,
+  LED_ON
+} LED_State;
+
+/**
+* @brief init LED
+*
+*/
+extern void led_init(void);
+
+/**
+* @brief switch LED
+*
+* @param state LED_ON / LED_OFF
+*/
+extern void led_switch(LED_State state);
+
+/**
+* @brief init LED
+* @return state of led
+*/
+extern LED_State led_get_state(void);
 
 #endif

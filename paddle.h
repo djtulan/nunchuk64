@@ -31,16 +31,16 @@
 /**
 * @brief init paddle-related IOs and interrupts
 */
-void paddle_init(void);
+extern void paddle_init(void);
 
 /**
 * @brief state paddle hardware and interrupt routines
 */
-void paddle_start(void);
+extern void paddle_start(void);
 
 /**
 * @brief update paddle state
 */
-void paddle_update(Joystick port_a, Joystick port_b);
+extern void paddle_update(Joystick port_a, Joystick port_b);
 
 #endif

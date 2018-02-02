@@ -43,7 +43,7 @@ typedef uint8_t Joystick;
 * All joystick ddr bits are set to zero (Tri-state)
 * Should be default anyway
 */
-void joystick_init(void);
+extern void joystick_init(void);
 
 /**
 * @brief Update Joystick state
@@ -53,6 +53,6 @@ void joystick_init(void);
 *
 * The bit (see Joystick_State) are set inside the respective parameter
 */
-void joystick_update(Joystick port_a, Joystick port_b);
+extern void joystick_update(Joystick port_a, Joystick port_b);
 
 #endif

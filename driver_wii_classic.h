@@ -26,6 +26,6 @@
 #include "driver.h"
 
 /// \brief wii classic driver
-Driver drv_wii_classic;
+extern Driver drv_wii_classic;
 
 #endif
