@@ -26,8 +26,13 @@
 #include <inttypes.h>
 
 typedef enum {
-  LED_OFF,
-  LED_ON
+  LED_OFF,      ///< LED is OFF
+  LED_ON,       ///< LED is ON
+  LED_BLINK1,   ///< LED blinks once
+  LED_BLINK2,   ///< LED blinks twice
+  LED_BLINK3,   ///< LED blinks tree times
+
+  NUMBER_LED_STATES
 } LED_State;
 
 /**
@@ -44,9 +49,21 @@ extern void led_init(void);
 extern void led_switch(LED_State state);
 
 /**
+* @brief toggle to next state
+*
+*/
+extern void led_setnextstate(void);
+
+/**
 * @brief init LED
 * @return state of led
 */
 extern LED_State led_get_state(void);
+
+/**
+* @brief poll led routines (for flashing)
+*
+*/
+extern void led_poll(void);
 
 #endif

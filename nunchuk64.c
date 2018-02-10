@@ -137,11 +137,13 @@ int main(void) {
 
     if (button_get()) {
 
+      /*
       if (led_get_state() == LED_OFF) {
         led_switch(LED_ON);
       } else {
         led_switch(LED_OFF);
-      }
+      }*/
+      led_setnextstate();
     }
 
     // get data from controller and let translate it by the driver
@@ -158,6 +160,8 @@ int main(void) {
 
     joystick_update(joystick[PORT_A], joystick[PORT_B]);
     paddle_update(joystick[PORT_A], joystick[PORT_B]);
+
+    led_poll();
 
 #ifdef DEBUG
     _delay_ms(100);
