@@ -26,11 +26,17 @@
 #include <inttypes.h>
 
 enum Joystick_State {
+  // joystick data
   UP     = (1 << 0), ///< up
   DOWN   = (1 << 1), ///< down
   LEFT   = (1 << 2), ///< left
   RIGHT  = (1 << 3), ///< right
-  BUTTON = (1 << 4)  ///< fire button
+  BUTTON = (1 << 4), ///< fire button
+  // some extra commands
+  SPACE  = (1 << 5), ///< fire button
+  // free info
+  FREE1  = (1 << 6), ///< fire button
+  FREE2  = (1 << 7)  ///< fire button
 };
 
 /// \brief Joystick, holds the state of one joystick

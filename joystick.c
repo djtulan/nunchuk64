@@ -90,8 +90,8 @@ void joystick_update(Joystick port_a, Joystick port_b) {
     BIT_CLEAR(DDR_JOY_A3, BIT_JOY_A3);
   }
 
-  // BUTTON
-  if (port_a & BUTTON) {
+  // BUTTON (small hack to simulate SPACE on both contollers)
+  if (port_a & BUTTON || port_a & SPACE || port_b & SPACE) {
     BIT_SET(DDR_BUTTON_A, BIT_BUTTON_A);
   } else {
     BIT_CLEAR(DDR_BUTTON_A, BIT_BUTTON_A);
