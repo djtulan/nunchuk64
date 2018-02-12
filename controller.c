@@ -145,6 +145,7 @@ uint8_t controller_read(ContollerData *cd) {
 const uint8_t ID_MAP[MAX_IDs][6] = {
   {0x00, 0x00, 0xa4, 0x20, 0x00, 0x00}, // ID_Nunchuck
   {0x00, 0x00, 0xa4, 0x20, 0x01, 0x01}, // ID_Classic
+  {0x01, 0x00, 0xa4, 0x20, 0x01, 0x01}, // ID_Wii_Classic_Pro
   {0x01, 0x00, 0xa4, 0x20, 0x01, 0x01}  // ID_NES_Classic_Mini_Clone
 };
 
@@ -170,12 +171,24 @@ ControllerID get_id(void) {
   i2c_stop();
   // --------------------
 
+
   // --------------------
   // compair the 6 bytes with known IDs
   for (uint8_t i = 0; i < MAX_IDs; i++) {
 
     // known controller found?
     if (memcmp(&ID_MAP[i][0], &id[0], 6) == 0) {
+
+      // HACK because fucking china clones use the same ID
+      if (i == ID_Wii_Classic_Pro) {
+        ContollerData data;
+        controller_read(&data);
+
+        if ((data.byte[3] & 0x0f) == 0x01) {
+          return ID_NES_Classic_Mini_Clone;
+        }
+      }
+
       return i;
     }
   }

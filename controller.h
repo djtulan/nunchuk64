@@ -34,7 +34,8 @@ typedef struct {
 typedef enum {
   ID_Nunchuck,                ///< 0 Nunchuck
   ID_Wii_Classic,             ///< 1 Wii Classic
-  ID_NES_Classic_Mini_Clone,  ///< 2 NES classic Mini Clone / SNES Clone
+  ID_Wii_Classic_Pro,         ///< 2 Wii Classic Pro
+  ID_NES_Classic_Mini_Clone,  ///< 3 NES classic Mini Clone / SNES Clone
   // room for new IDs
   MAX_IDs           ///< number of different supported ids
 } ControllerID;
