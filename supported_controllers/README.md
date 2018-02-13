@@ -4,6 +4,7 @@
 Wireless Controller for Nintendo NES Mini Classic Edition.
 Seen here: https://www.ebay.com/itm/272765627224
 > Button A+ and B+ are same as A and B but with autofire
+
 ![NES Classic Mini Clone](nes_classic_mini_clone.jpg)
 
 | Item          |Mode OFF  |Mode ON   |Mode F1   |Mode F2   |Mode F3   |
