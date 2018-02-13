@@ -41,7 +41,10 @@ Seen here: https://www.ebay.com/itm/162874713501
 | SELECT        |FIRE      |          |          |          |          |
 | START         |SPACE     |          |          |          |          |
 
-Wii classic controller
+## Wii classic controller
+Wii Classic Controller for Nintendo Wii Remote (Wired)
+Seen here: https://www.ebay.com/itm/291645811767
+
 ![Wii Classic](wii_classic.jpg)
 
 | Item          |Mode OFF  |Mode ON   |Mode F1   |Mode F2   |Mode F3   |
@@ -62,7 +65,9 @@ Wii classic controller
 | R             |-         |          |          |          |          |
 | ZR            |RIGHT     |          |          |          |          |
 
-Wii Nunchuck
+## Wii Nunchuck
+Wii Nunchuck Controller for Nintendo Wii Remote
+
 ![Wii Nunchuk](wii_nunchuk.jpg)
 
 | Item          |Mode OFF  |Mode ON   |Mode F1   |Mode F2   |Mode F3   |
