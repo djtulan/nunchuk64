@@ -1,6 +1,72 @@
-| Controller                                                | where to get?                        |
-| ----------------------------------------------------------|--------------------------------------|
-| Wireless Controller for Nintendo Mini NES Classic Edition | https://www.ebay.com/itm/272765627224|
-| original Nintendo Nunchuck                                | anywhere Nintendo stuff is sold      |
+# Supported Controllers
+
+## NES Classic Mini Clone
+Wireless Controller for Nintendo NES Mini Classic Edition.
+
+![NES Classic Mini Clone](nes_classic_mini_clone.jpg)
+
+| Item          |Mode OFF  |Mode ON   |Mode F1   |Mode F2   |Mode F3   |
+| --------------|----------|----------|----------|----------|----------|
+| Joystick UP   |UP        |          |          |          |          |
+| Joystick DOWN |DOWN      |          |          |          |          |
+| Joystick LEFT |LEFT      |          |          |          |          |
+| Joystick RIGHT|RIGHT     |          |          |          |          |
+| A             |UP        |          |          |          |          |
+| B             |FIRE      |          |          |          |          |
+| A+            |UP        |          |          |          |          |
+| B+            |FIRE      |          |          |          |          |
+| SELECT        |FIRE      |          |          |          |          |
+| START         |SPACE     |          |          |          |          |
+
+Seen here: https://www.ebay.com/itm/272765627224
 
 
+## SNES Classic Mini Clone
+Wireless Controller for Nintendo SNES Mini Classic Edition
+
+![SNES Classic Mini Clone](snes_classic_mini_clone.jpg)
+
+| Item          |Mode OFF  |Mode ON   |Mode F1   |Mode F2   |Mode F3   |
+| --------------|----------|----------|----------|----------|----------|
+| Joystick UP   |UP        |          |          |          |          |
+| Joystick DOWN |DOWN      |          |          |          |          |
+| Joystick LEFT |LEFT      |          |          |          |          |
+| Joystick RIGHT|RIGHT     |          |          |          |          |
+| A             |UP        |          |          |          |          |
+| B             |FIRE      |          |          |          |          |
+| X             |UP        |          |          |          |          |
+| Y             |FIRE      |          |          |          |          |
+| SELECT        |FIRE      |          |          |          |          |
+| START         |SPACE     |          |          |          |          |
+
+Seen here: https://www.ebay.com/itm/162874713501
+
+Wii classic controller
+![Wii Classic](wii_classic.jpg)
+
+| Item          |Mode OFF  |Mode ON   |Mode F1   |Mode F2   |Mode F3   |
+| --------------|----------|----------|----------|----------|----------|
+| Joystick UP   |UP        |          |          |          |          |
+| Joystick DOWN |DOWN      |          |          |          |          |
+| Joystick LEFT |LEFT      |          |          |          |          |
+| Joystick RIGHT|RIGHT     |          |          |          |          |
+| A             |UP        |          |          |          |          |
+| B             |FIRE      |          |          |          |          |
+| X             |UP        |          |          |          |          |
+| Y             |FIRE      |          |          |          |          |
+| SELECT        |FIRE      |          |          |          |          |
+| HOME          |SPACE     |          |          |          |          |
+| START         |SPACE     |          |          |          |          |
+
+Wii Nunchuck
+![Wii Nunchuk](wii_nunchuk.jpg)
+
+| Item          |Mode OFF  |Mode ON   |Mode F1   |Mode F2   |Mode F3   |
+| --------------|----------|----------|----------|----------|----------|
+| Analog Joy X  |LEFT/RIGHT|-         |          |          |          |
+| Analog Joy Y  |UP/DOWN   |-         |          |          |          |
+| Accel X       |-         |LEFT/RIGHT|          |          |          |
+| Accel Y       |-         |UP/DOWN   |          |          |          |
+| Accel Z       |-         |-         |          |          |          |
+| C             |UP        |UP        |          |          |          |
+| Z             |FIRE      |FIRE      |          |          |          |
