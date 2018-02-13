@@ -2,7 +2,8 @@
 
 ## NES Classic Mini Clone
 Wireless Controller for Nintendo NES Mini Classic Edition.
-
+Seen here: https://www.ebay.com/itm/272765627224
+> Button A+ and B+ are same as A and B but with autofire
 ![NES Classic Mini Clone](nes_classic_mini_clone.jpg)
 
 | Item          |Mode OFF  |Mode ON   |Mode F1   |Mode F2   |Mode F3   |
@@ -18,11 +19,11 @@ Wireless Controller for Nintendo NES Mini Classic Edition.
 | SELECT        |FIRE      |          |          |          |          |
 | START         |SPACE     |          |          |          |          |
 
-Seen here: https://www.ebay.com/itm/272765627224
 
 
 ## SNES Classic Mini Clone
 Wireless Controller for Nintendo SNES Mini Classic Edition
+Seen here: https://www.ebay.com/itm/162874713501
 
 ![SNES Classic Mini Clone](snes_classic_mini_clone.jpg)
 
@@ -38,8 +39,6 @@ Wireless Controller for Nintendo SNES Mini Classic Edition
 | Y             |FIRE      |          |          |          |          |
 | SELECT        |FIRE      |          |          |          |          |
 | START         |SPACE     |          |          |          |          |
-
-Seen here: https://www.ebay.com/itm/162874713501
 
 Wii classic controller
 ![Wii Classic](wii_classic.jpg)
