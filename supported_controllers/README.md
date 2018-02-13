@@ -36,8 +36,8 @@ Seen here: https://www.ebay.com/itm/162874713501
 | Joystick RIGHT|RIGHT     |          |          |          |          |
 | A             |UP        |          |          |          |          |
 | B             |FIRE      |          |          |          |          |
-| X             |UP        |          |          |          |          |
-| Y             |FIRE      |          |          |          |          |
+| X             |FIRE      |          |          |          |          |
+| Y             |-         |          |          |          |          |
 | SELECT        |FIRE      |          |          |          |          |
 | START         |SPACE     |          |          |          |          |
 
@@ -52,11 +52,15 @@ Wii classic controller
 | Joystick RIGHT|RIGHT     |          |          |          |          |
 | A             |UP        |          |          |          |          |
 | B             |FIRE      |          |          |          |          |
-| X             |UP        |          |          |          |          |
-| Y             |FIRE      |          |          |          |          |
-| SELECT        |FIRE      |          |          |          |          |
-| HOME          |SPACE     |          |          |          |          |
-| START         |SPACE     |          |          |          |          |
+| X             |FIRE      |          |          |          |          |
+| Y             |UP        |          |          |          |          |
+| SELECT        |-         |          |          |          |          |
+| HOME          |-         |          |          |          |          |
+| START         |-         |          |          |          |          |
+| L             |-         |          |          |          |          |
+| ZL            |LEFT      |          |          |          |          |
+| R             |-         |          |          |          |          |
+| ZR            |RIGHT     |          |          |          |          |
 
 Wii Nunchuck
 ![Wii Nunchuk](wii_nunchuk.jpg)
