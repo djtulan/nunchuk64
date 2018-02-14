@@ -84,6 +84,18 @@ static void get_joystick_state_wii_classic(const ContollerData *cd, Joystick *jo
   if ((cd->byte[4] & 0x02) == 0) {
     (*joystick) |= RIGHT;
   }
+
+  // ------------------------------
+
+  // B+ - Button Start
+  if ((cd->byte[4] & 0x04) == 0) {
+    (*joystick) |= SPACE;
+  }
+
+  // B- - Button Select
+  if ((cd->byte[4] & 0x10) == 0) {
+    (*joystick) |= BUTTON;
+  }
 }
 
 static void get_paddle_state_wii_classic(const ContollerData *cd, uint8_t *paddle) {

@@ -66,13 +66,13 @@ Seen here: https://www.ebay.com/itm/291645811767
 | B             |FIRE      |          |          |          |          |
 | X             |FIRE      |          |          |          |          |
 | Y             |UP        |          |          |          |          |
-| SELECT        |-         |          |          |          |          |
+| SELECT        |FIRE      |          |          |          |          |
 | HOME          |-         |          |          |          |          |
-| START         |-         |          |          |          |          |
-| L             |-         |          |          |          |          |
-| ZL            |LEFT      |          |          |          |          |
-| R             |-         |          |          |          |          |
-| ZR            |RIGHT     |          |          |          |          |
+| START         |SPACE     |          |          |          |          |
+| L             |LEFT      |          |          |          |          |
+| ZL            |-         |          |          |          |          |
+| R             |RIGHT     |          |          |          |          |
+| ZR            |-         |          |          |          |          |
 
 ## Wii Nunchuck
 Wii Nunchuck Controller for Nintendo Wii Remote
