@@ -45,7 +45,7 @@ Seen here: https://www.ebay.at/itm/222674575659
 | A             |UP        |          |          |          |          |
 | B             |FIRE      |          |          |          |          |
 | X             |FIRE      |          |          |          |          |
-| Y             |-         |          |          |          |          |
+| Y             |UP        |          |          |          |          |
 | SELECT        |FIRE      |          |          |          |          |
 | START         |SPACE     |          |          |          |          |
 
