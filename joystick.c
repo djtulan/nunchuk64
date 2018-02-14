@@ -56,7 +56,19 @@ void joystick_init(void) {
   */
 }
 
+static Joystick port_a_old = 0;
+static Joystick port_b_old = 0;
+
 void joystick_update(Joystick port_a, Joystick port_b) {
+
+  // look if same change?
+  if (port_a == port_a_old && port_b == port_b_old) {
+    // nothing changed
+    return;
+  }
+
+  port_a_old = port_a;
+  port_b_old = port_b;
 
   // ===================================
   //  CONTROL PORT A
