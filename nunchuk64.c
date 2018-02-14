@@ -162,8 +162,6 @@ int main(void) {
     joystick_update(joystick[PORT_A], joystick[PORT_B]);
     paddle_update(joystick[PORT_A], joystick[PORT_B]);
 
-    led_poll();
-
 #ifdef DEBUG
     _delay_ms(100);
 
