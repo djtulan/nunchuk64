@@ -29,6 +29,7 @@ Wireless Controller for Nintendo SNES Mini Classic Edition.
 Seen here: https://www.ebay.com/itm/162874713501
 
 ![SNES Classic Mini Clone](snes_classic_mini_clone.jpg)
+![SNES Classic Mini Clone](snes_classic_mini_clone_wired.jpg)
 
 | Item          |Mode OFF  |Mode ON   |Mode F1   |Mode F2   |Mode F3   |
 | --------------|----------|----------|----------|----------|----------|
