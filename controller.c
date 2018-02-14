@@ -54,7 +54,41 @@ uint8_t controller_init(void) {
   _delay_ms(1);
   // ===========================================
 
+  return 0;
+}
 
+uint8_t controller_read(ContollerData *cd) {
+
+  // ===========================================
+  // get data bytes from controller
+
+  // --------------------
+  // send read request to 0x00 register
+  i2c_start_wait(CONTROLLER_ADDR | I2C_WRITE);
+  i2c_write(0x00);
+  i2c_stop();
+  // --------------------
+
+  // --------------------
+  // read 6 bytes
+  i2c_start_wait(CONTROLLER_ADDR | I2C_READ);
+
+  uint8_t i = 0;
+
+  for (i = 0; i < 5; i++) {
+    cd->byte[i] = i2c_readAck(); // i2c_read(I2C_ACK);
+  }
+
+  cd->byte[i] = (i2c_readNak()); // i2c_read(I2C_NOACK);
+  i2c_stop();
+  // --------------------
+
+  // ===========================================
+
+  return 0;
+}
+
+static void controller_disable_encryption(void) {
   // ===========================================
   // deactivate encryption
 
@@ -107,39 +141,6 @@ uint8_t controller_init(void) {
 
   _delay_ms(1);
   // ===========================================
-
-  return 0;
-}
-
-uint8_t controller_read(ContollerData *cd) {
-
-  // ===========================================
-  // get data bytes from controller
-
-  // --------------------
-  // send read request to 0x00 register
-  i2c_start_wait(CONTROLLER_ADDR | I2C_WRITE);
-  i2c_write(0x00);
-  i2c_stop();
-  // --------------------
-
-  // --------------------
-  // read 6 bytes
-  i2c_start_wait(CONTROLLER_ADDR | I2C_READ);
-
-  uint8_t i = 0;
-
-  for (i = 0; i < 5; i++) {
-    cd->byte[i] = i2c_readAck(); // i2c_read(I2C_ACK);
-  }
-
-  cd->byte[i] = (i2c_readNak()); // i2c_read(I2C_NOACK);
-  i2c_stop();
-  // --------------------
-
-  // ===========================================
-
-  return 0;
 }
 
 const uint8_t ID_MAP[MAX_IDs][6] = {
@@ -184,7 +185,8 @@ ControllerID get_id(void) {
         ContollerData data;
         controller_read(&data);
 
-        if ((data.byte[3] & 0x0f) == 0x01) {
+        if (data.byte[4] == 0x00 && data.byte[5] == 0x00) {
+          controller_disable_encryption();
           return ID_NES_Classic_Mini_Clone;
         }
       }
