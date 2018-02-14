@@ -21,32 +21,27 @@
 /// @brief  led
 //=============================================================================
 #include <avr/pgmspace.h>
+#include <avr/interrupt.h>
 
 #include "ioconfig.h"
 
 #include "led.h"
 
-static const uint8_t LONG_WAIT = 200;
-static const uint8_t SHORT_WAIT = 50;
-
 const uint8_t FLASH_DATA[NUMBER_LED_STATES][7] PROGMEM = {
 // off, on, off,  on, off, on
-  {0,    0,   0,   0,   0,  0, 0},
-  {0,    0,   0,   0,   0,  0, 0},
-  {55,   8,   0,   0,   0,  0, 0},
-  {55,   8,  15,   8,   0,  0, 0},
-  {55,   8,  15,   8,  15,  8, 0}
+  {0,  0,  0,  0,  0,  0, 0},
+  {0,  0,  0,  0,  0,  0, 0},
+  {8,  2,  0,  0,  0,  0, 0},
+  {8,  2,  4,  2,  0,  0, 0},
+  {8,  2,  4,  2,  4,  2, 0}
 };
 
 static LED_State led_state = LED_OFF;
 static uint8_t led_flash_index = 0;
 static uint8_t led_flash_timer = 0;
-static uint8_t led_status = 0;
 
 static void led_set(uint8_t on) {
-  led_status = on ? 1 : 0;
-
-  if (led_status) {
+  if (on) {
     BIT_SET(PORT_LED, BIT_LED);
   } else {
     BIT_CLEAR(PORT_LED, BIT_LED);
@@ -56,6 +51,15 @@ static void led_set(uint8_t on) {
 void led_init(void) {
   BIT_SET(DDR_LED, BIT_LED);   // enable output
   BIT_CLEAR(PORT_LED, BIT_LED);  // set to 0 => LED OFF
+
+  // enable timer overflow interrupt for both Timer2
+  TIMSK2 |= _BV(TOIE2);
+
+  // set timer0 counter initial value to 0
+  TCNT2 = 0x00;
+
+  // start timer0 with /1024 prescaler
+  TCCR2B = _BV(CS22) | _BV(CS21);
 }
 
 void led_switch(LED_State state) {
@@ -108,12 +112,12 @@ void led_poll(void) {
 
   // set timer
   if (led_flash_timer == 0) {
-    uint8_t data = pgm_read_byte(&(FLASH_DATA[led_state][led_flash_index]));
+    uint8_t wait = pgm_read_byte(&(FLASH_DATA[led_state][led_flash_index]));
 
-    if (data) {
-      led_flash_timer = data;
+    if (wait) {
+      led_flash_timer = wait;
     } else {
-      led_flash_index = 0;
+      led_flash_index = 0; // start from beginning
       led_set(0);
     }
 
@@ -130,3 +134,7 @@ void led_poll(void) {
   }
 }
 
+// timer1 overflow
+ISR(TIMER2_OVF_vect) {
+  led_poll();
+}
