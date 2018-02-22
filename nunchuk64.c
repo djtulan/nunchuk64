@@ -42,7 +42,17 @@
 #include "driver_wii_classic.h"
 #include "driver_nunchuk.h"
 
+// ===================================
+// activate DEBUG
+// ===================================
 // #define DEBUG
+
+// ===================================
+// activate SINGLE CONTROLLER
+// ===================================
+#define CONTROLLER_A        1
+#define CONTROLLER_B        2
+// #define SINGLE_CONTROLLER   CONTROLLER_B
 
 Driver *GetDriver(ControllerID id) {
   switch (id) {
@@ -79,18 +89,22 @@ void init(void) {
   // ===================================
   // select i2c port A
   // ===================================
+#if SINGLE_CONTROLLER != CONTROLLER_B
   switch_selector(PORT_A);
   _delay_ms(1);
   controller_init();  // init controller A
   _delay_ms(1);
+#endif
 
   // ===================================
   // select i2c port B
   // ===================================
+#if SINGLE_CONTROLLER != CONTROLLER_A
   switch_selector(PORT_B);
   _delay_ms(1);
   controller_init();  // init controller B
   _delay_ms(1);
+#endif
 
   // ===================================
   // enable interrupts
@@ -117,9 +131,18 @@ int main(void) {
   Driver *driver[NUMBER_PORTS] = {NULL, NULL};
 
   ContollerData cd[NUMBER_PORTS];  // controller data
-  Joystick joystick[NUMBER_PORTS]; // joystick data
+  Joystick joystick[NUMBER_PORTS] = {0, 0}; // joystick data
+
+#if SINGLE_CONTROLLER == CONTROLLER_A
+
+  for (uint8_t p = PORT_A; p <= PORT_A; p++) {
+#elif SINGLE_CONTROLLER == CONTROLLER_B
+
+  for (uint8_t p = PORT_B; p <= PORT_B; p++) {
+#else
 
   for (uint8_t p = PORT_A; p <= PORT_B; p++) {
+#endif
     switch_selector(p);
     _delay_ms(1);
 
@@ -137,18 +160,20 @@ int main(void) {
     button_debounce();
 
     if (button_get()) {
-
-      /*
-      if (led_get_state() == LED_OFF) {
-        led_switch(LED_ON);
-      } else {
-        led_switch(LED_OFF);
-      }*/
       led_setnextstate();
     }
 
     // get data from controller and let translate it by the driver
+#if SINGLE_CONTROLLER == CONTROLLER_A
+
+    for (uint8_t p = PORT_A; p <= PORT_A; p++) {
+#elif SINGLE_CONTROLLER == CONTROLLER_B
+
+    for (uint8_t p = PORT_B; p <= PORT_B; p++) {
+#else
+
     for (uint8_t p = PORT_A; p <= PORT_B; p++) {
+#endif
       // select I2C port
       switch_selector(p);
 
@@ -181,4 +206,5 @@ int main(void) {
 
   return 0;
 }
+
 
