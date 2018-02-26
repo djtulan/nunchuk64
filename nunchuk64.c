@@ -52,7 +52,7 @@
 // ===================================
 #define CONTROLLER_A        1
 #define CONTROLLER_B        2
-// #define SINGLE_CONTROLLER   CONTROLLER_B
+// #define SINGLE_CONTROLLER   CONTROLLER_A
 
 Driver *GetDriver(ControllerID id) {
   switch (id) {
@@ -116,7 +116,6 @@ void init(void) {
   // ===================================
   paddle_start();
 
-  led_switch(LED_OFF); // diagnose (init done)
 }
 
 int main(void) {
@@ -124,6 +123,7 @@ int main(void) {
   // init everything
   // ===================================
   init();
+  led_switch(LED_BLINK1); // diagnose (init done)
 
   // ===================================
   // get the correct driver
@@ -148,6 +148,8 @@ int main(void) {
 
     driver[p] = GetDriver(get_id());
   }
+
+  led_switch(LED_OFF); // diagnose (init done)
 
 #ifdef DEBUG
   uint8_t toggle = 0;

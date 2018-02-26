@@ -40,46 +40,12 @@ uint8_t controller_init(void) {
   i2c_stop();
   // --------------------
 
-  _delay_ms(1);
-
   i2c_start_wait(CONTROLLER_ADDR | I2C_WRITE);
 
   // --------------------
   // send 0x00 to register 0xfb
   i2c_write(0xfb);
   i2c_write(0x00);
-  i2c_stop();
-  // --------------------
-
-  _delay_ms(1);
-  // ===========================================
-
-  return 0;
-}
-
-uint8_t controller_read(ContollerData *cd) {
-
-  // ===========================================
-  // get data bytes from controller
-
-  // --------------------
-  // send read request to 0x00 register
-  i2c_start_wait(CONTROLLER_ADDR | I2C_WRITE);
-  i2c_write(0x00);
-  i2c_stop();
-  // --------------------
-
-  // --------------------
-  // read 6 bytes
-  i2c_start_wait(CONTROLLER_ADDR | I2C_READ);
-
-  uint8_t i = 0;
-
-  for (i = 0; i < 5; i++) {
-    cd->byte[i] = i2c_readAck(); // i2c_read(I2C_ACK);
-  }
-
-  cd->byte[i] = (i2c_readNak()); // i2c_read(I2C_NOACK);
   i2c_stop();
   // --------------------
 
@@ -143,6 +109,41 @@ static void controller_disable_encryption(void) {
   // ===========================================
 }
 
+uint8_t controller_read(ContollerData *cd) {
+
+  // ===========================================
+  // get data bytes from controller
+
+  _delay_ms(1);
+
+  // --------------------
+  // read 6 bytes
+  i2c_start_wait(CONTROLLER_ADDR | I2C_READ);
+
+  uint8_t i = 0;
+
+  for (i = 0; i < 5; i++) {
+    cd->byte[i] = i2c_readAck(); // i2c_read(I2C_ACK);
+  }
+
+  cd->byte[i] = (i2c_readNak()); // i2c_read(I2C_NOACK);
+  i2c_stop();
+  // --------------------
+
+  // --------------------
+  // send read request to 0x00 register
+  // for the next bytes!!!!
+  // NOTE this is very important for original Nintendo Controller
+  i2c_start_wait(CONTROLLER_ADDR | I2C_WRITE);
+  i2c_write(0x00);
+  i2c_stop();
+  // --------------------
+
+  // ===========================================
+
+  return 0;
+}
+
 const uint8_t ID_MAP[MAX_IDs][6] = {
   {0x00, 0x00, 0xa4, 0x20, 0x00, 0x00}, // ID_Nunchuck
   {0x00, 0x00, 0xa4, 0x20, 0x01, 0x01}, // ID_Classic
@@ -158,11 +159,12 @@ ControllerID get_id(void) {
   i2c_stop();
   // --------------------
 
+
   // --------------------
   // read 6 bytes
   i2c_start_wait(CONTROLLER_ADDR | I2C_READ);
-  uint8_t id[6];
   uint8_t i = 0;
+  uint8_t id[6];
 
   for (i = 0; i < 5; i++) {
     id[i] = i2c_readAck(); // i2c_read(I2C_ACK);
@@ -172,9 +174,8 @@ ControllerID get_id(void) {
   i2c_stop();
   // --------------------
 
-
   // --------------------
-  // compair the 6 bytes with known IDs
+  // compare the 6 bytes with known IDs
   for (uint8_t i = 0; i < MAX_IDs; i++) {
 
     // known controller found?
