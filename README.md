@@ -27,7 +27,7 @@ ATMega328p chip it was made us of.
 Currently the following hardware is supported (see [Supported Controllers](./supported_controllers))
 
 ## Dependecies
-- KiCad to see schematic and layout
+- KiCad to see schematic and layout (see [KiCad](http://kicad-pcb.org/))
 - avr-gcc toolchain for compiling the firmware
 
 ## My personal project goals
