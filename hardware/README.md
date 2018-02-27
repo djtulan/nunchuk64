@@ -1,8 +1,7 @@
 Hardware
 ==============
-In this folder you can find all the needed parts to order a pcb.
-The subfolder "nunchuk64" hold the KiCad project files.
-Commodore 64 ones.
+In this folder you can find all the needed parts to order the pcb.
+The subfolder "nunchuk64" hold the KiCad project and Gerber files.
 
 The ready PCBs
 --------------
