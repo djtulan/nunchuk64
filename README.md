@@ -14,7 +14,7 @@ The project is still in progress, because I need to finish the firmware for the
 ATMega328p chip it was made us of.
 
 ## 3D Picture
-![3d Picture](nunchuk64.png)
+![3d Picture](nunchuk64.png) ![3d Picture](in_action.jpg)
 
 ## Milestones
 - ☑ Tested with "Nindendo NES Classic Mini Controller" replica
@@ -27,7 +27,7 @@ ATMega328p chip it was made us of.
 Currently the following hardware is supported (see [Supported Controllers](./supported_controllers))
 
 ## Dependecies
-- KiCad to see schematic and layout (see [KiCad](http://kicad-pcb.org/))
+- KiCad to work in schematic and layout (see [KiCad](http://kicad-pcb.org/))
 - avr-gcc toolchain for compiling the firmware
 
 ## My personal project goals
