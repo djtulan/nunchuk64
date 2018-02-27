@@ -32,12 +32,6 @@ ATMega328p chip I made us of.
 ![3d Picture](nunchuk64.png)
 
 ## Supported Hardware
-Currently the following hardware is supported:
-
-| Controller                                                | where to get?                        |
-| ----------------------------------------------------------|--------------------------------------|
-| Wireless Controller for Nintendo Mini NES Classic Edition | https://www.ebay.com/itm/272765627224|
-| original Nintendo Nunchuck                                | anywhere Nintendo stuff is sold      |
+Currently the following hardware is supported: [Supported Controllers](./supported_controllers)
 
 
-[link to Google!](./supported_controllers)
