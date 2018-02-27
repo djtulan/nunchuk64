@@ -18,14 +18,17 @@ ATMega328p chip it was made us of.
 
 ## Milestones
 - ☑ Tested with "Nindendo NES Classic Mini Controller" replica
+- ☑ Tested with "original Nindendo Nunchuk Controller"
+- ☑ Tested with "Nindendo Nunchuk Controller" replica
+- ☑ Tested with different other NES/SNES Clones
 - ☐ Analog input like Nunchuk or Analog Gamepad
+
+## Supported and tested Hardware
+Currently the following hardware is supported (see [Supported Controllers](./supported_controllers))
 
 ## Dependecies
 - KiCad to see schematic and layout
 - avr-gcc toolchain for compiling the firmware
-
-## Supported Hardware
-Currently the following hardware is supported: [Supported Controllers](./supported_controllers)
 
 ## My personal project goals
 - ☑ learn KiCad design workflow
