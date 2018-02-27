@@ -40,3 +40,4 @@ Currently the following hardware is supported:
 | original Nintendo Nunchuck                                | anywhere Nintendo stuff is sold      |
 
 
+[link to Google!](./supported_controllers)
