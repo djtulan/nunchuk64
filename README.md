@@ -7,6 +7,7 @@ All types of the Commodore 64 inputs, which means digital and analog inputs, are
 
 ## Introduction Video
 User [dukestah] from [Forum64](https://www.forum64.de) made a nice introduction video.
+He gives a short introduction how the things works in basic and demonstrates the functions while playing a game.
 [![INTRODUCITON VIDEO](http://img.youtube.com/vi/LK__4W44_HA/0.jpg)](http://www.youtube.com/watch?v=LK__4W44_HA)
 
 
