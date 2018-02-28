@@ -1,12 +1,16 @@
 # Nunchuk64
-Converter to connect for Wii Nunchuk or Nindendo NES Classic Mini Controller
-to a Commodore 64. The circuit converts two Nintendo Controllers to two
-Commodore 64 ones. Both digital and analog inputs of the Commodore are
-controlled.
+Nunchuk64 is a converter or adapter to connect a Wii Nunchuk or a Nindendo NES Classic Mini Controller
+to a Commodore 64. The circuit converts two Nintendo Controllers into two Commodore 64 ones.
+All types of the Commodore 64 inputs, which means digital and analog inputs, are available.
 
 ![Work in Progress](work.gif) ![Picture](in_action.jpg)
 
-This is my very first project designing a PCB with a layouting tool.
+## Introduction Video
+User [dukestah] from [Forum64](https://www.forum64.de) made a nice introduction video.
+[![INTRODUCITON VIDEO](http://img.youtube.com/vi/LK__4W44_HA/0.jpg)](http://www.youtube.com/watch?v=LK__4W44_HA)
+
+
+It is my very first project designing a PCB with a layouting tool.
 I introduced myself into KiCad which satisfied my needs perfectly.
 The KiCad project is provided inside subfolder ["hardware"](./hardware).
 
