@@ -4,39 +4,38 @@ to a Commodore 64. The circuit converts two Nintendo Controllers to two
 Commodore 64 ones. Both digital and analog inputs of the Commodore are
 controlled.
 
-![Work in Progress](work.gif)
+![Work in Progress](work.gif) ![Picture](in_action.jpg)
 
 This is my very first project designing a PCB with a layouting tool.
-I introduced myself into KiCad which satisfed my needs perfectly.
-The KiCad project is provided inside subfolder "hardware".
+I introduced myself into KiCad which satisfied my needs perfectly.
+The KiCad project is provided inside subfolder ["hardware"](./hardware).
 
 The project is still in progress, because I need to finish the firmware for the
-ATMega328p chip I made us of.
+ATMega328p chip it was made us of.
+
+## 3D Picture
+![3d Picture](nunchuk64.png)
+
+## Milestones
+- ☑ Tested with "Nindendo NES Classic Mini Controller" replica
+- ☑ Tested with "original Nindendo Nunchuk Controller"
+- ☑ Tested with "Nindendo Nunchuk Controller" replica
+- ☑ Tested with different other NES/SNES Clones
+- ☐ Analog input like Nunchuk or Analog Gamepad
+
+## Supported and tested Hardware
+Currently the following hardware is supported (see [Supported Controllers](./supported_controllers))
+
+## Dependecies
+- KiCad to work in schematic and layout (see [KiCad](http://kicad-pcb.org/))
+- avr-gcc toolchain for compiling the firmware
 
 ## My personal project goals
 - ☑ learn KiCad design workflow
 - ☑ learn how to layout PCBs with SMD parts
 - ☑ learn about SMD sizes and package types
 - ☑ order a PCB from a professional manufactorer
+- ☑ learn programming AVR chips
 
-## Dependecies
-- KiCad to see schematic and layout
-- avr-gcc toolchain for compiling the firmware
-
-
-## Milestones
-- ☑ Tested with "Nindendo NES Classic Mini Controller" replica
-- ☐ Analog input like Nunchuk or Analog Gamepad
-
-## 3D Picture
-![3d Picture](nunchuk64.png)
-
-## Supported Hardware
-Currently the following hardware is supported:
-
-| Controller                                                | where to get?                        |
-| ----------------------------------------------------------|--------------------------------------|
-| Wireless Controller for Nintendo Mini NES Classic Edition | https://www.ebay.com/itm/272765627224|
-| original Nintendo Nunchuck                                | anywhere Nintendo stuff is sold      |
 
 
