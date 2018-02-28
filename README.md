@@ -17,7 +17,7 @@ I introduced myself into KiCad which satisfied my needs perfectly.
 The KiCad project is provided inside subfolder ["hardware"](./hardware).
 
 The project is still in progress, because I need to finish the firmware for the
-ATMega328p chip it was made us of.
+ATMega328p microcontroller.
 
 ## 3D Picture
 ![3d Picture](nunchuk64.png)
