@@ -23,11 +23,10 @@ ATMega328p microcontroller.
 ![3d Picture](nunchuk64.png)
 
 ## Milestones
-- ☑ Tested with "Nindendo NES Classic Mini Controller" replica
-- ☑ Tested with "original Nindendo Nunchuk Controller"
-- ☑ Tested with "Nindendo Nunchuk Controller" replica
-- ☑ Tested with different other NES/SNES Clones
-- ☐ Analog input like Nunchuk or Analog Gamepad
+- ☑ Tested with a "Nindendo NES Classic Mini Controller" clone
+- ☑ Tested with a "original Nindendo Nunchuk Controller"
+- ☑ Tested with a "Nindendo Nunchuk Controller" clone
+- ☑ Tested with different other NES/SNES Classic Mini clones
 
 ## Supported and tested Hardware
 Currently the following hardware is supported (see [Supported Controllers](./supported_controllers))
@@ -36,12 +35,9 @@ Currently the following hardware is supported (see [Supported Controllers](./sup
 - KiCad to work in schematic and layout (see [KiCad](http://kicad-pcb.org/))
 - avr-gcc toolchain for compiling the firmware
 
-## My personal project goals
+## Personal project goals reached
 - ☑ learn KiCad design workflow
 - ☑ learn how to layout PCBs with SMD parts
 - ☑ learn about SMD sizes and package types
 - ☑ order a PCB from a professional manufactorer
 - ☑ learn programming AVR chips
-
-
-
