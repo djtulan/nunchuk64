@@ -75,12 +75,6 @@ Driver *GetDriver(ControllerID id) {
 
 void init(void) {
   // ===================================
-  // first disable watchdog
-  // ===================================
-  wdt_disable();
-  wdt_reset();
-
-  // ===================================
   // init modules
   // ===================================
   led_init();         // init led output
