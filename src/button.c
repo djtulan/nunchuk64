@@ -57,7 +57,7 @@ void button_debounce(void) {
       count = 0;
     }
 
-  // state is similar to old state
+    // state is similar to old state
   } else {
     // reset counter
     count = 0;
@@ -71,7 +71,4 @@ uint8_t button_get(void) {
   }
 
   return 0;
-}
-
-void button_poll(void) {
 }

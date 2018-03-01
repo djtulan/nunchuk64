@@ -42,10 +42,4 @@ extern void button_debounce(void);
 */
 extern uint8_t button_get(void);
 
-/**
-* @brief poll button routines (for count the time the button is pressed)
-* @note This function is called by timer interrupt routine
-*/
-extern void button_poll(void);
-
 #endif

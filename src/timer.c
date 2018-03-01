@@ -22,7 +22,6 @@
 //=============================================================================
 #include <avr/interrupt.h>
 
-#include "button.h"
 #include "joystick.h"
 #include "led.h"
 
@@ -41,7 +40,6 @@ void timer_init(void) {
 
 static inline void timer_poll(void) {
   led_poll();
-  button_poll();
   joystick_poll();
 }
 

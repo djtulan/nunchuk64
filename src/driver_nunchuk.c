@@ -113,7 +113,7 @@ static void get_joystick_state_nunchuk(const ContollerData *cd, Joystick *joysti
 
   // C Button
   if ((cd->byte[5] & 0x02) == 0) {
-    (*joystick) |= UP;
+    (*joystick) |= AUTOFIRE;
   }
 }
 

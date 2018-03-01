@@ -174,18 +174,18 @@ void joystick_poll(void) {
   if (autofire_a == 1) {
     // toggle FIRE A
     if (bit_is_set(DDR_BUTTON_A, BIT_BUTTON_A)) {
-      BIT_SET(DDR_BUTTON_A, BIT_BUTTON_A);
-    } else {
       BIT_CLEAR(DDR_BUTTON_A, BIT_BUTTON_A);
+    } else {
+      BIT_SET(DDR_BUTTON_A, BIT_BUTTON_A);
     }
   }
 
   if (autofire_b == 1) {
     // toggle FIRE B
     if (bit_is_set(DDR_BUTTON_B, BIT_BUTTON_B)) {
-      BIT_SET(DDR_BUTTON_B, BIT_BUTTON_B);
-    } else {
       BIT_CLEAR(DDR_BUTTON_B, BIT_BUTTON_B);
+    } else {
+      BIT_SET(DDR_BUTTON_B, BIT_BUTTON_B);
     }
   }
 }

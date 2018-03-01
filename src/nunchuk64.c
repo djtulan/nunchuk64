@@ -27,6 +27,7 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <util/delay.h>
+#include <avr/wdt.h>
 
 #include "led.h"
 #include "button.h"
@@ -74,6 +75,12 @@ Driver *GetDriver(ControllerID id) {
 
 void init(void) {
   // ===================================
+  // first disable watchdog
+  // ===================================
+  wdt_disable();
+  wdt_reset();
+
+  // ===================================
   // init modules
   // ===================================
   led_init();         // init led output
@@ -87,6 +94,11 @@ void init(void) {
   led_switch(LED_ON); // diagnose (in init)
 
   _delay_ms(1);
+
+  // ===================================
+  // enable watchdog, woof
+  // ===================================
+  wdt_enable(WDTO_500MS);
 
   // ===================================
   // select i2c port A
@@ -117,7 +129,6 @@ void init(void) {
   // start paddle routines
   // ===================================
   paddle_start();
-
 }
 
 int main(void) {
@@ -125,7 +136,6 @@ int main(void) {
   // init everything
   // ===================================
   init();
-  led_switch(LED_BLINK1); // diagnose (init done)
 
   // ===================================
   // get the correct driver
@@ -160,6 +170,8 @@ int main(void) {
   // ===================================
   // MAIN LOOP
   while (1) {
+
+    wdt_reset();
 
     button_debounce();
 
