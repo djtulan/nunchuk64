@@ -72,3 +72,6 @@ uint8_t button_get(void) {
 
   return 0;
 }
+
+void button_poll(void) {
+}

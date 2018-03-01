@@ -15,37 +15,14 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //=============================================================================
-/// @file   button.h
+/// @file   timer.h
 /// @author Robert Grasböck (robert.grasboeck@gmail.com)
-/// @date   January, 2018
-/// @brief  button
+/// @date   March, 2018
+/// @brief  timer for different things
 //=============================================================================
-#ifndef _BUTTON_H_
-#define _BUTTON_H_
-
-#include <inttypes.h>
 
 /**
-* @brief init button inputs
+* @brief init Timer
 *
 */
-extern void button_init(void);
-
-/**
-* @brief read and debounce button
-*
-*/
-extern void button_debounce(void);
-
-/**
-* @brief get buttonpress
-*/
-extern uint8_t button_get(void);
-
-/**
-* @brief poll led routines (for flashing)
-* @note This function is called by timer interrupt routine
-*/
-extern void button_poll(void);
-
-#endif
+extern void timer_init(void);

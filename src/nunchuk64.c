@@ -37,6 +37,7 @@
 #include "controller.h"
 #include "joystick.h"
 #include "paddle.h"
+#include "timer.h"
 
 #include "driver_nes_classic.h"
 #include "driver_wii_classic.h"
@@ -81,6 +82,7 @@ void init(void) {
   i2c_init();         // init i2c routines
   joystick_init();    // init joystick outputs
   paddle_init();      // init paddle outputs
+  timer_init();       // init timer interrupt
 
   led_switch(LED_ON); // diagnose (in init)
 

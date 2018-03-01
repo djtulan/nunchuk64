@@ -15,37 +15,35 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //=============================================================================
-/// @file   button.h
+/// @file   timer.c
 /// @author Robert Grasböck (robert.grasboeck@gmail.com)
-/// @date   January, 2018
-/// @brief  button
+/// @date   March, 2018
+/// @brief  timer for different things
 //=============================================================================
-#ifndef _BUTTON_H_
-#define _BUTTON_H_
+#include <avr/interrupt.h>
 
-#include <inttypes.h>
+#include "button.h"
+#include "led.h"
 
-/**
-* @brief init button inputs
-*
-*/
-extern void button_init(void);
+#include "timer.h"
 
-/**
-* @brief read and debounce button
-*
-*/
-extern void button_debounce(void);
+void timer_init(void) {
+  // enable timer overflow interrupt for both Timer2
+  TIMSK2 |= _BV(TOIE2);
 
-/**
-* @brief get buttonpress
-*/
-extern uint8_t button_get(void);
+  // set timer2 counter initial value to 0
+  TCNT2 = 0x00;
 
-/**
-* @brief poll led routines (for flashing)
-* @note This function is called by timer interrupt routine
-*/
-extern void button_poll(void);
+  // start timer2 with /1024 prescaler
+  TCCR2B = _BV(CS22) | _BV(CS21);
+}
 
-#endif
+static void timer_poll(void) {
+  led_poll();
+  button_poll();
+}
+
+// timer2 overflow
+ISR(TIMER2_OVF_vect) {
+  timer_poll();
+}

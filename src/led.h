@@ -62,7 +62,7 @@ extern LED_State led_get_state(void);
 
 /**
 * @brief poll led routines (for flashing)
-*
+* @note This function is called by timer interrupt routine
 */
 extern void led_poll(void);
 

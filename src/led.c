@@ -21,7 +21,6 @@
 /// @brief  led
 //=============================================================================
 #include <avr/pgmspace.h>
-#include <avr/interrupt.h>
 
 #include "ioconfig.h"
 
@@ -51,15 +50,6 @@ static void led_set(uint8_t on) {
 void led_init(void) {
   BIT_SET(DDR_LED, BIT_LED);   // enable output
   BIT_CLEAR(PORT_LED, BIT_LED);  // set to 0 => LED OFF
-
-  // enable timer overflow interrupt for both Timer2
-  TIMSK2 |= _BV(TOIE2);
-
-  // set timer0 counter initial value to 0
-  TCNT2 = 0x00;
-
-  // start timer0 with /1024 prescaler
-  TCCR2B = _BV(CS22) | _BV(CS21);
 }
 
 void led_switch(LED_State state) {
@@ -132,9 +122,4 @@ void led_poll(void) {
       led_set(led_flash_index % 2);
     }
   }
-}
-
-// timer1 overflow
-ISR(TIMER2_OVF_vect) {
-  led_poll();
 }
