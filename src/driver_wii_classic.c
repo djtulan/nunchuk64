@@ -70,7 +70,7 @@ static void get_joystick_state_wii_classic(const ContollerData *cd, Joystick *jo
 
   // BY - Y Button
   if ((cd->byte[5] & 0x20) == 0) {
-    (*joystick) |= UP;
+    (*joystick) |= AUTOFIRE;
   }
 
   // ------------------------------

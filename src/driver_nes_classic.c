@@ -121,7 +121,7 @@ static void get_joystick_state_nes(const ContollerData *cd, Joystick *joystick) 
 
     // Y
     case 0x90:
-      // DO NOTHING :D
+      (*joystick) |= AUTOFIRE;
       break;
 
     // A and B
