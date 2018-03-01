@@ -27,16 +27,16 @@
 
 enum Joystick_State {
   // joystick data
-  UP     = (1 << 0), ///< up
-  DOWN   = (1 << 1), ///< down
-  LEFT   = (1 << 2), ///< left
-  RIGHT  = (1 << 3), ///< right
-  BUTTON = (1 << 4), ///< fire button
-  // some extra commands
-  SPACE  = (1 << 5), ///< fire button
+  UP       = (1 << 0), ///< up
+  DOWN     = (1 << 1), ///< down
+  LEFT     = (1 << 2), ///< left
+  RIGHT    = (1 << 3), ///< right
+  BUTTON   = (1 << 4), ///< fire button
+  // special function
+  SPACE    = (1 << 5), ///< fire button on port A
+  AUTOFIRE = (1 << 6), ///< auto fire button
   // free info
-  FREE1  = (1 << 6), ///< fire button
-  FREE2  = (1 << 7)  ///< fire button
+  FREE2    = (1 << 7)  ///< fire button
 };
 
 /// \brief Joystick, holds the state of one joystick
@@ -60,5 +60,11 @@ extern void joystick_init(void);
 * The bit (see Joystick_State) are set inside the respective parameter
 */
 extern void joystick_update(Joystick port_a, Joystick port_b);
+
+/**
+* @brief poll joystick routines (for autofire)
+* @note This function is called by timer interrupt routine
+*/
+extern void joystick_poll(void);
 
 #endif

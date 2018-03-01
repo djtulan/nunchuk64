@@ -23,6 +23,7 @@
 #include <avr/interrupt.h>
 
 #include "button.h"
+#include "joystick.h"
 #include "led.h"
 
 #include "timer.h"
@@ -38,9 +39,10 @@ void timer_init(void) {
   TCCR2B = _BV(CS22) | _BV(CS21);
 }
 
-static void timer_poll(void) {
+static inline void timer_poll(void) {
   led_poll();
   button_poll();
+  joystick_poll();
 }
 
 // timer2 overflow
