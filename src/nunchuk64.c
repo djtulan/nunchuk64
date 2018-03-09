@@ -22,11 +22,8 @@
 //=============================================================================
 #include <inttypes.h>
 #include <stdio.h>
-#include <stdlib.h>
 
-#include <avr/io.h>
 #include <avr/interrupt.h>
-#include <util/delay.h>
 #include <avr/wdt.h>
 
 #include "led.h"
@@ -40,21 +37,10 @@
 #include "paddle.h"
 #include "timer.h"
 
+// drivers
 #include "driver_nes_classic.h"
-#include "driver_wii_classic.h"
 #include "driver_nunchuk.h"
-
-// ===================================
-// activate DEBUG
-// ===================================
-// #define DEBUG
-
-// ===================================
-// activate SINGLE CONTROLLER
-// ===================================
-#define CONTROLLER_A        1
-#define CONTROLLER_B        2
-// #define SINGLE_CONTROLLER   CONTROLLER_A
+#include "driver_wii_classic.h"
 
 Driver *GetDriver(ControllerID id) {
   switch (id) {
@@ -69,7 +55,8 @@ Driver *GetDriver(ControllerID id) {
       return &drv_nes_classic;
 
     default:
-      return &drv_nunchuk;
+    case MAX_IDs:
+      return NULL;
   }
 }
 
@@ -78,6 +65,8 @@ void init(void) {
   // init modules
   // ===================================
   led_init();         // init led output
+  led_switch(LED_ON); // diagnose (in init)
+
   button_init();      // init button input
   init_selector();    // init i2c bus selector
   i2c_init();         // init i2c routines
@@ -85,34 +74,11 @@ void init(void) {
   paddle_init();      // init paddle outputs
   timer_init();       // init timer interrupt
 
-  led_switch(LED_ON); // diagnose (in init)
-
-  _delay_ms(1);
 
   // ===================================
   // enable watchdog, woof
   // ===================================
   wdt_enable(WDTO_500MS);
-
-  // ===================================
-  // select i2c port A
-  // ===================================
-#if SINGLE_CONTROLLER != CONTROLLER_B
-  switch_selector(PORT_A);
-  _delay_ms(1);
-  controller_init();  // init controller A
-  _delay_ms(1);
-#endif
-
-  // ===================================
-  // select i2c port B
-  // ===================================
-#if SINGLE_CONTROLLER != CONTROLLER_A
-  switch_selector(PORT_B);
-  _delay_ms(1);
-  controller_init();  // init controller B
-  _delay_ms(1);
-#endif
 
   // ===================================
   // enable interrupts
@@ -123,6 +89,8 @@ void init(void) {
   // start paddle routines
   // ===================================
   paddle_start();
+
+  led_switch(LED_OFF); // diagnose (in init)
 }
 
 int main(void) {
@@ -139,76 +107,54 @@ int main(void) {
   ContollerData cd[NUMBER_PORTS];  // controller data
   Joystick joystick[NUMBER_PORTS] = {0, 0}; // joystick data
 
-#if SINGLE_CONTROLLER == CONTROLLER_A
-
-  for (uint8_t p = PORT_A; p <= PORT_A; p++) {
-#elif SINGLE_CONTROLLER == CONTROLLER_B
-
-  for (uint8_t p = PORT_B; p <= PORT_B; p++) {
-#else
-
-  for (uint8_t p = PORT_A; p <= PORT_B; p++) {
-#endif
-    switch_selector(p);
-    _delay_ms(1);
-
-    driver[p] = GetDriver(get_id());
-  }
-
-  led_switch(LED_OFF); // diagnose (init done)
-
-#ifdef DEBUG
-  uint8_t toggle = 0;
-#endif
-
   // ===================================
   // MAIN LOOP
   while (1) {
 
-    wdt_reset();
+    wdt_reset(); // calm watchdog down
 
+
+    // ================
+    // read button
+    // ================
     button_debounce();
 
     if (button_get()) {
       led_setnextstate();
     }
 
-    // get data from controller and let translate it by the driver
-#if SINGLE_CONTROLLER == CONTROLLER_A
-
-    for (uint8_t p = PORT_A; p <= PORT_A; p++) {
-#elif SINGLE_CONTROLLER == CONTROLLER_B
-
-    for (uint8_t p = PORT_B; p <= PORT_B; p++) {
-#else
-
+    // ===================================
+    // communiate with controllers
+    // ===================================
     for (uint8_t p = PORT_A; p <= PORT_B; p++) {
-#endif
       // select I2C port
       switch_selector(p);
 
-      // get data from port
-      controller_read(&cd[p]);
+      // ===================================
+      // detect controller type, set driver
+      // ===================================
+      if (driver[p] == NULL) {
+        controller_init();
+
+        driver[p] = GetDriver(get_id());
+
+      // ===================================
+      // read data from controller
+      // ===================================
+      } else {
+        // controller read failed? -> delete driver
+        if (controller_read(&cd[p]) != 0) {
+          driver[p] = NULL;
+        }
+      }
 
       // translate the controller date to joystick data
-      driver[p]->get_joystick_state(&cd[p], &joystick[p]);
+      if (driver[p] != NULL)
+        driver[p]->get_joystick_state(&cd[p], &joystick[p]);
     }
 
     joystick_update(joystick[PORT_A], joystick[PORT_B]);
     paddle_update(joystick[PORT_A], joystick[PORT_B]);
-
-#ifdef DEBUG
-    _delay_ms(100);
-
-    if (toggle == 1) {
-      led_switch(0);
-      toggle = 0;
-    } else {
-      led_switch(1);
-      toggle = 1;
-    }
-
-#endif
   }
 
   //  MAIN LOOP
@@ -216,5 +162,3 @@ int main(void) {
 
   return 0;
 }
-
-

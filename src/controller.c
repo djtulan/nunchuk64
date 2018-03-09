@@ -21,7 +21,6 @@
 /// @brief  i2c controller
 //=============================================================================
 #include <string.h>
-#include <util/delay.h>
 
 #include "i2c_master.h"
 #include "controller.h"
@@ -29,35 +28,26 @@
 #define CONTROLLER_ADDR (0x52<<1) ///< device address
 
 uint8_t controller_init(void) {
-  // ===========================================
-  // init controller
-
   // --------------------
   // send 0x55 to register 0xf0
-  i2c_start_wait(CONTROLLER_ADDR | I2C_WRITE);
+  i2c_start(CONTROLLER_ADDR | I2C_WRITE);
   i2c_write(0xf0);
   i2c_write(0x55);
   i2c_stop();
   // --------------------
 
-  i2c_start_wait(CONTROLLER_ADDR | I2C_WRITE);
-
   // --------------------
   // send 0x00 to register 0xfb
+  i2c_start(CONTROLLER_ADDR | I2C_WRITE);
   i2c_write(0xfb);
   i2c_write(0x00);
   i2c_stop();
   // --------------------
 
-  // ===========================================
-
   return 0;
 }
 
 static void controller_disable_encryption(void) {
-  // ===========================================
-  // deactivate encryption
-
   // --------------------
   // send 0xaa to register 0xf0
   i2c_start_wait(CONTROLLER_ADDR | I2C_WRITE);
@@ -66,8 +56,6 @@ static void controller_disable_encryption(void) {
   i2c_stop();
   // --------------------
 
-  _delay_ms(1);
-
   // --------------------
   // send 6 zero bytes to register 0x40
   i2c_start_wait(CONTROLLER_ADDR | I2C_WRITE);
@@ -79,8 +67,6 @@ static void controller_disable_encryption(void) {
   i2c_stop();
   // --------------------
 
-  _delay_ms(1);
-
   // --------------------
   // send 6 zero bytes to register 0x40
   i2c_start_wait(CONTROLLER_ADDR | I2C_WRITE);
@@ -91,8 +77,6 @@ static void controller_disable_encryption(void) {
 
   i2c_stop();
   // --------------------
-
-  _delay_ms(1);
 
   // --------------------
   // send 4 zero bytes to register 0x40
@@ -104,21 +88,15 @@ static void controller_disable_encryption(void) {
 
   i2c_stop();
   // --------------------
-
-  _delay_ms(1);
-  // ===========================================
 }
 
 uint8_t controller_read(ContollerData *cd) {
 
-  // ===========================================
-  // get data bytes from controller
-
-  _delay_ms(1);
-
   // --------------------
   // read 6 bytes
-  i2c_start_wait(CONTROLLER_ADDR | I2C_READ);
+  if (i2c_start(CONTROLLER_ADDR | I2C_READ) != 0) {
+    return 1;
+  }
 
   uint8_t i = 0;
 
@@ -134,12 +112,10 @@ uint8_t controller_read(ContollerData *cd) {
   // send read request to 0x00 register
   // for the next bytes!!!!
   // NOTE this is very important for original Nintendo Controller
-  i2c_start_wait(CONTROLLER_ADDR | I2C_WRITE);
+  i2c_start(CONTROLLER_ADDR | I2C_WRITE);
   i2c_write(0x00);
   i2c_stop();
   // --------------------
-
-  // ===========================================
 
   return 0;
 }
@@ -154,15 +130,17 @@ const uint8_t ID_MAP[MAX_IDs][6] = {
 ControllerID get_id(void) {
   // --------------------
   // send read request to 0xfa register
-  i2c_start_wait(CONTROLLER_ADDR | I2C_WRITE);
+  i2c_start(CONTROLLER_ADDR | I2C_WRITE);
   i2c_write(0xFA);
   i2c_stop();
   // --------------------
 
-
   // --------------------
   // read 6 bytes
-  i2c_start_wait(CONTROLLER_ADDR | I2C_READ);
+  if (i2c_start(CONTROLLER_ADDR | I2C_READ) != 0) {
+    return MAX_IDs; // if controller is not responsing, return MAX_IDs
+  }
+
   uint8_t i = 0;
   uint8_t id[6];
 
