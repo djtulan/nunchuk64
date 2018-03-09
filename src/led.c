@@ -27,12 +27,12 @@
 #include "led.h"
 
 const uint8_t FLASH_DATA[NUMBER_LED_STATES][7] PROGMEM = {
-// off, on, off,  on, off, on
-  {0,  0,  0,  0,  0,  0, 0},
-  {0,  0,  0,  0,  0,  0, 0},
-  {8,  2,  0,  0,  0,  0, 0},
-  {8,  2,  4,  2,  0,  0, 0},
-  {8,  2,  4,  2,  4,  2, 0}
+// on, off,  on, off, on, off
+  {0,  0,  0,  0,  0,  0,  0},
+  {0,  0,  0,  0,  0,  0,  0},
+  {2, 12,  0,  0,  0,  0,  0},
+  {2,  4,  2, 12,  0,  0,  0},
+  {2,  4,  2,  4,  2, 12,  0}
 };
 
 static LED_State led_state = LED_OFF;
@@ -62,15 +62,15 @@ void led_switch(LED_State state) {
       break;
 
     case LED_BLINK1:
-      led_set(0);
+      led_set(1);
       break;
 
     case LED_BLINK2:
-      led_set(0);
+      led_set(1);
       break;
 
     case LED_BLINK3:
-      led_set(0);
+      led_set(1);
       break;
 
     case NUMBER_LED_STATES:
@@ -97,6 +97,7 @@ LED_State led_get_state(void) {
 
 void led_poll(void) {
 
+  // if ON or OFF do nothing
   if (led_state == LED_OFF || led_state == LED_ON)
     return;
 
@@ -108,7 +109,7 @@ void led_poll(void) {
       led_flash_timer = wait;
     } else {
       led_flash_index = 0; // start from beginning
-      led_set(0);
+      led_set(1);
     }
 
   // count down timer
@@ -119,7 +120,7 @@ void led_poll(void) {
     if (led_flash_timer == 0) {
       // toggle led
       led_flash_index ++;
-      led_set(led_flash_index % 2);
+      led_set((led_flash_index + 1)  % 2);
     }
   }
 }
