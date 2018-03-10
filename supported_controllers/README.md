@@ -34,6 +34,8 @@ Seen here: https://www.ebay.com/itm/272765627224
 
 | Item          |Mode OFF  |Mode ON   |Mode F1   |Mode F2   |Mode F3   |
 | --------------|----------|----------|----------|----------|----------|
+| Item          |Mode OFF  |Mode ON   |Mode F1   |Mode F2   |Mode F3   |
+| --------------|----------|----------|----------|----------|----------|
 | Joystick UP   |UP        |UP        |          |          |          |
 | Joystick DOWN |DOWN      |DOWN      |          |          |          |
 | Joystick LEFT |LEFT      |LEFT      |          |          |          |
