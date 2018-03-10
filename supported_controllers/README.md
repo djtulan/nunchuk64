@@ -1,5 +1,27 @@
 # Supported Controllers
 
+This is an overview of all tested controllers.
+Since they all mostly use the same datasets, it is very likely that other controllers will work too.
+Pressing the pushbutton switches the Nunchuk64 to different modes.
+- Mode OFF ... LED is OFF
+- Mode ON  ... LED is ON (same as mode OFF, but exchanges Control Port 1 and Port 2.
+- Mode F1  ... LED flashes 1 time
+- Mode F2  ... LED flashes 2 times
+- Mode F3  ... LED flashes 3 times
+
+Depending on the mode the controllers behaves differently.
+Nunchuk64 can perform these different controls on each individual C64 Control Port:
+
+- UP
+- DOWN
+- LEFT
+- RIGHT
+- FIRE
+- SPACE (=> FIRE on Control Port 1)
+- AUTOFIRE
+- PADDLE X
+- PADDLE Y
+
 ## NES Classic Mini Clone
 Wireless Controller for Nintendo NES Mini Classic Edition.
 
@@ -10,17 +32,16 @@ Seen here: https://www.ebay.com/itm/272765627224
 
 | Item          |Mode OFF  |Mode ON   |Mode F1   |Mode F2   |Mode F3   |
 | --------------|----------|----------|----------|----------|----------|
-| Joystick UP   |UP        |          |          |          |          |
-| Joystick DOWN |DOWN      |          |          |          |          |
-| Joystick LEFT |LEFT      |          |          |          |          |
-| Joystick RIGHT|RIGHT     |          |          |          |          |
-| A             |UP        |          |          |          |          |
-| B             |FIRE      |          |          |          |          |
-| A+            |UP        |          |          |          |          |
-| B+            |FIRE      |          |          |          |          |
-| SELECT        |FIRE      |          |          |          |          |
-| START         |SPACE     |          |          |          |          |
-
+| Joystick UP   |UP        |UP        |          |          |          |
+| Joystick DOWN |DOWN      |DOWN      |          |          |          |
+| Joystick LEFT |LEFT      |LEFT      |          |          |          |
+| Joystick RIGHT|RIGHT     |RIGHT     |          |          |          |
+| A             |UP        |UP        |          |          |          |
+| B             |FIRE      |FIRE      |          |          |          |
+| A+            |UP        |UP        |          |          |          |
+| B+            |FIRE      |FIRE      |          |          |          |
+| SELECT        |FIRE      |FIRE      |          |          |          |
+| START         |SPACE     |SPACE     |          |          |          |
 
 
 ## SNES Classic Mini Clone
@@ -38,16 +59,16 @@ Seen here: https://www.ebay.at/itm/222674575659
 
 | Item          |Mode OFF  |Mode ON   |Mode F1   |Mode F2   |Mode F3   |
 | --------------|----------|----------|----------|----------|----------|
-| Joystick UP   |UP        |          |          |          |          |
-| Joystick DOWN |DOWN      |          |          |          |          |
-| Joystick LEFT |LEFT      |          |          |          |          |
-| Joystick RIGHT|RIGHT     |          |          |          |          |
-| A             |UP        |          |          |          |          |
-| B             |FIRE      |          |          |          |          |
-| X             |FIRE      |          |          |          |          |
-| Y             |UP        |          |          |          |          |
-| SELECT        |FIRE      |          |          |          |          |
-| START         |SPACE     |          |          |          |          |
+| Joystick UP   |UP        |UP        |          |          |          |
+| Joystick DOWN |DOWN      |DOWN      |          |          |          |
+| Joystick LEFT |LEFT      |LEFT      |          |          |          |
+| Joystick RIGHT|RIGHT     |RIGHT     |          |          |          |
+| A             |UP        |UP        |          |          |          |
+| B             |FIRE      |FIRE      |          |          |          |
+| X             |FIRE      |FIRE      |          |          |          |
+| Y             |AUTOFIRE  |AUTOFIRE  |          |          |          |
+| SELECT        |FIRE      |FIRE      |          |          |          |
+| START         |SPACE     |SPACE     |          |          |          |
 
 ## Wii classic controller
 Wii Classic Controller for Nintendo Wii Remote. (Wired)
@@ -65,7 +86,7 @@ Seen here: https://www.ebay.com/itm/291645811767
 | A             |UP        |          |          |          |          |
 | B             |FIRE      |          |          |          |          |
 | X             |FIRE      |          |          |          |          |
-| Y             |UP        |          |          |          |          |
+| Y             |AUTOFIRE  |          |          |          |          |
 | SELECT        |FIRE      |          |          |          |          |
 | HOME          |-         |          |          |          |          |
 | START         |SPACE     |          |          |          |          |
