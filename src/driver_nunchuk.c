@@ -91,17 +91,17 @@ static void get_joystick_state_nunchuk(const ContollerData *cd, Joystick *joysti
     int x = nunchuk_caccelx(cd);
     int y = nunchuk_caccely(cd);
 
-    if (x < -128) {
+    if (x < -118) {
       (*joystick) |= LEFT;
 
-    } else if (x > 128) {
+    } else if (x > 118) {
       (*joystick) |= RIGHT;
     }
 
-    if (y < -128) {
+    if (y < -118) {
       (*joystick) |= UP;
 
-    } else if (y > 128) {
+    } else if (y > 118) {
       (*joystick) |= DOWN;
     }
   }

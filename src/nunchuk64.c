@@ -25,6 +25,7 @@
 
 #include <avr/interrupt.h>
 #include <avr/wdt.h>
+#include <util/delay.h>
 
 #include "led.h"
 #include "button.h"
@@ -129,6 +130,7 @@ int main(void) {
     for (uint8_t p = PORT_A; p <= PORT_B; p++) {
       // select I2C port
       switch_selector(p);
+      _delay_ms(1);
 
       // ===================================
       // detect controller type, set driver
@@ -145,6 +147,7 @@ int main(void) {
         // controller read failed? -> delete driver
         if (controller_read(&cd[p]) != 0) {
           driver[p] = NULL;
+          joystick[p] = 0; // delete old data
         }
       }
 
