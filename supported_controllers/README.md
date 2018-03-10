@@ -4,7 +4,7 @@ This is an overview of all tested controllers.
 Since they all mostly use the same datasets, it is very likely that other controllers will work too.
 Pressing the pushbutton switches the Nunchuk64 to different modes.
 - Mode OFF ... LED is OFF
-- Mode ON  ... LED is ON (same as mode OFF, but exchanges Control Port 1 and Port 2.
+- Mode ON  ... LED is ON (same as mode OFF, but exchanges Control Port 1 and Port 2)
 - Mode F1  ... LED flashes 1 time
 - Mode F2  ... LED flashes 2 times
 - Mode F3  ... LED flashes 3 times
