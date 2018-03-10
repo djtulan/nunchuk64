@@ -17,10 +17,12 @@ Nunchuk64 can perform these different controls on each individual C64 Control Po
 - LEFT
 - RIGHT
 - FIRE
-- SPACE (=> FIRE on Control Port 1)
 - AUTOFIRE
 - PADDLE X
 - PADDLE Y
+
+An extra function is SPACE, which triggers FIRE on controller port 1.
+This is very handy because you can use it to press the space bar.
 
 ## NES Classic Mini Clone
 Wireless Controller for Nintendo NES Mini Classic Edition.
