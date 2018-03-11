@@ -3,6 +3,7 @@
 This is an overview of all tested controllers.
 Since they all mostly use the same datasets, it is very likely that other controllers will work too.
 Pressing the pushbutton switches the Nunchuk64 to different modes.
+
 - Mode OFF ... LED is OFF
 - Mode ON  ... LED is ON (same as mode OFF, but exchanges Control Port 1 and Port 2)
 - Mode F1  ... LED flashes 1 time
@@ -81,21 +82,21 @@ Seen here: https://www.ebay.com/itm/291645811767
 
 | Item          |Mode OFF  |Mode ON   |Mode F1   |Mode F2   |Mode F3   |
 | --------------|----------|----------|----------|----------|----------|
-| Joystick UP   |UP        |          |          |          |          |
-| Joystick DOWN |DOWN      |          |          |          |          |
-| Joystick LEFT |LEFT      |          |          |          |          |
-| Joystick RIGHT|RIGHT     |          |          |          |          |
-| A             |UP        |          |          |          |          |
-| B             |FIRE      |          |          |          |          |
-| X             |FIRE      |          |          |          |          |
-| Y             |AUTOFIRE  |          |          |          |          |
-| SELECT        |FIRE      |          |          |          |          |
-| HOME          |-         |          |          |          |          |
-| START         |SPACE     |          |          |          |          |
-| L             |LEFT      |          |          |          |          |
-| ZL            |-         |          |          |          |          |
-| R             |RIGHT     |          |          |          |          |
-| ZR            |-         |          |          |          |          |
+| Joystick UP   |UP        |UP        |          |          |          |
+| Joystick DOWN |DOWN      |DOWN      |          |          |          |
+| Joystick LEFT |LEFT      |LEFT      |          |          |          |
+| Joystick RIGHT|RIGHT     |RIGHT     |          |          |          |
+| A             |UP        |UP        |          |          |          |
+| B             |FIRE      |FIRE      |          |          |          |
+| X             |FIRE      |FIRE      |          |          |          |
+| Y             |AUTOFIRE  |AUTOFIRE  |          |          |          |
+| SELECT        |FIRE      |FIRE      |          |          |          |
+| HOME          |-         |-         |          |          |          |
+| START         |SPACE     |SPACE     |          |          |          |
+| L             |LEFT      |LEFT      |          |          |          |
+| ZL            |-         |-         |          |          |          |
+| R             |RIGHT     |RIGHT     |          |          |          |
+| ZR            |-         |-         |          |          |          |
 
 ## Wii Nunchuck
 Wii Nunchuck Controller for Nintendo Wii Remote
