@@ -33,6 +33,8 @@ Seen here: https://www.ebay.com/itm/272765627224
 
 ![NES Classic Mini Clone](nes_classic_mini_clone.jpg)
 
+DRIVER driver_nes_classic.c
+
 | Item          |Mode OFF  |Mode ON   |Mode F1   |Mode F2   |Mode F3   |
 | --------------|----------|----------|----------|----------|----------|
 | Joystick UP   |UP        |UP        |          |          |          |
@@ -60,6 +62,8 @@ Seen here: https://www.ebay.at/itm/222674575659
 
 ![SNES Classic Mini Clone](snes_classic_mini_clone_wired.jpg)
 
+DRIVER driver_wii_classic.c
+
 | Item          |Mode OFF  |Mode ON   |Mode F1   |Mode F2   |Mode F3   |
 | --------------|----------|----------|----------|----------|----------|
 | Joystick UP   |UP        |UP        |          |          |          |
@@ -72,6 +76,8 @@ Seen here: https://www.ebay.at/itm/222674575659
 | Y             |AUTOFIRE  |AUTOFIRE  |          |          |          |
 | SELECT        |FIRE      |FIRE      |          |          |          |
 | START         |SPACE     |SPACE     |          |          |          |
+| L             |LEFT      |LEFT      |          |          |          |
+| R             |RIGHT     |RIGHT     |          |          |          |
 
 ## Wii classic controller
 Wii Classic Controller for Nintendo Wii Remote. (Wired)
@@ -79,6 +85,8 @@ Wii Classic Controller for Nintendo Wii Remote. (Wired)
 Seen here: https://www.ebay.com/itm/291645811767
 
 ![Wii Classic](wii_classic.jpg)
+
+DRIVER driver_wii_classic.c
 
 | Item          |Mode OFF  |Mode ON   |Mode F1   |Mode F2   |Mode F3   |
 | --------------|----------|----------|----------|----------|----------|
@@ -103,12 +111,14 @@ Wii Nunchuck Controller for Nintendo Wii Remote
 
 ![Wii Nunchuk](wii_nunchuk.jpg)
 
+DRIVER driver_nunchuk.c
+
 | Item          |Mode OFF  |Mode ON   |Mode F1   |Mode F2   |Mode F3   |
 | --------------|----------|----------|----------|----------|----------|
-| Analog Joy X  |LEFT/RIGHT|-         |          |          |          |
-| Analog Joy Y  |UP/DOWN   |-         |          |          |          |
-| Accel X       |-         |LEFT/RIGHT|          |          |          |
-| Accel Y       |-         |UP/DOWN   |          |          |          |
-| Accel Z       |-         |-         |          |          |          |
-| C             |UP        |UP        |          |          |          |
-| Z             |FIRE      |FIRE      |          |          |          |
+| Analog Joy X  |LEFT/RIGHT|LEFT/RIGHT|-         |          |          |
+| Analog Joy Y  |UP/DOWN   |UP/DOWN   |-         |          |          |
+| Accel X       |-         |-         |LEFT/RIGHT|          |          |
+| Accel Y       |-         |-         |UP/DOWN   |          |          |
+| Accel Z       |-         |-         |-         |          |          |
+| C             |UP        |UP        |UP        |          |          |
+| Z             |FIRE      |FIRE      |FIRE      |          |          |
