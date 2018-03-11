@@ -115,10 +115,10 @@ DRIVER: driver_nunchuk.c
 
 | Item          |Mode OFF  |Mode ON   |Mode F1   |Mode F2   |Mode F3   |
 | --------------|----------|----------|----------|----------|----------|
-| Analog Joy X  |LEFT/RIGHT|LEFT/RIGHT|-         |          |          |
-| Analog Joy Y  |UP/DOWN   |UP/DOWN   |-         |          |          |
-| Accel X       |-         |-         |LEFT/RIGHT|          |          |
-| Accel Y       |-         |-         |UP/DOWN   |          |          |
-| Accel Z       |-         |-         |-         |          |          |
-| C             |UP        |UP        |UP        |          |          |
-| Z             |FIRE      |FIRE      |FIRE      |          |          |
+| Analog Joy X  |LEFT/RIGHT|LEFT/RIGHT|-         |-         |          |
+| Analog Joy Y  |UP/DOWN   |UP/DOWN   |-         |-         |          |
+| Accel X       |-         |-         |LEFT/RIGHT|LEFT/RIGHT|          |
+| Accel Y       |-         |-         |UP/DOWN   |UP/DOWN   |          |
+| Accel Z       |-         |-         |-         |-         |          |
+| C             |AUTOFIRE  |AUTOFIRE  |AUTOFIRE  |AUTOFIRE  |          |
+| Z             |FIRE      |FIRE      |FIRE      |FIRE      |          |
