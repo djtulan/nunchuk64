@@ -26,16 +26,16 @@
 
 #include "driver_nunchuk.h"
 
-#define ACCEL_ZEROX   510
-#define ACCEL_ZEROY   489
-#define ACCEL_ZEROZ   525
+#define ACCEL_ZEROX   512
+#define ACCEL_ZEROY   512
+#define ACCEL_ZEROZ   512
 
 static inline uint16_t nunchuk_accelx(const ContollerData *cd) {
   return ((0x0000 | (cd->byte[2] << 2)) + ((cd->byte[5] & 0x0c) >> 2));
 }
 
 static inline uint16_t nunchuk_accely(const ContollerData *cd) {
-  return ((0x0000 | (cd->byte[3] << 2)) + ((cd->byte[5] & 0xc0) >> 4));
+  return ((0x0000 | (cd->byte[3] << 2)) + ((cd->byte[5] & 0x30) >> 4));
 }
 
 static inline uint16_t nunchuk_accelz(const ContollerData *cd) {
@@ -61,49 +61,66 @@ static void get_joystick_state_nunchuk(const ContollerData *cd, Joystick *joysti
   // while analog stick Y returns from around 27 to 220. Center for both is around 128.
   (*joystick) = 0;
 
-  // ===================================
-  // LED is OFF (Joystick mode)
-  // ===================================
-  if (led_get_state() == LED_OFF) {
+  switch (led_get_state()) {
+    // ===================================
+    // LED is OFF/ON (Joystick mode)
+    // ===================================
+    case LED_OFF:
+    case LED_ON: {
+      // Analog Joystick X
+      uint8_t sx = cd->byte[0];
 
-    // Analog Joystick X
-    uint8_t sx = cd->byte[0];
+      if (sx > 180) {
+        (*joystick) |= RIGHT;
+      } else if (sx < 76) {
+        (*joystick) |= LEFT;
+      }
 
-    if (sx > 180) {
-      (*joystick) |= RIGHT;
-    } else if (sx < 76) {
-      (*joystick) |= LEFT;
+      // Analog Joystick Y
+      uint8_t sy = cd->byte[1];
+
+      if (sy > 180) {
+        (*joystick) |= UP;
+      } else if (sy < 76) {
+        (*joystick) |= DOWN;
+      }
     }
+    break;
 
-    // Analog Joystick Y
-    uint8_t sy = cd->byte[1];
+    // ===================================
+    // LED BLINK (Accelerometer mode)
+    // ===================================
+    case LED_BLINK1: {
+      int x = nunchuk_caccelx(cd);
+      int y = nunchuk_caccely(cd);
 
-    if (sy > 180) {
-      (*joystick) |= UP;
-    } else if (sy < 76) {
-      (*joystick) |= DOWN;
+      if (x < -118) {
+        (*joystick) |= LEFT;
+
+      } else if (x > 118) {
+        (*joystick) |= RIGHT;
+      }
+
+      if (y < -118) {
+        (*joystick) |= UP;
+
+      } else if (y > 118) {
+        (*joystick) |= DOWN;
+      }
     }
+    break;
 
-  // ===================================
-  // LED is ON (Accelerometer mode)
-  // ===================================
-  } else {
-    int x = nunchuk_caccelx(cd);
-    int y = nunchuk_caccely(cd);
-
-    if (x < -118) {
-      (*joystick) |= LEFT;
-
-    } else if (x > 118) {
-      (*joystick) |= RIGHT;
+    case LED_BLINK2: {
     }
+    break;
 
-    if (y < -118) {
-      (*joystick) |= UP;
-
-    } else if (y > 118) {
-      (*joystick) |= DOWN;
+    case LED_BLINK3: {
     }
+    break;
+
+    case NUMBER_LED_STATES: {
+    }
+    break;
   }
 
   // Z Button
@@ -117,7 +134,17 @@ static void get_joystick_state_nunchuk(const ContollerData *cd, Joystick *joysti
   }
 }
 
-static void get_paddle_state_nunchuk(const ContollerData *cd, uint8_t *paddle) {
+static void get_paddle_state_nunchuk(const ContollerData *cd, Paddle *paddle) {
+  if (led_get_state() == LED_BLINK2) {
+
+    paddle->axis_x = nunchuk_accelx(cd);
+    paddle->axis_y = nunchuk_accely(cd);
+
+  } else if (led_get_state() == LED_BLINK3) {
+
+    paddle->axis_x = cd->byte[0] << 2;
+    paddle->axis_y = cd->byte[1] << 2;
+  }
 }
 
 Driver drv_nunchuk = {

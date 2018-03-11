@@ -24,7 +24,7 @@
 
 #include "selector.h"
 
-void init_selector(void) {
+void selector_init(void) {
   BIT_SET(DDR_SEL1, BIT_SEL1);    // enable output
   BIT_SET(DDR_SEL2, BIT_SEL2);    // enable output
 
@@ -32,7 +32,7 @@ void init_selector(void) {
   BIT_CLEAR(PORT_SEL2, BIT_SEL2); // set to 0 (unselected)
 }
 
-void switch_selector(Port port) {
+void selector_switch(Port port) {
   if (port == PORT_A) {
     BIT_CLEAR(PORT_SEL1, BIT_SEL1);   // set to 0
     BIT_SET(PORT_SEL2, BIT_SEL2);     // set to 1

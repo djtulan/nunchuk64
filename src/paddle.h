@@ -28,6 +28,12 @@
 #include "controller.h"
 #include "joystick.h"
 
+/// \brief Joystick, holds the state of one joystick
+typedef struct {
+  uint16_t axis_x; ///< [0 - 1023]  0 ... right / 1023 ...left
+  uint16_t axis_y; ///< [0 - 1023]  0 ... right / 1023 ...left
+} Paddle;
+
 /**
 * @brief init paddle-related IOs and interrupts
 */
@@ -39,8 +45,13 @@ extern void paddle_init(void);
 extern void paddle_start(void);
 
 /**
+* @brief stop paddle hardware and interrupt routines
+*/
+extern void paddle_stop(void);
+
+/**
 * @brief update paddle state
 */
-extern void paddle_update(Joystick port_a, Joystick port_b);
+extern void paddle_update(Paddle *port_a, Paddle *port_b);
 
 #endif

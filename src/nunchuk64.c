@@ -43,7 +43,7 @@
 #include "driver_nunchuk.h"
 #include "driver_wii_classic.h"
 
-Driver *GetDriver(ControllerID id) {
+static Driver *GetDriver(ControllerID id) {
   switch (id) {
     case ID_Nunchuck:
       return &drv_nunchuk;
@@ -55,13 +55,14 @@ Driver *GetDriver(ControllerID id) {
     case ID_NES_Classic_Mini_Clone:
       return &drv_nes_classic;
 
-    default:
     case MAX_IDs:
       return NULL;
   }
+
+  return NULL;
 }
 
-void init(void) {
+static void init(void) {
   // ===================================
   // init modules
   // ===================================
@@ -69,12 +70,11 @@ void init(void) {
   led_switch(LED_ON); // diagnose (in init)
 
   button_init();      // init button input
-  init_selector();    // init i2c bus selector
+  selector_init();    // init i2c bus selector
   i2c_init();         // init i2c routines
   joystick_init();    // init joystick outputs
   paddle_init();      // init paddle outputs
   timer_init();       // init timer interrupt
-
 
   // ===================================
   // enable watchdog, woof
@@ -85,11 +85,6 @@ void init(void) {
   // enable interrupts
   // ===================================
   sei();
-
-  // ===================================
-  // start paddle routines
-  // ===================================
-  paddle_start();
 
   led_switch(LED_OFF); // diagnose (in init)
 }
@@ -107,6 +102,7 @@ int main(void) {
 
   ContollerData cd[NUMBER_PORTS];  // controller data
   Joystick joystick[NUMBER_PORTS] = {0, 0}; // joystick data
+  Paddle paddle[NUMBER_PORTS] = {{0, 0}, {0, 0}}; // joystick data
 
   // ===================================
   // MAIN LOOP
@@ -114,14 +110,30 @@ int main(void) {
 
     wdt_reset(); // calm watchdog down
 
-
     // ================
     // read button
     // ================
     button_debounce();
 
     if (button_get()) {
+      // set to next led state
       led_setnextstate();
+
+      // start / stop paddle depending on state
+      switch (led_get_state()) {
+        case LED_OFF:
+        case LED_ON:
+        case LED_BLINK1:
+        case NUMBER_LED_STATES:
+          paddle_stop();
+          break;
+
+        case LED_BLINK2:
+        case LED_BLINK3:
+          paddle_start();
+          break;
+      }
+      // activate / deactivate paddle
     }
 
     // ===================================
@@ -129,7 +141,7 @@ int main(void) {
     // ===================================
     for (uint8_t p = PORT_A; p <= PORT_B; p++) {
       // select I2C port
-      switch_selector(p);
+      selector_switch(p);
       _delay_ms(1);
 
       // ===================================
@@ -140,9 +152,9 @@ int main(void) {
 
         driver[p] = GetDriver(get_id());
 
-      // ===================================
-      // read data from controller
-      // ===================================
+        // ===================================
+        // read data from controller
+        // ===================================
       } else {
         // controller read failed? -> delete driver
         if (controller_read(&cd[p]) != 0) {
@@ -152,12 +164,20 @@ int main(void) {
       }
 
       // translate the controller date to joystick data
-      if (driver[p] != NULL)
+      if (driver[p] != NULL) {
         driver[p]->get_joystick_state(&cd[p], &joystick[p]);
+        driver[p]->get_paddle_state(&cd[p], &paddle[p]);
+      }
     }
 
-    joystick_update(joystick[PORT_A], joystick[PORT_B]);
-    paddle_update(joystick[PORT_A], joystick[PORT_B]);
+    // switched mode (while LED == ON)
+    if (led_get_state() == LED_ON) {
+      joystick_update(joystick[PORT_B], joystick[PORT_A]);
+      paddle_update(&paddle[PORT_B], &paddle[PORT_A]);
+    } else {
+      joystick_update(joystick[PORT_A], joystick[PORT_B]);
+      paddle_update(&paddle[PORT_A], &paddle[PORT_B]);
+    }
   }
 
   //  MAIN LOOP

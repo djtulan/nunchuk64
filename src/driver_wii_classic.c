@@ -22,8 +22,17 @@
 //=============================================================================
 #include "enums.h"
 #include "joystick.h"
+#include "led.h"
 
 #include "driver_wii_classic.h"
+
+static inline uint16_t left_x(const ContollerData *cd) {
+  return (cd->byte[0] & 0x3f);
+}
+
+static inline uint16_t left_y(const ContollerData *cd) {
+  return (cd->byte[1] & 0x3f);
+}
 
 static void get_joystick_state_wii_classic(const ContollerData *cd, Joystick *joystick) {
 
@@ -96,9 +105,41 @@ static void get_joystick_state_wii_classic(const ContollerData *cd, Joystick *jo
   if ((cd->byte[4] & 0x10) == 0) {
     (*joystick) |= BUTTON;
   }
+
+  switch (led_get_state()) {
+    case LED_OFF:
+    case LED_ON:
+    case LED_BLINK1:
+    case NUMBER_LED_STATES: {
+
+      uint8_t lx = left_x(cd);
+
+      if (lx > 43) {
+        (*joystick) |= RIGHT;
+      } else if (lx < 20) {
+        (*joystick) |= LEFT;
+      }
+
+      // Analog Joystick Y
+      uint8_t ly = left_y(cd);
+
+      if (ly > 43) {
+        (*joystick) |= UP;
+      } else if (ly < 20) {
+        (*joystick) |= DOWN;
+      }
+    }
+    break;
+
+    case LED_BLINK2:
+    case LED_BLINK3:
+      break;
+  }
 }
 
-static void get_paddle_state_wii_classic(const ContollerData *cd, uint8_t *paddle) {
+static void get_paddle_state_wii_classic(const ContollerData *cd, Paddle *paddle) {
+  paddle->axis_x = left_x(cd) << 4;
+  paddle->axis_y = left_y(cd) << 4;
 }
 
 Driver drv_wii_classic = {

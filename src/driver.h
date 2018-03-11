@@ -41,7 +41,7 @@ typedef struct {
   * @param [in] cd controller data
   * @param [out] paddle data
   */
-  void (*get_paddle_state)(const ContollerData *cd, uint8_t *paddle);
+  void (*get_paddle_state)(const ContollerData *cd, Paddle *paddle);
 
 } Driver;
 

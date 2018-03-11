@@ -28,11 +28,6 @@
 
 #include "paddle.h"
 
-static volatile uint16_t ocr1a_load = 41; ///< precalculated OCR1A value (A XPOT)
-static volatile uint16_t ocr1b_load = 41; ///< precalculated OCR1B value (A YPOT)
-static volatile uint16_t ocr0a_load = 41; ///< precalculated OCR0A value (B XPOT)
-static volatile uint16_t ocr0b_load = 41; ///< precalculated OCR0B value (B YPOT)
-
 void paddle_init(void) {
   // SID sensing port
   DDR_SENSE_A  &= ~_BV(BIT_SENSE_A); // SENSE is input
@@ -68,8 +63,6 @@ void paddle_start(void) {
   TCCR1B = 0;
   TCCR0B = 0;
 
-  // POTX/Y normally controlled by output compare unit
-  // initially should be pulled up to provide high bias on SENSE pin
   DDR_PADDLE_A_X  |= (_BV(BIT_PADDLE_A_X) | _BV(BIT_PADDLE_A_Y));   // enable POTX/POTY as outputs
   PORT_PADDLE_A_X |= (_BV(BIT_PADDLE_A_X) | _BV(BIT_PADDLE_A_Y));   // output "1" on both
 
@@ -83,70 +76,75 @@ void paddle_start(void) {
   EIMSK |= _BV(INT1);   // enable INT1
 }
 
-void paddle_update(Joystick port_a, Joystick port_b) {
+void paddle_stop(void) {
+  // Initialize Timer1 and use OC1A/OC1B to output values
+  // don't count yet
+  TCCR1B = 0;
+  TCCR0B = 0;
+
+  DDR_PADDLE_A_X  &= ~(_BV(BIT_PADDLE_A_X) | _BV(BIT_PADDLE_A_Y));   // disable POTX/POTY as outputs
+  PORT_PADDLE_A_X &= ~(_BV(BIT_PADDLE_A_X) | _BV(BIT_PADDLE_A_Y));
+
+  DDR_PADDLE_B_X  &= ~(_BV(BIT_PADDLE_B_X) | _BV(BIT_PADDLE_B_Y));   // disable POTX/POTY as outputs
+  PORT_PADDLE_B_X &= ~(_BV(BIT_PADDLE_B_X) | _BV(BIT_PADDLE_B_Y));
+
+  EIFR  |= _BV(INTF0);  // clear INT0 flag
+  EIMSK &= ~_BV(INT0);  // enable INT0
+
+  EIFR  |= _BV(INTF1);  // clear INT1 flag
+  EIMSK &= ~_BV(INT1);  // enable INT1
+}
+
+#define P1_MIN_TIMER     19
+#define P1_MAX_TIMER     53
+#define P1_RANGE         (P1_MAX_TIMER - P1_MIN_TIMER)
+
+#define P2_MIN_TIMER     20
+#define P2_MAX_TIMER     56
+#define P2_RANGE         (P2_MAX_TIMER - P2_MIN_TIMER)
+
+static volatile uint16_t ocr1a_load = P1_MIN_TIMER + (P1_RANGE / 2); ///< precalculated OCR1A value (A XPOT)
+static volatile uint16_t ocr1b_load = P1_MIN_TIMER + (P1_RANGE / 2); ///< precalculated OCR1B value (A YPOT)
+static volatile uint16_t ocr0a_load = P2_MIN_TIMER + (P2_RANGE / 2); ///< precalculated OCR0A value (B XPOT)
+static volatile uint16_t ocr0b_load = P2_MIN_TIMER + (P2_RANGE / 2); ///< precalculated OCR0B value (B YPOT)
+
+void paddle_update(Paddle *port_a, Paddle *port_b) {
 
   // ===================================
   //  CONTROL PORT A
   // ===================================
 
-  // UP
-  if (port_a & LEFT) {
-    ocr1a_load += 1;
-  }
+  // ocr1a_load  x
+  // ocr1b_load  y
 
-  // DOWN
-  if (port_a & RIGHT) {
-    ocr1a_load -= 1;
-  }
+  // ocr0a_load  x
+  // ocr0b_load  y
 
-  // LEFT
-  if (port_a & DOWN) {
-    ocr1b_load += 1;
-  }
+  ocr1a_load = P1_RANGE - ((port_a->axis_x * P1_RANGE) / 1023) + P1_MIN_TIMER;
+  ocr1b_load = P1_RANGE - ((port_a->axis_y * P1_RANGE) / 1023) + P1_MIN_TIMER;
 
-  // RIGHT
-  if (port_a & UP) {
-    ocr1b_load -= 1;
-  }
+  ocr0a_load = P2_RANGE - ((port_b->axis_x * P2_RANGE) / 1023) + P2_MIN_TIMER;
+  ocr0b_load = P2_RANGE - ((port_b->axis_y * P2_RANGE) / 1023) + P2_MIN_TIMER;
 
-  // ===================================
-  //  CONTROL PORT B
-  // ===================================
+  if (ocr1a_load < P1_MIN_TIMER)
+    ocr1a_load = P1_MIN_TIMER;
+  else if (ocr1a_load > P1_MAX_TIMER)
+    ocr1a_load = P1_MAX_TIMER;
 
-  // UP
-  if (port_b & LEFT) {
-    ocr0a_load += 1;
-  }
+  if (ocr1b_load < P1_MIN_TIMER)
+    ocr1b_load = P1_MIN_TIMER;
+  else if (ocr1b_load > P1_MAX_TIMER)
+    ocr1b_load = P1_MAX_TIMER;
 
-  // DOWN
-  if (port_b & RIGHT) {
-    ocr0a_load -= 1;
-  }
+  if (ocr0a_load < P2_MIN_TIMER)
+    ocr0a_load = P2_MIN_TIMER;
+  else if (ocr0a_load > P2_MAX_TIMER)
+    ocr0a_load = P2_MAX_TIMER;
 
-  // LEFT
-  if (port_b & DOWN) {
-    ocr0b_load += 1;
-  }
-
-  // RIGHT
-  if (port_b & UP) {
-    ocr0b_load -= 1;
-  }
-
-
-  // ocrXY_load should be in range of 20 - 53
-  if (ocr1a_load < 18) ocr1a_load = 18;
-  else if (ocr1a_load > 53) ocr1a_load = 53;
-
-  if (ocr1b_load < 18) ocr1b_load = 18;
-  else if (ocr1b_load > 53) ocr1b_load = 53;
-
-
-  if (ocr0a_load < 20) ocr0a_load = 20;
-  else if (ocr0a_load > 56) ocr0a_load = 56;
-
-  if (ocr0b_load < 20) ocr0b_load = 20;
-  else if (ocr0b_load > 56) ocr0b_load = 56;
+  if (ocr0b_load < P2_MIN_TIMER)
+    ocr0b_load = P2_MIN_TIMER;
+  else if (ocr0b_load > P2_MAX_TIMER)
+    ocr0b_load = P2_MAX_TIMER;
 }
 
 /// SID measuring cycle detected.
