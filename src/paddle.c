@@ -79,20 +79,14 @@ void paddle_start(void) {
 void paddle_stop(void) {
   // Initialize Timer1 and use OC1A/OC1B to output values
   // don't count yet
-  TCCR1B = 0;
-  TCCR0B = 0;
-
   DDR_PADDLE_A_X  &= ~(_BV(BIT_PADDLE_A_X) | _BV(BIT_PADDLE_A_Y));   // disable POTX/POTY as outputs
   PORT_PADDLE_A_X &= ~(_BV(BIT_PADDLE_A_X) | _BV(BIT_PADDLE_A_Y));
 
   DDR_PADDLE_B_X  &= ~(_BV(BIT_PADDLE_B_X) | _BV(BIT_PADDLE_B_Y));   // disable POTX/POTY as outputs
   PORT_PADDLE_B_X &= ~(_BV(BIT_PADDLE_B_X) | _BV(BIT_PADDLE_B_Y));
 
-  EIFR  |= _BV(INTF0);  // clear INT0 flag
-  EIMSK &= ~_BV(INT0);  // enable INT0
-
-  EIFR  |= _BV(INTF1);  // clear INT1 flag
-  EIMSK &= ~_BV(INT1);  // enable INT1
+  EIMSK &= ~_BV(INT0);  // disable INT0
+  EIMSK &= ~_BV(INT1);  // disable INT1
 }
 
 #define P1_MIN_TIMER     19
