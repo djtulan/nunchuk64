@@ -57,11 +57,29 @@ void paddle_init(void) {
   EICRA |= _BV(ISC11);                // ISC11:ISC10 == 10, @negedge
 }
 
+#define P1_MIN_TIMER     19
+#define P1_MAX_TIMER     53
+#define P1_RANGE         (P1_MAX_TIMER - P1_MIN_TIMER)
+
+#define P2_MIN_TIMER     20
+#define P2_MAX_TIMER     56
+#define P2_RANGE         (P2_MAX_TIMER - P2_MIN_TIMER)
+
+static volatile uint16_t ocr1a_load = P1_MIN_TIMER + (P1_RANGE / 2); ///< precalculated OCR1A value (A XPOT)
+static volatile uint16_t ocr1b_load = P1_MIN_TIMER + (P1_RANGE / 2); ///< precalculated OCR1B value (A YPOT)
+static volatile uint16_t ocr0a_load = P2_MIN_TIMER + (P2_RANGE / 2); ///< precalculated OCR0A value (B XPOT)
+static volatile uint16_t ocr0b_load = P2_MIN_TIMER + (P2_RANGE / 2); ///< precalculated OCR0B value (B YPOT)
+
 void paddle_start(void) {
   // Initialize Timer1 and use OC1A/OC1B to output values
   // don't count yet
   TCCR1B = 0;
   TCCR0B = 0;
+
+  ocr1a_load = P1_MIN_TIMER + (P1_RANGE / 2); ///< precalculated OCR1A value (A XPOT)
+  ocr1b_load = P1_MIN_TIMER + (P1_RANGE / 2); ///< precalculated OCR1B value (A YPOT)
+  ocr0a_load = P2_MIN_TIMER + (P2_RANGE / 2); ///< precalculated OCR0A value (B XPOT)
+  ocr0b_load = P2_MIN_TIMER + (P2_RANGE / 2); ///< precalculated OCR0B value (B YPOT)
 
   DDR_PADDLE_A_X  |= (_BV(BIT_PADDLE_A_X) | _BV(BIT_PADDLE_A_Y));   // enable POTX/POTY as outputs
   PORT_PADDLE_A_X |= (_BV(BIT_PADDLE_A_X) | _BV(BIT_PADDLE_A_Y));   // output "1" on both
@@ -77,8 +95,6 @@ void paddle_start(void) {
 }
 
 void paddle_stop(void) {
-  // Initialize Timer1 and use OC1A/OC1B to output values
-  // don't count yet
   DDR_PADDLE_A_X  &= ~(_BV(BIT_PADDLE_A_X) | _BV(BIT_PADDLE_A_Y));   // disable POTX/POTY as outputs
   PORT_PADDLE_A_X &= ~(_BV(BIT_PADDLE_A_X) | _BV(BIT_PADDLE_A_Y));
 
@@ -88,19 +104,6 @@ void paddle_stop(void) {
   EIMSK &= ~_BV(INT0);  // disable INT0
   EIMSK &= ~_BV(INT1);  // disable INT1
 }
-
-#define P1_MIN_TIMER     19
-#define P1_MAX_TIMER     53
-#define P1_RANGE         (P1_MAX_TIMER - P1_MIN_TIMER)
-
-#define P2_MIN_TIMER     20
-#define P2_MAX_TIMER     56
-#define P2_RANGE         (P2_MAX_TIMER - P2_MIN_TIMER)
-
-static volatile uint16_t ocr1a_load = P1_MIN_TIMER + (P1_RANGE / 2); ///< precalculated OCR1A value (A XPOT)
-static volatile uint16_t ocr1b_load = P1_MIN_TIMER + (P1_RANGE / 2); ///< precalculated OCR1B value (A YPOT)
-static volatile uint16_t ocr0a_load = P2_MIN_TIMER + (P2_RANGE / 2); ///< precalculated OCR0A value (B XPOT)
-static volatile uint16_t ocr0b_load = P2_MIN_TIMER + (P2_RANGE / 2); ///< precalculated OCR0B value (B YPOT)
 
 void paddle_update(Paddle *port_a, Paddle *port_b) {
 

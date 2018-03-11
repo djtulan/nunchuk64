@@ -22,7 +22,7 @@
 //=============================================================================
 #include <string.h>
 
-#include <util/delay.h>
+// #include <util/delay.h>
 
 #include "i2c_master.h"
 #include "controller.h"
@@ -58,7 +58,7 @@ static void controller_disable_encryption(void) {
   i2c_stop();
   // --------------------
 
-  _delay_ms(1);
+  // _delay_ms(1);
 
   // --------------------
   // send 6 zero bytes to register 0x40
@@ -71,7 +71,7 @@ static void controller_disable_encryption(void) {
   i2c_stop();
   // --------------------
 
-  _delay_ms(1);
+  // _delay_ms(1);
 
   // --------------------
   // send 6 zero bytes to register 0x40
@@ -84,7 +84,7 @@ static void controller_disable_encryption(void) {
   i2c_stop();
   // --------------------
 
-  _delay_ms(1);
+  // _delay_ms(1);
 
   // --------------------
   // send 4 zero bytes to register 0x40
@@ -97,12 +97,12 @@ static void controller_disable_encryption(void) {
   i2c_stop();
   // --------------------
 
-  _delay_ms(1);
+  // _delay_ms(1);
 }
 
 uint8_t controller_read(ContollerData *cd) {
 
-  _delay_ms(1);
+  // _delay_ms(1);
 
   // --------------------
   // read 6 bytes

@@ -25,7 +25,7 @@
 
 #include <avr/interrupt.h>
 #include <avr/wdt.h>
-#include <util/delay.h>
+// #include <util/delay.h>
 
 #include "led.h"
 #include "button.h"
@@ -142,7 +142,7 @@ int main(void) {
     for (uint8_t p = PORT_A; p <= PORT_B; p++) {
       // select I2C port
       selector_switch(p);
-      _delay_ms(1);
+      // _delay_ms(1);
 
       // ===================================
       // detect controller type, set driver
