@@ -76,10 +76,11 @@ void paddle_start(void) {
   TCCR1B = 0;
   TCCR0B = 0;
 
-  ocr1a_load = P1_MIN_TIMER + (P1_RANGE / 2); ///< precalculated OCR1A value (A XPOT)
-  ocr1b_load = P1_MIN_TIMER + (P1_RANGE / 2); ///< precalculated OCR1B value (A YPOT)
-  ocr0a_load = P2_MIN_TIMER + (P2_RANGE / 2); ///< precalculated OCR0A value (B XPOT)
-  ocr0b_load = P2_MIN_TIMER + (P2_RANGE / 2); ///< precalculated OCR0B value (B YPOT)
+  OCR1A = ocr1a_load;
+  OCR1B = ocr1b_load;
+
+  OCR0A = ocr0a_load;
+  OCR0B = ocr0b_load;
 
   DDR_PADDLE_A_X  |= (_BV(BIT_PADDLE_A_X) | _BV(BIT_PADDLE_A_Y));   // enable POTX/POTY as outputs
   PORT_PADDLE_A_X |= (_BV(BIT_PADDLE_A_X) | _BV(BIT_PADDLE_A_Y));   // output "1" on both
