@@ -65,8 +65,7 @@ static void get_joystick_state_nunchuk(const ContollerData *cd, Joystick *joysti
     // ===================================
     // LED is OFF/ON (Joystick mode)
     // ===================================
-    case LED_OFF:
-    case LED_ON: {
+    case LED_OFF: {
       // Analog Joystick X
       uint8_t sx = cd->byte[0];
 
@@ -90,7 +89,8 @@ static void get_joystick_state_nunchuk(const ContollerData *cd, Joystick *joysti
     // ===================================
     // LED BLINK (Accelerometer mode)
     // ===================================
-    case LED_BLINK1: {
+    case LED_ON:
+    {
       int x = nunchuk_caccelx(cd);
       int y = nunchuk_caccely(cd);
 
@@ -110,13 +110,14 @@ static void get_joystick_state_nunchuk(const ContollerData *cd, Joystick *joysti
     }
     break;
 
+    case LED_BLINK1:
     case LED_BLINK2: {
     }
     break;
 
-    case LED_BLINK3: {
-    }
-    break;
+//     case LED_BLINK3: {
+//     }
+//     break;
 
     case NUMBER_LED_STATES: {
     }
@@ -135,12 +136,12 @@ static void get_joystick_state_nunchuk(const ContollerData *cd, Joystick *joysti
 }
 
 static void get_paddle_state_nunchuk(const ContollerData *cd, Paddle *paddle) {
-  if (led_get_state() == LED_BLINK2) {
+  if (led_get_state() == LED_BLINK1) {
 
     paddle->axis_x = nunchuk_accelx(cd);
     paddle->axis_y = nunchuk_accely(cd);
 
-  } else if (led_get_state() == LED_BLINK3) {
+  } else if (led_get_state() == LED_BLINK2) {
 
     paddle->axis_x = cd->byte[0] << 2;
     paddle->axis_y = cd->byte[1] << 2;

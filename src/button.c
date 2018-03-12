@@ -25,6 +25,7 @@
 #include "button.h"
 
 static volatile uint8_t button_down = 0;
+static volatile uint8_t button_down_long = 0;
 
 void button_init(void) {
   BIT_SET(PORT_BUTTON, BIT_BUTTON); // Enable internal pullup resistor on the input pin
@@ -36,22 +37,34 @@ void button_init(void) {
 // Call this function about 100 times per second.
 void button_debounce(void) {
   static uint8_t count = 0; // counter for number of equal states
-  static uint8_t button_state = 0; // current (debounced) state
+  static uint8_t button_state = 1; // current (debounced) state
+  static uint8_t button_trigger = 0; // trigger button down
 
+  static uint8_t count_long = 0; // counter for number of equal states
+  static uint8_t button_state_long = 1; // current (debounced) state
+
+  // =====================================================
   // check if button is high or low for the moment
+  // =====================================================
   uint8_t current_state = (bit_is_set(PIN_BUTTON, BIT_BUTTON)) ? 1 : 0;
 
+  // =====================================================
   // button state is about to be changed, increase counter
+  // =====================================================
   if (current_state != button_state) {
     count ++;
 
     // the button have not bounced for 3 checks, change state
-    if (count >= 3) {
+    if (count >= 4) {
       button_state = current_state; // we are in a new state
 
       // if the button was pressed (not released), tell main so
       if (current_state == 0) {
-        button_down = 1;
+        button_trigger = 1;
+        // if button was released again
+      } else {
+        if (button_trigger == 1)
+          button_down = 1;
       }
 
       count = 0;
@@ -61,6 +74,32 @@ void button_debounce(void) {
   } else {
     // reset counter
     count = 0;
+  }
+
+// =====================================================
+// button state is about to be changed, increase counter
+// =====================================================
+  if (current_state != button_state_long) {
+    count_long ++;
+
+    // the button have not bounced for 3 checks, change state
+    if ((count_long >= 70 && current_state == 0) ||
+        (count_long >= 4 && current_state == 1)) {
+      button_state_long = current_state; // we are in a new state
+
+      // if the button was pressed long (not released), tell main so
+      if (current_state == 0) {
+        button_down_long = 1;
+        button_trigger = 0;
+      }
+
+      count_long = 0;
+    }
+
+    // state is similar to old state
+  } else {
+    // reset counter
+    count_long = 0;
   }
 }
 
@@ -72,3 +111,13 @@ uint8_t button_get(void) {
 
   return 0;
 }
+
+uint8_t button_get_long(void) {
+  if (button_down_long == 1) {
+    button_down_long = 0;
+    return 1;
+  }
+
+  return 0;
+}
+

@@ -103,18 +103,23 @@ int main(void) {
   ContollerData cd[NUMBER_PORTS];  // controller data
   Joystick joystick[NUMBER_PORTS] = {0, 0}; // joystick data
   Paddle paddle[NUMBER_PORTS] = {{0, 0}, {0, 0}}; // joystick data
+  uint8_t switch_ports = 0;
 
   // ===================================
   // MAIN LOOP
   while (1) {
 
-    wdt_reset(); // calm watchdog down
+    // ================
+    // calm watchdog down
+    // ================
+    wdt_reset();
 
     // ================
     // read button
     // ================
     button_debounce();
 
+    // short press
     if (button_get()) {
       // set to next led state
       led_setnextstate();
@@ -123,17 +128,22 @@ int main(void) {
       switch (led_get_state()) {
         case LED_OFF:
         case LED_ON:
-        case LED_BLINK1:
         case NUMBER_LED_STATES:
           paddle_stop();
           break;
 
+        case LED_BLINK1:
         case LED_BLINK2:
-        case LED_BLINK3:
+        // case LED_BLINK3:
           paddle_start();
           break;
       }
       // activate / deactivate paddle
+    }
+
+    // long press
+    if (button_get_long()) {
+      switch_ports = ~switch_ports;
     }
 
     // ===================================
@@ -171,12 +181,12 @@ int main(void) {
     }
 
     // switched mode (while LED == ON)
-    if (led_get_state() == LED_ON) {
-      joystick_update(joystick[PORT_B], joystick[PORT_A]);
-      paddle_update(&paddle[PORT_B], &paddle[PORT_A]);
-    } else {
+    if (switch_ports == 0) {
       joystick_update(joystick[PORT_A], joystick[PORT_B]);
       paddle_update(&paddle[PORT_A], &paddle[PORT_B]);
+    } else {
+      joystick_update(joystick[PORT_B], joystick[PORT_A]);
+      paddle_update(&paddle[PORT_B], &paddle[PORT_A]);
     }
   }
 
