@@ -30,7 +30,8 @@ Nunchuk64 can perform these different controls on each individual C64 Control Po
 
 An extra function is SPACE, which triggers FIRE on controller port 1.
 This is very handy because you can use it to press the space bar.
-For SECOND FIRE / THIRD FIRE C64s analog paddle input X,Y are used, similar the Cheetah Annihilator Joystick.
+For SECOND FIRE / THIRD FIRE C64s analog paddle input X,Y are used, 
+similar the Cheetah Annihilator Joystick.
 See https://www.c64-wiki.de/wiki/Joystick#Weitere_Feuerkn.C3.B6pfe
 
 ### Joystick Swapping
