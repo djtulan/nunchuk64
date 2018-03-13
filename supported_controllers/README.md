@@ -40,7 +40,7 @@ Seen here: https://www.ebay.com/itm/272765627224
 
 ![NES Classic Mini Clone](nes_classic_mini_clone.jpg)
 
-DRIVER: driver_nes_classic.c
+DRIVER: [https://github.com/djtulan/nunchuk64/blob/master/src/driver_nes_classic.c](driver_nes_classic.c)
 
 | Item          |Mode OFF  |Mode ON   |Mode F1   |Mode F2   |
 | --------------|----------|----------|----------|----------|
