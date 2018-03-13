@@ -1,7 +1,8 @@
 # Supported Controllers
-
 This is an overview of all tested controllers.
 Since they all mostly use the same datasets, it is very likely that other controllers will work too.
+
+### Modes
 Pressing the pushbutton switches the Nunchuk64 to different modes.
 
 - Mode OFF ... LED is OFF
@@ -10,6 +11,8 @@ Pressing the pushbutton switches the Nunchuk64 to different modes.
 - Mode F2  ... LED flashes 2 times
 
 Depending on the mode the controllers behaves differently.
+
+### Possible Controls
 Nunchuk64 can perform these different controls on each individual C64 Control Port:
 
 - UP
@@ -30,6 +33,7 @@ This is very handy because you can use it to press the space bar.
 For SECOND FIRE / THIRD FIRE C64s analog paddle input X,Y are used, similar the Cheetah Annihilator Joystick.
 See https://www.c64-wiki.de/wiki/Joystick#Weitere_Feuerkn.C3.B6pfe
 
+### Joystic Swapping
 A long press on the button changes the ports. Port 1 becomes 2 and Port 2 becomes 1.
 Another long press, changes them back.
 
