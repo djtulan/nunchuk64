@@ -27,7 +27,7 @@ Nunchuk64 can perform these different controls on each individual C64 Control Po
 
 An extra function is SPACE, which triggers FIRE on controller port 1.
 This is very handy because you can use it to press the space bar.
-For SECOND FIRE / THIRD FIRE C64s analog paddle input X,Y ist used, similar the Cheetah Annihilator Joystick.
+For SECOND FIRE / THIRD FIRE C64s analog paddle input X,Y are used, similar the Cheetah Annihilator Joystick.
 See https://www.c64-wiki.de/wiki/Joystick#Weitere_Feuerkn.C3.B6pfe
 
 ## NES Classic Mini Clone
@@ -35,6 +35,7 @@ Wireless Controller for Nintendo NES Mini Classic Edition.
 
 Seen here: https://www.ebay.com/itm/272765627224
 > Button A+ and B+ are same as A and B but with autofire!
+
 > Nintendo original NES Classic Mini is using the driver_wii_classic!
 
 ![NES Classic Mini Clone](nes_classic_mini_clone.jpg)
