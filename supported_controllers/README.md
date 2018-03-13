@@ -40,7 +40,7 @@ Seen here: https://www.ebay.com/itm/272765627224
 
 ![NES Classic Mini Clone](nes_classic_mini_clone.jpg)
 
-DRIVER: [https://github.com/djtulan/nunchuk64/blob/master/src/driver_nes_classic.c](driver_nes_classic.c)
+DRIVER: [driver_nes_classic.c]
 
 | Item          |Mode OFF  |Mode ON   |Mode F1   |Mode F2   |
 | --------------|----------|----------|----------|----------|
@@ -132,3 +132,6 @@ DRIVER: driver_nunchuk.c
 | Accel Z       |-         |-         |-         |-         |
 | C             |AUTOFIRE  |AUTOFIRE  |AUTOFIRE  |AUTOFIRE  |
 | Z             |FIRE      |FIRE      |FIRE      |FIRE      |
+
+
+[driver_nes_classic.c]: <https://github.com/djtulan/nunchuk64/blob/master/src/driver_nes_classic.c>
