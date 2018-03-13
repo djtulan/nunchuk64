@@ -89,8 +89,7 @@ static void get_joystick_state_nunchuk(const ContollerData *cd, Joystick *joysti
     // ===================================
     // LED BLINK (Accelerometer mode)
     // ===================================
-    case LED_ON:
-    {
+    case LED_ON: {
       int x = nunchuk_caccelx(cd);
       int y = nunchuk_caccely(cd);
 
@@ -138,17 +137,41 @@ static void get_joystick_state_nunchuk(const ContollerData *cd, Joystick *joysti
 static void get_paddle_state_nunchuk(const ContollerData *cd, Paddle *paddle) {
   if (led_get_state() == LED_BLINK1) {
 
-    paddle->axis_x = nunchuk_accelx(cd);
-    paddle->axis_y = nunchuk_accely(cd);
+    int16_t x = nunchuk_accelx(cd);
+    int16_t y = nunchuk_accely(cd);
+
+    x = scale(x, 2.3);
+    y = scale(y, 2.3);
+
+    paddle->axis_x = x;
+    paddle->axis_y = y;
 
   } else if (led_get_state() == LED_BLINK2) {
 
-    paddle->axis_x = cd->byte[0] << 2;
-    paddle->axis_y = cd->byte[1] << 2;
+    int16_t x = cd->byte[0] << 2;
+    int16_t y = cd->byte[1] << 2;
+
+    x = scale(x, 1.7);
+    y = scale(y, 1.7);
+
+    paddle->axis_x = x;
+    paddle->axis_y = y;
+  }
+}
+
+uint8_t get_paddle_enabled_nunchuk(void) {
+  switch (led_get_state()) {
+    case LED_BLINK1:
+    case LED_BLINK2:
+      return TRUE;
+
+    default:
+      return FALSE;
   }
 }
 
 Driver drv_nunchuk = {
   get_joystick_state_nunchuk,
-  get_paddle_state_nunchuk
+  get_paddle_state_nunchuk,
+  get_paddle_enabled_nunchuk
 };

@@ -62,6 +62,12 @@ static volatile Joystick port_b_old = 0;
 static volatile uint8_t  autofire_a = 0;
 static volatile uint8_t  autofire_b = 0;
 
+static volatile uint8_t  autofire2_a = 0;
+static volatile uint8_t  autofire2_b = 0;
+
+static volatile uint8_t  autofire3_a = 0;
+static volatile uint8_t  autofire3_b = 0;
+
 void joystick_update(Joystick port_a, Joystick port_b) {
 
   // look if same change?
@@ -120,6 +126,23 @@ void joystick_update(Joystick port_a, Joystick port_b) {
       BIT_CLEAR(DDR_BUTTON_A, BIT_BUTTON_A);
     }
   }
+/*
+  // BUTTON2
+  if (port_a & BUTTON2) {
+    BIT_SET(DDR_BUTTON2_A, BIT_BUTTON2_A);
+  } else {
+
+    // AUTOFIRE2 BUTTON
+    if (port_a & AUTOFIRE2) {
+      autofire2_a = 1;
+
+      // neither AUTOFIRE2 nor FIRE BUTTON2
+    } else {
+      autofire2_a = 0;
+      BIT_CLEAR(DDR_BUTTON2_A, BIT_BUTTON2_A);
+    }
+  }
+*/
 
   // ===================================
   //  CONTROL PORT B
@@ -168,6 +191,26 @@ void joystick_update(Joystick port_a, Joystick port_b) {
       BIT_CLEAR(DDR_BUTTON_B, BIT_BUTTON_B);
     }
   }
+
+/*
+  // BUTTON2
+  if (port_b & BUTTON2) {
+    BIT_SET(DDR_BUTTON2_B, BIT_BUTTON2_B);
+    BIT_SET(PORT_BUTTON2_B, BIT_BUTTON2_B);
+  } else {
+
+    // AUTOFIRE2 BUTTON
+    if (port_b & AUTOFIRE2) {
+      autofire2_b = 1;
+
+      // neither AUTOFIRE2 nor FIRE BUTTON2
+    } else {
+      autofire2_b = 0;
+      BIT_CLEAR(DDR_BUTTON2_B, BIT_BUTTON2_B);
+      BIT_CLEAR(PORT_BUTTON2_B, BIT_BUTTON2_B);
+    }
+  }
+*/
 }
 
 void joystick_poll(void) {
@@ -180,12 +223,30 @@ void joystick_poll(void) {
     }
   }
 
+  if (autofire2_a == 1) {
+    // toggle FIRE A
+    if (bit_is_set(DDR_BUTTON2_A, BIT_BUTTON2_A)) {
+      BIT_CLEAR(DDR_BUTTON2_A, BIT_BUTTON2_A);
+    } else {
+      BIT_SET(DDR_BUTTON2_A, BIT_BUTTON2_A);
+    }
+  }
+
   if (autofire_b == 1) {
     // toggle FIRE B
     if (bit_is_set(DDR_BUTTON_B, BIT_BUTTON_B)) {
       BIT_CLEAR(DDR_BUTTON_B, BIT_BUTTON_B);
     } else {
       BIT_SET(DDR_BUTTON_B, BIT_BUTTON_B);
+    }
+  }
+
+  if (autofire2_b == 1) {
+    // toggle FIRE B
+    if (bit_is_set(DDR_BUTTON2_B, BIT_BUTTON2_B)) {
+      BIT_CLEAR(DDR_BUTTON2_B, BIT_BUTTON2_B);
+    } else {
+      BIT_SET(DDR_BUTTON2_B, BIT_BUTTON2_B);
     }
   }
 }

@@ -74,7 +74,7 @@ static void get_joystick_state_wii_classic(const ContollerData *cd, Joystick *jo
 
   // BX - X Button
   if ((cd->byte[5] & 0x08) == 0) {
-    (*joystick) |= BUTTON;
+    (*joystick) |= BUTTON2;
   }
 
   // BY - Y Button
@@ -138,11 +138,32 @@ static void get_joystick_state_wii_classic(const ContollerData *cd, Joystick *jo
 }
 
 static void get_paddle_state_wii_classic(const ContollerData *cd, Paddle *paddle) {
-  paddle->axis_x = left_x(cd) << 4;
-  paddle->axis_y = left_y(cd) << 4;
+  if (led_get_state() == LED_BLINK1 || led_get_state() == LED_BLINK2) {
+
+    int16_t x = left_x(cd) << 4;
+    int16_t y = left_y(cd) << 4;
+
+    x = scale(x, 1.6);
+    y = scale(y, 1.6);
+
+    paddle->axis_x = x;
+    paddle->axis_y = y;
+  }
+}
+
+uint8_t get_paddle_enabled_wii_classic(void) {
+  switch (led_get_state()) {
+    case LED_BLINK1:
+    case LED_BLINK2:
+      return TRUE;
+
+    default:
+      return FALSE;
+  }
 }
 
 Driver drv_wii_classic = {
   get_joystick_state_wii_classic,
-  get_paddle_state_wii_classic
+  get_paddle_state_wii_classic,
+  get_paddle_enabled_wii_classic
 };

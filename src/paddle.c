@@ -57,12 +57,12 @@ void paddle_init(void) {
   EICRA |= _BV(ISC11);                // ISC11:ISC10 == 10, @negedge
 }
 
-#define P1_MIN_TIMER     19
-#define P1_MAX_TIMER     53
+#define P1_MIN_TIMER     20
+#define P1_MAX_TIMER     52
 #define P1_RANGE         (P1_MAX_TIMER - P1_MIN_TIMER)
 
 #define P2_MIN_TIMER     20
-#define P2_MAX_TIMER     56
+#define P2_MAX_TIMER     55
 #define P2_RANGE         (P2_MAX_TIMER - P2_MIN_TIMER)
 
 static volatile uint16_t ocr1a_load = P1_MIN_TIMER + (P1_RANGE / 2); ///< precalculated OCR1A value (A XPOT)
@@ -70,40 +70,74 @@ static volatile uint16_t ocr1b_load = P1_MIN_TIMER + (P1_RANGE / 2); ///< precal
 static volatile uint16_t ocr0a_load = P2_MIN_TIMER + (P2_RANGE / 2); ///< precalculated OCR0A value (B XPOT)
 static volatile uint16_t ocr0b_load = P2_MIN_TIMER + (P2_RANGE / 2); ///< precalculated OCR0B value (B YPOT)
 
-void paddle_start(void) {
-  // Initialize Timer1 and use OC1A/OC1B to output values
-  // don't count yet
-  TCCR1B = 0;
-  TCCR0B = 0;
+static volatile uint8_t a_enabled = 0;
+static volatile uint8_t b_enabled = 0;
 
-  OCR1A = ocr1a_load;
-  OCR1B = ocr1b_load;
+void paddle_start(Port port) {
 
-  OCR0A = ocr0a_load;
-  OCR0B = ocr0b_load;
+  if (port == PORT_A) {
 
-  DDR_PADDLE_A_X  |= (_BV(BIT_PADDLE_A_X) | _BV(BIT_PADDLE_A_Y));   // enable POTX/POTY as outputs
-  PORT_PADDLE_A_X |= (_BV(BIT_PADDLE_A_X) | _BV(BIT_PADDLE_A_Y));   // output "1" on both
+    if (a_enabled == 1)
+      return;
 
-  DDR_PADDLE_B_X  |= (_BV(BIT_PADDLE_B_X) | _BV(BIT_PADDLE_B_Y));   // enable POTX/POTY as outputs
-  PORT_PADDLE_B_X |= (_BV(BIT_PADDLE_B_X) | _BV(BIT_PADDLE_B_Y));   // output "1" on both
+    TCCR1B = 0;
 
-  EIFR  |= _BV(INTF0);  // clear INT0 flag
-  EIMSK |= _BV(INT0);   // enable INT0
+    OCR1A = P1_MIN_TIMER + (P1_RANGE / 2);
+    OCR1B = P1_MIN_TIMER + (P1_RANGE / 2);
 
-  EIFR  |= _BV(INTF1);  // clear INT1 flag
-  EIMSK |= _BV(INT1);   // enable INT1
+    DDR_PADDLE_A_X  |= (_BV(BIT_PADDLE_A_X) | _BV(BIT_PADDLE_A_Y));   // enable POTX/POTY as outputs
+    PORT_PADDLE_A_X |= (_BV(BIT_PADDLE_A_X) | _BV(BIT_PADDLE_A_Y));   // output "1" on both
+
+    EIFR  |= _BV(INTF0);  // clear INT0 flag
+    EIMSK |= _BV(INT0);   // enable INT0
+
+    a_enabled = 1;
+
+  } else {
+
+    if (b_enabled == 1)
+      return;
+
+    TCCR0B = 0; // Port B
+
+    OCR0A = P2_MIN_TIMER + (P2_RANGE / 2); // Port B
+    OCR0B = P2_MIN_TIMER + (P2_RANGE / 2); // Port B
+
+    DDR_PADDLE_B_X  |= (_BV(BIT_PADDLE_B_X) | _BV(BIT_PADDLE_B_Y));   // enable POTX/POTY as outputs
+    PORT_PADDLE_B_X |= (_BV(BIT_PADDLE_B_X) | _BV(BIT_PADDLE_B_Y));   // output "1" on both
+
+    EIFR  |= _BV(INTF1);  // clear INT1 flag
+    EIMSK |= _BV(INT1);   // enable INT1
+
+    b_enabled = 1;
+  }
 }
 
-void paddle_stop(void) {
-  DDR_PADDLE_A_X  &= ~(_BV(BIT_PADDLE_A_X) | _BV(BIT_PADDLE_A_Y));   // disable POTX/POTY as outputs
-  PORT_PADDLE_A_X &= ~(_BV(BIT_PADDLE_A_X) | _BV(BIT_PADDLE_A_Y));
+void paddle_stop(Port port) {
+  if (port == PORT_A) {
 
-  DDR_PADDLE_B_X  &= ~(_BV(BIT_PADDLE_B_X) | _BV(BIT_PADDLE_B_Y));   // disable POTX/POTY as outputs
-  PORT_PADDLE_B_X &= ~(_BV(BIT_PADDLE_B_X) | _BV(BIT_PADDLE_B_Y));
+    if (a_enabled == 0)
+      return;
 
-  EIMSK &= ~_BV(INT0);  // disable INT0
-  EIMSK &= ~_BV(INT1);  // disable INT1
+    DDR_PADDLE_A_X  &= ~(_BV(BIT_PADDLE_A_X) | _BV(BIT_PADDLE_A_Y));   // disable POTX/POTY as outputs
+    PORT_PADDLE_A_X &= ~(_BV(BIT_PADDLE_A_X) | _BV(BIT_PADDLE_A_Y));
+
+    EIMSK &= ~_BV(INT0);  // disable INT0
+
+    a_enabled = 0;
+
+  } else {
+
+    if (b_enabled == 0)
+      return;
+
+    DDR_PADDLE_B_X  &= ~(_BV(BIT_PADDLE_B_X) | _BV(BIT_PADDLE_B_Y));   // disable POTX/POTY as outputs
+    PORT_PADDLE_B_X &= ~(_BV(BIT_PADDLE_B_X) | _BV(BIT_PADDLE_B_Y));
+
+    EIMSK &= ~_BV(INT1);  // disable INT1
+
+    b_enabled = 0;
+  }
 }
 
 void paddle_update(Paddle *port_a, Paddle *port_b) {

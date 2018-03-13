@@ -26,6 +26,12 @@
 #include "controller.h"
 #include "joystick.h"
 #include "paddle.h"
+#include "led.h"
+
+inline int16_t scale(int16_t val, float factor) {
+  int16_t ret = ((val - 512) * factor) + 512;
+  return ret;
+}
 
 /// \driver struct
 typedef struct {
@@ -42,6 +48,12 @@ typedef struct {
   * @param [out] paddle data
   */
   void (*get_paddle_state)(const ContollerData *cd, Paddle *paddle);
+
+  /**
+  * @brief is paddle enabled in current led state
+  * @return TRUE ... paddle is on / FALSE ... paddle is off
+  */
+  uint8_t (*get_paddle_enabled)(void);
 
 } Driver;
 

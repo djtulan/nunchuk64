@@ -42,12 +42,12 @@ extern void paddle_init(void);
 /**
 * @brief state paddle hardware and interrupt routines
 */
-extern void paddle_start(void);
+extern void paddle_start(Port port);
 
 /**
 * @brief stop paddle hardware and interrupt routines
 */
-extern void paddle_stop(void);
+extern void paddle_stop(Port port);
 
 /**
 * @brief update paddle state

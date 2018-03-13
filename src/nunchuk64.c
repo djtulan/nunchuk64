@@ -43,6 +43,8 @@
 #include "driver_nunchuk.h"
 #include "driver_wii_classic.h"
 
+Driver *driver[NUMBER_PORTS] = {NULL, NULL};
+
 static Driver *GetDriver(ControllerID id) {
   switch (id) {
     case ID_Nunchuck:
@@ -89,21 +91,41 @@ static void init(void) {
   led_switch(LED_OFF); // diagnose (in init)
 }
 
+static Port switch_port(Port p) {
+  if (p == PORT_A)
+    return PORT_B;
+  else
+    return PORT_A;
+}
+
+static void handle_paddle_enabled(uint8_t switched_ports) {
+  for (Port p = PORT_A; p <= PORT_B; p++) {
+
+    Port setport = p;
+
+    if (switched_ports == TRUE) {
+      setport = switch_port(setport);
+    }
+
+    if (driver[p] != NULL && driver[p]->get_paddle_enabled() == TRUE) {
+      paddle_start(setport);
+    } else {
+      paddle_stop(setport);
+    }
+  }
+}
+
 int main(void) {
   // ===================================
   // init everything
   // ===================================
   init();
 
-  // ===================================
-  // get the correct driver
-  // ===================================
-  Driver *driver[NUMBER_PORTS] = {NULL, NULL};
 
   ContollerData cd[NUMBER_PORTS];  // controller data
   Joystick joystick[NUMBER_PORTS] = {0, 0}; // joystick data
   Paddle paddle[NUMBER_PORTS] = {{0, 0}, {0, 0}}; // joystick data
-  uint8_t switch_ports = 0;
+  uint8_t switched_ports = FALSE;
 
   // ===================================
   // MAIN LOOP
@@ -124,26 +146,14 @@ int main(void) {
       // set to next led state
       led_setnextstate();
 
-      // start / stop paddle depending on state
-      switch (led_get_state()) {
-        case LED_OFF:
-        case LED_ON:
-        case NUMBER_LED_STATES:
-          paddle_stop();
-          break;
-
-        case LED_BLINK1:
-        case LED_BLINK2:
-        // case LED_BLINK3:
-          paddle_start();
-          break;
-      }
-      // activate / deactivate paddle
+      handle_paddle_enabled(switched_ports); // handle paddle enabled
     }
 
     // long press
-    if (button_get_long()) {
-      switch_ports = ~switch_ports;
+    if (button_get_long() == TRUE) {
+      switched_ports = (switched_ports == FALSE) ? TRUE : FALSE;
+
+      handle_paddle_enabled(switched_ports); // handle paddle disabled
     }
 
     // ===================================
@@ -159,8 +169,12 @@ int main(void) {
       // ===================================
       if (driver[p] == NULL) {
         controller_init();
-
         driver[p] = GetDriver(get_id());
+
+        // new driver found
+        if (driver[p] != NULL) {
+          handle_paddle_enabled(switched_ports);
+        }
 
         // ===================================
         // read data from controller
@@ -170,6 +184,7 @@ int main(void) {
         if (controller_read(&cd[p]) == FALSE) {
           driver[p] = NULL;
           joystick[p] = 0; // delete old data
+          handle_paddle_enabled(switched_ports);
         }
       }
 
@@ -181,7 +196,7 @@ int main(void) {
     }
 
     // switched mode?
-    if (switch_ports == 0) {
+    if (switched_ports == FALSE) {
       joystick_update(joystick[PORT_A], joystick[PORT_B]);
       paddle_update(&paddle[PORT_A], &paddle[PORT_B]);
     } else {
