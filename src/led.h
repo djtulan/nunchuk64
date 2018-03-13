@@ -30,7 +30,7 @@ typedef enum {
   LED_ON,       ///< LED is ON
   LED_BLINK1,   ///< LED blinks once
   LED_BLINK2,   ///< LED blinks twice
-  LED_BLINK3,   ///< LED blinks tree times
+  // LED_BLINK3,   ///< LED blinks tree times
 
   NUMBER_LED_STATES
 } LED_State;

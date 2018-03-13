@@ -38,8 +38,15 @@ extern void button_init(void);
 extern void button_debounce(void);
 
 /**
-* @brief get buttonpress
+* @brief get buttonpress (short)
+* @return 1 ... button was pressed short / 0 ... no button press
 */
 extern uint8_t button_get(void);
+
+/**
+* @brief get buttonpress (long)
+* @return 1 ... button was pressed long / 0 ... no button press
+*/
+extern uint8_t button_get_long(void);
 
 #endif

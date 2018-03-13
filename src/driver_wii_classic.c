@@ -109,7 +109,6 @@ static void get_joystick_state_wii_classic(const ContollerData *cd, Joystick *jo
   switch (led_get_state()) {
     case LED_OFF:
     case LED_ON:
-    case LED_BLINK1:
     case NUMBER_LED_STATES: {
 
       uint8_t lx = left_x(cd);
@@ -131,8 +130,9 @@ static void get_joystick_state_wii_classic(const ContollerData *cd, Joystick *jo
     }
     break;
 
+    case LED_BLINK1:
     case LED_BLINK2:
-    case LED_BLINK3:
+//  case LED_BLINK3:
       break;
   }
 }
