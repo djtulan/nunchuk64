@@ -30,4 +30,9 @@ typedef enum {
   NUMBER_PORTS ///< number of ports
 } Port;
 
+enum {
+  FALSE, ///< value false
+  TRUE   ///< value true
+};
+
 #endif

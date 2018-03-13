@@ -73,11 +73,16 @@
 #define PORT_JOY_A2        PORTC // PC3
 #define PORT_JOY_A3        PORTC // PC2
 #define PORT_BUTTON_A      PORTB // PB7
+#define PORT_BUTTON2_A     PORTB // PB1
+#define PORT_BUTTON3_A     PORTB // PB2 
 #define PORT_JOY_B0        PORTB // PB5
 #define PORT_JOY_B1        PORTB // PB3
 #define PORT_JOY_B2        PORTB // PB0
 #define PORT_JOY_B3        PORTD // PD7
 #define PORT_BUTTON_B      PORTB // PB4
+#define PORT_BUTTON2_B     PORTD // PD5
+#define PORT_BUTTON3_B     PORTD // PD6
+
 
 // ddr for joystick outputs
 #define DDR_JOY_A0          DDRD // PD1
@@ -85,11 +90,15 @@
 #define DDR_JOY_A2          DDRC // PC3
 #define DDR_JOY_A3          DDRC // PC2
 #define DDR_BUTTON_A        DDRB // PB7
+#define DDR_BUTTON2_A       DDRB // PB1
+#define DDR_BUTTON3_A       DDRB // PB2
 #define DDR_JOY_B0          DDRB // PB5
 #define DDR_JOY_B1          DDRB // PB3
 #define DDR_JOY_B2          DDRB // PB0
 #define DDR_JOY_B3          DDRD // PD7
 #define DDR_BUTTON_B        DDRB // PB4
+#define DDR_BUTTON2_B       DDRD // PD6
+#define DDR_BUTTON3_B       DDRD // PD5
 
 // bits for joystick outputs
 #define BIT_JOY_A0             1 // PD1
@@ -97,11 +106,15 @@
 #define BIT_JOY_A2             3 // PC3
 #define BIT_JOY_A3             2 // PC2
 #define BIT_BUTTON_A           7 // PB7
+#define BIT_BUTTON2_A          1 // PB1
+#define BIT_BUTTON3_A          2 // PB2
 #define BIT_JOY_B0             5 // PB5
 #define BIT_JOY_B1             3 // PB3
 #define BIT_JOY_B2             0 // PB0
 #define BIT_JOY_B3             7 // PD7
 #define BIT_BUTTON_B           4 // PB4
+#define BIT_BUTTON2_B          6 // PD6
+#define BIT_BUTTON3_B          5 // PD5
 
 // ========================================================
 //  PADDLE INPUTS & OUTPUTS
@@ -113,8 +126,8 @@
 #define PORT_PADDLE_A_Y    PORTB // PB2
 
 #define PORT_SENSE_B       PORTD // PD3
-#define PORT_PADDLE_B_X    PORTD // PD6
 #define PORT_PADDLE_B_Y    PORTD // PD5
+#define PORT_PADDLE_B_X    PORTD // PD6
 
 // ddr for paddle inputs / outputs
 #define DDR_SENSE_A         DDRD // PD2

@@ -120,7 +120,7 @@ int main(void) {
     button_debounce();
 
     // short press
-    if (button_get()) {
+    if (button_get() == TRUE) {
       // set to next led state
       led_setnextstate();
 
@@ -167,7 +167,7 @@ int main(void) {
         // ===================================
       } else {
         // controller read failed? -> delete driver
-        if (controller_read(&cd[p]) != 0) {
+        if (controller_read(&cd[p]) == FALSE) {
           driver[p] = NULL;
           joystick[p] = 0; // delete old data
         }
@@ -180,7 +180,7 @@ int main(void) {
       }
     }
 
-    // switched mode (while LED == ON)
+    // switched mode?
     if (switch_ports == 0) {
       joystick_update(joystick[PORT_A], joystick[PORT_B]);
       paddle_update(&paddle[PORT_A], &paddle[PORT_B]);

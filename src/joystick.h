@@ -27,20 +27,22 @@
 
 enum Joystick_State {
   // joystick data
-  UP       = (1 << 0), ///< up
-  DOWN     = (1 << 1), ///< down
-  LEFT     = (1 << 2), ///< left
-  RIGHT    = (1 << 3), ///< right
-  BUTTON   = (1 << 4), ///< fire button
+  UP        = (1 << 0), ///< up
+  DOWN      = (1 << 1), ///< down
+  LEFT      = (1 << 2), ///< left
+  RIGHT     = (1 << 3), ///< right
+  BUTTON    = (1 << 4), ///< fire button
   // special function
-  SPACE    = (1 << 5), ///< fire button on port A
-  AUTOFIRE = (1 << 6), ///< auto fire button
-  // free info
-  FREE2    = (1 << 7)  ///< fire button
+  SPACE     = (1 << 5), ///< fire button on port A
+  AUTOFIRE  = (1 << 6), ///< auto fire button
+  BUTTON2   = (1 << 7), ///< fire button2
+  AUTOFIRE2 = (1 << 8), ///< auto fire button2
+  BUTTON3   = (1 << 9), ///< fire button3
+  AUTOFIRE3 = (1 << 10) ///< auto fire button3
 };
 
 /// \brief Joystick, holds the state of one joystick
-typedef uint8_t Joystick;
+typedef uint16_t Joystick;
 
 /**
 * @brief Init Joystick Ports

@@ -21,11 +21,12 @@
 /// @brief  button
 //=============================================================================
 #include "ioconfig.h"
+#include "enums.h"
 
 #include "button.h"
 
-static volatile uint8_t button_down = 0;
-static volatile uint8_t button_down_long = 0;
+static volatile uint8_t button_down = FALSE;
+static volatile uint8_t button_down_long = FALSE;
 
 void button_init(void) {
   BIT_SET(PORT_BUTTON, BIT_BUTTON); // Enable internal pullup resistor on the input pin
@@ -38,7 +39,7 @@ void button_init(void) {
 void button_debounce(void) {
   static uint8_t count = 0; // counter for number of equal states
   static uint8_t button_state = 1; // current (debounced) state
-  static uint8_t button_trigger = 0; // trigger button down
+  static uint8_t button_trigger = FALSE; // trigger button down
 
   static uint8_t count_long = 0; // counter for number of equal states
   static uint8_t button_state_long = 1; // current (debounced) state
@@ -60,11 +61,11 @@ void button_debounce(void) {
 
       // if the button was pressed (not released), tell main so
       if (current_state == 0) {
-        button_trigger = 1;
+        button_trigger = TRUE;
         // if button was released again
       } else {
-        if (button_trigger == 1)
-          button_down = 1;
+        if (button_trigger == TRUE)
+          button_down = TRUE;
       }
 
       count = 0;
@@ -89,8 +90,8 @@ void button_debounce(void) {
 
       // if the button was pressed long (not released), tell main so
       if (current_state == 0) {
-        button_down_long = 1;
-        button_trigger = 0;
+        button_down_long = TRUE;
+        button_trigger = FALSE;
       }
 
       count_long = 0;
@@ -104,20 +105,19 @@ void button_debounce(void) {
 }
 
 uint8_t button_get(void) {
-  if (button_down == 1) {
-    button_down = 0;
-    return 1;
+  if (button_down == TRUE) {
+    button_down = FALSE;
+    return TRUE;
   }
 
-  return 0;
+  return FALSE;
 }
 
 uint8_t button_get_long(void) {
-  if (button_down_long == 1) {
-    button_down_long = 0;
-    return 1;
+  if (button_down_long == TRUE) {
+    button_down_long = FALSE;
+    return TRUE;
   }
 
-  return 0;
+  return FALSE;
 }
-

@@ -24,12 +24,13 @@
 
 // #include <util/delay.h>
 
+#include "enums.h"
 #include "i2c_master.h"
 #include "controller.h"
 
 #define CONTROLLER_ADDR (0x52<<1) ///< device address
 
-uint8_t controller_init(void) {
+void controller_init(void) {
   // --------------------
   // send 0x55 to register 0xf0
   i2c_start(CONTROLLER_ADDR | I2C_WRITE);
@@ -45,8 +46,6 @@ uint8_t controller_init(void) {
   i2c_write(0x00);
   i2c_stop();
   // --------------------
-
-  return 0;
 }
 
 static void controller_disable_encryption(void) {
@@ -58,8 +57,6 @@ static void controller_disable_encryption(void) {
   i2c_stop();
   // --------------------
 
-  // _delay_ms(1);
-
   // --------------------
   // send 6 zero bytes to register 0x40
   i2c_start_wait(CONTROLLER_ADDR | I2C_WRITE);
@@ -71,8 +68,6 @@ static void controller_disable_encryption(void) {
   i2c_stop();
   // --------------------
 
-  // _delay_ms(1);
-
   // --------------------
   // send 6 zero bytes to register 0x40
   i2c_start_wait(CONTROLLER_ADDR | I2C_WRITE);
@@ -83,8 +78,6 @@ static void controller_disable_encryption(void) {
 
   i2c_stop();
   // --------------------
-
-  // _delay_ms(1);
 
   // --------------------
   // send 4 zero bytes to register 0x40
@@ -96,18 +89,13 @@ static void controller_disable_encryption(void) {
 
   i2c_stop();
   // --------------------
-
-  // _delay_ms(1);
 }
 
 uint8_t controller_read(ContollerData *cd) {
-
-  // _delay_ms(1);
-
   // --------------------
   // read 6 bytes
   if (i2c_start(CONTROLLER_ADDR | I2C_READ) != 0) {
-    return 1;
+    return FALSE;
   }
 
   uint8_t i = 0;
@@ -129,7 +117,7 @@ uint8_t controller_read(ContollerData *cd) {
   i2c_stop();
   // --------------------
 
-  return 0;
+  return TRUE;
 }
 
 const uint8_t ID_MAP[MAX_IDs][6] = {

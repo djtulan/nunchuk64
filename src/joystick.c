@@ -56,11 +56,11 @@ void joystick_init(void) {
   */
 }
 
-static Joystick port_a_old = 0;
-static Joystick port_b_old = 0;
+static volatile Joystick port_a_old = 0;
+static volatile Joystick port_b_old = 0;
 
-static uint8_t  autofire_a = 0;
-static uint8_t  autofire_b = 0;
+static volatile uint8_t  autofire_a = 0;
+static volatile uint8_t  autofire_b = 0;
 
 void joystick_update(Joystick port_a, Joystick port_b) {
 

@@ -39,13 +39,13 @@ extern void button_debounce(void);
 
 /**
 * @brief get buttonpress (short)
-* @return 1 ... button was pressed short / 0 ... no button press
+* @return TRUE ... button was pressed short / FALSE ... no button press
 */
 extern uint8_t button_get(void);
 
 /**
 * @brief get buttonpress (long)
-* @return 1 ... button was pressed long / 0 ... no button press
+* @return TRUE.. button was pressed long / FALSE ... no button press
 */
 extern uint8_t button_get_long(void);
 
