@@ -68,7 +68,7 @@ Seen here: https://www.ebay.at/itm/222674575659
 
 ![SNES Classic Mini Clone](snes_classic_mini_clone_wired.jpg)
 
-DRIVER: driver_wii_classic.c
+DRIVER: [driver_wii_classic.c]
 
 | Item          |Mode OFF  |Mode ON   |Mode F1   |Mode F2   |
 | --------------|----------|----------|----------|----------|
@@ -92,7 +92,7 @@ Seen here: https://www.ebay.com/itm/291645811767
 
 ![Wii Classic](wii_classic.jpg)
 
-DRIVER: driver_wii_classic.c
+DRIVER: [driver_wii_classic.c]
 
 | Item          |Mode OFF  |Mode ON   |Mode F1   |Mode F2   |
 | --------------|----------|----------|----------|----------|
@@ -135,3 +135,4 @@ DRIVER: driver_nunchuk.c
 
 
 [driver_nes_classic.c]: <https://github.com/djtulan/nunchuk64/blob/master/src/driver_nes_classic.c>
+[driver_wii_classic.c]: <https://github.com/djtulan/nunchuk64/blob/master/src/driver_wii_classic.c>
