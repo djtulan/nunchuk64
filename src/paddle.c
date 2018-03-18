@@ -37,7 +37,6 @@ void paddle_init(void) {
   PORT_PADDLE_A_X &= ~(_BV(BIT_PADDLE_A_X) | _BV(BIT_PADDLE_A_Y)); // = PORT_PADDLE_A_Y
   DDR_PADDLE_A_X  &= ~(_BV(BIT_PADDLE_A_X) | _BV(BIT_PADDLE_A_Y)); // = DDR_PADDLE_A_Y
 
-
   // SID sensing port
   DDR_SENSE_B  &= ~_BV(BIT_SENSE_B); // SENSE is input
   PORT_SENSE_B &= ~_BV(BIT_SENSE_B); // pullup off, hi-biased by OC1B
@@ -57,21 +56,21 @@ void paddle_init(void) {
   EICRA |= _BV(ISC11);                // ISC11:ISC10 == 10, @negedge
 }
 
-#define P1_MIN_TIMER     20
-#define P1_MAX_TIMER     52
+#define P1_MIN_TIMER     23
+#define P1_MAX_TIMER     51
 #define P1_RANGE         (P1_MAX_TIMER - P1_MIN_TIMER)
 
-#define P2_MIN_TIMER     20
+#define P2_MIN_TIMER     27
 #define P2_MAX_TIMER     55
 #define P2_RANGE         (P2_MAX_TIMER - P2_MIN_TIMER)
 
-static volatile uint16_t ocr1a_load = P1_MIN_TIMER + (P1_RANGE / 2); ///< precalculated OCR1A value (A XPOT)
-static volatile uint16_t ocr1b_load = P1_MIN_TIMER + (P1_RANGE / 2); ///< precalculated OCR1B value (A YPOT)
-static volatile uint16_t ocr0a_load = P2_MIN_TIMER + (P2_RANGE / 2); ///< precalculated OCR0A value (B XPOT)
-static volatile uint16_t ocr0b_load = P2_MIN_TIMER + (P2_RANGE / 2); ///< precalculated OCR0B value (B YPOT)
+static volatile uint8_t ocr1a_load = P1_MIN_TIMER + (P1_RANGE / 2); ///< precalculated OCR1A value (A XPOT)
+static volatile uint8_t ocr1b_load = P1_MIN_TIMER + (P1_RANGE / 2); ///< precalculated OCR1B value (A YPOT)
+static volatile uint8_t ocr0a_load = P2_MIN_TIMER + (P2_RANGE / 2); ///< precalculated OCR0A value (B XPOT)
+static volatile uint8_t ocr0b_load = P2_MIN_TIMER + (P2_RANGE / 2); ///< precalculated OCR0B value (B YPOT)
 
-static volatile uint8_t a_enabled = 0;
-static volatile uint8_t b_enabled = 0;
+static volatile uint8_t a_enabled = 0xff;
+static volatile uint8_t b_enabled = 0xff;
 
 void paddle_start(Port port) {
 
@@ -151,13 +150,29 @@ void paddle_update(Paddle *port_a, Paddle *port_b) {
 
   // ocr0a_load  x
   // ocr0b_load  y
+  uint16_t a_x = port_a->axis_x;
+  uint16_t a_y = port_a->axis_y;
+  uint16_t b_x = port_b->axis_x;
+  uint16_t b_y = port_b->axis_y;
 
-  ocr1a_load = P1_RANGE - ((port_a->axis_x * P1_RANGE) / 1023) + P1_MIN_TIMER;
-  ocr1b_load = P1_RANGE - ((port_a->axis_y * P1_RANGE) / 1023) + P1_MIN_TIMER;
+  if (a_x > 1024)
+    a_x = 1024;
 
-  ocr0a_load = P2_RANGE - ((port_b->axis_x * P2_RANGE) / 1023) + P2_MIN_TIMER;
-  ocr0b_load = P2_RANGE - ((port_b->axis_y * P2_RANGE) / 1023) + P2_MIN_TIMER;
+  if (a_y > 1024)
+    a_y = 1024;
 
+  if (b_x > 1024)
+    b_x = 1024;
+
+  if (b_y > 1024)
+    b_y = 1024;
+
+  ocr1a_load = P1_RANGE - ((a_x * P1_RANGE) / 1024) + P1_MIN_TIMER;
+  ocr1b_load = P1_RANGE - ((a_y * P1_RANGE) / 1024) + P1_MIN_TIMER;
+
+  ocr0a_load = P2_RANGE - ((b_x * P2_RANGE) / 1024) + P2_MIN_TIMER;
+  ocr0b_load = P2_RANGE - ((b_y * P2_RANGE) / 1024) + P2_MIN_TIMER;
+/*
   if (ocr1a_load < P1_MIN_TIMER)
     ocr1a_load = P1_MIN_TIMER;
   else if (ocr1a_load > P1_MAX_TIMER)
@@ -177,6 +192,7 @@ void paddle_update(Paddle *port_a, Paddle *port_b) {
     ocr0b_load = P2_MIN_TIMER;
   else if (ocr0b_load > P2_MAX_TIMER)
     ocr0b_load = P2_MAX_TIMER;
+ */
 }
 
 /// SID measuring cycle detected.

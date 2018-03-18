@@ -140,8 +140,10 @@ static void get_paddle_state_nunchuk(const ContollerData *cd, Paddle *paddle) {
     int16_t x = nunchuk_accelx(cd);
     int16_t y = nunchuk_accely(cd);
 
-    x = scale(x, 2.3);
-    y = scale(y, 2.3);
+    // x = scale(x, 2.3);
+    // y = scale(y, 2.3);
+    // x = scale(x, 2);
+    // y = scale(y, 2);
 
     paddle->axis_x = x;
     paddle->axis_y = y;
@@ -151,8 +153,8 @@ static void get_paddle_state_nunchuk(const ContollerData *cd, Paddle *paddle) {
     int16_t x = cd->byte[0] << 2;
     int16_t y = cd->byte[1] << 2;
 
-    x = scale(x, 1.7);
-    y = scale(y, 1.7);
+    // x = scale(x, 2);
+    // y = scale(y, 2);
 
     paddle->axis_x = x;
     paddle->axis_y = y;

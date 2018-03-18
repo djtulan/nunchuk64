@@ -20,11 +20,50 @@
 /// @date   January, 2018
 /// @brief  driver wii classic
 //=============================================================================
+#include <avr/pgmspace.h>
+
 #include "enums.h"
 #include "joystick.h"
 #include "led.h"
 
 #include "driver_wii_classic.h"
+
+/// \brief different possible buttons
+typedef enum {
+  A, B, X, Y, START, SELECT, HOME, NUMBER_BUTTONS
+} Button;
+
+/// \brief button mapping
+const uint16_t button_map[NUMBER_LED_STATES][NUMBER_BUTTONS] PROGMEM = {
+//  BUTTON      BUTTON      BUTTON      BUTTON      BUTTON      BUTTON      BUTTON
+//  A           B           X           Y           START       SELECT      HOME
+  { UP,         BUTTON,     BUTTON2,    AUTOFIRE,   SPACE,      BUTTON,     BUTTON2 },  // LED OFF
+  { BUTTON2,    BUTTON,     BUTTON3,    UP,         SPACE,      BUTTON,     BUTTON2 },  // LED ON
+  { UP,         DOWN,       BUTTON,     AUTOFIRE,   SPACE,      BUTTON,     BUTTON2 },  // LED F1 (zschunky Mode)
+  { RIGHT,      LEFT,       BUTTON,     0,          SPACE,      BUTTON,     0       }   // LED F2
+};
+
+static inline uint16_t map_buttons(Button btn) {
+  return pgm_read_word(&button_map[led_get_state()][btn]);
+}
+
+/// \brief different possible d pads
+typedef enum {
+  D_UP, D_DOWN, D_LEFT, D_RIGHT, D_TL, D_TR, NUMBER_DPADS
+} DPads;
+
+/// \brief button mapping
+const uint16_t dpad_map[NUMBER_LED_STATES][NUMBER_BUTTONS] PROGMEM = {
+//  D_UP    D_DOWN  D_LEFT  D_RIGHT D_TL    D_TR
+  { UP,     DOWN,   LEFT,   RIGHT,  LEFT,   RIGHT   },  // LED OFF
+  { UP,     DOWN,   LEFT,   RIGHT,  LEFT,   RIGHT   },  // LED ON
+  { 0,      0,      LEFT,   RIGHT,  BUTTON, BUTTON  },  // LED F1 (zschunky Mode)
+  { 0,      0,      0,      0,      0,      0       }   // LED F2
+};
+
+static inline uint16_t map_dpad(DPads dpad) {
+  return pgm_read_word(&dpad_map[led_get_state()][dpad]);
+}
 
 static inline uint16_t left_x(const ContollerData *cd) {
   return (cd->byte[0] & 0x3f);
@@ -42,109 +81,111 @@ static void get_joystick_state_wii_classic(const ContollerData *cd, Joystick *jo
 
   // BDU - DPAD U
   if ((cd->byte[5] & 0x01) == 0) {
-    (*joystick) |= UP;
+    (*joystick) |= map_dpad(D_UP);
   }
 
   // BDD - DPAD D
   if ((cd->byte[4] & 0x40) == 0) {
-    (*joystick) |= DOWN;
+    (*joystick) |= map_dpad(D_DOWN);
   }
 
   // BDL - DPAD L
   if ((cd->byte[5] & 0x02) == 0) {
-    (*joystick) |= LEFT;
+    (*joystick) |= map_dpad(D_LEFT);
   }
 
   // BDR - DPAD R
   if ((cd->byte[4] & 0x80) == 0) {
-    (*joystick) |= RIGHT;
+    (*joystick) |= map_dpad(D_RIGHT);
   }
 
   // ------------------------------
 
   // BA - A Button
   if ((cd->byte[5] & 0x10) == 0) {
-    (*joystick) |= UP;
+    (*joystick) |= map_buttons(A);
   }
 
   // BB - B Button
   if ((cd->byte[5] & 0x40) == 0) {
-    (*joystick) |= BUTTON;
+    (*joystick) |= map_buttons(B);
   }
 
   // BX - X Button
   if ((cd->byte[5] & 0x08) == 0) {
-    (*joystick) |= BUTTON2;
+    (*joystick) |= map_buttons(X);
   }
 
   // BY - Y Button
   if ((cd->byte[5] & 0x20) == 0) {
-    (*joystick) |= AUTOFIRE;
+    (*joystick) |= map_buttons(Y);
   }
 
   // ------------------------------
 
   // BLT - Button left (trigger)
   if ((cd->byte[4] & 0x20) == 0) {
-    (*joystick) |= LEFT;
+    (*joystick) |= map_dpad(D_TL);
   }
 
   // BRT - Button right (trigger)
   if ((cd->byte[4] & 0x02) == 0) {
-    (*joystick) |= RIGHT;
+    (*joystick) |= map_dpad(D_TR);
   }
 
   // ------------------------------
 
   // B+ - Button Start
   if ((cd->byte[4] & 0x04) == 0) {
-    (*joystick) |= SPACE;
+    (*joystick) |= map_buttons(START);
+  }
+
+  // Home - Button Start
+  if ((cd->byte[4] & 0x08) == 0) {
+    (*joystick) |= map_buttons(HOME);
   }
 
   // B- - Button Select
   if ((cd->byte[4] & 0x10) == 0) {
-    (*joystick) |= BUTTON;
+    (*joystick) |= map_buttons(SELECT);
   }
 
-  switch (led_get_state()) {
-    case LED_OFF:
-    case LED_ON:
-    case NUMBER_LED_STATES: {
+  // ------------------------------
 
-      uint8_t lx = left_x(cd);
+  // Left X and Left Y
+  if (led_get_state() == LED_OFF ||
+      led_get_state() == LED_ON ||
+      led_get_state() == LED_BLINK1) {
 
-      if (lx > 43) {
-        (*joystick) |= RIGHT;
-      } else if (lx < 20) {
-        (*joystick) |= LEFT;
-      }
+    uint8_t lx = left_x(cd);
 
-      // Analog Joystick Y
-      uint8_t ly = left_y(cd);
-
-      if (ly > 43) {
-        (*joystick) |= UP;
-      } else if (ly < 20) {
-        (*joystick) |= DOWN;
-      }
+    if (lx > 43) {
+      (*joystick) |= RIGHT;
+    } else if (lx < 20) {
+      (*joystick) |= LEFT;
     }
-    break;
 
-    case LED_BLINK1:
-    case LED_BLINK2:
-//  case LED_BLINK3:
-      break;
+    // Analog Joystick Y
+    uint8_t ly = left_y(cd);
+
+    if (ly > 43) {
+      (*joystick) |= UP;
+    } else if (ly < 20) {
+      (*joystick) |= DOWN;
+    }
   }
 }
 
 static void get_paddle_state_wii_classic(const ContollerData *cd, Paddle *paddle) {
-  if (led_get_state() == LED_BLINK1 || led_get_state() == LED_BLINK2) {
+
+  if (led_get_state() == LED_BLINK1 ||
+      led_get_state() == LED_BLINK2) {
 
     int16_t x = left_x(cd) << 4;
     int16_t y = left_y(cd) << 4;
 
-    x = scale(x, 1.6);
-    y = scale(y, 1.6);
+    // x = scale(x, 1.6);
+    // y = scale(y, 1.6);
 
     paddle->axis_x = x;
     paddle->axis_y = y;
@@ -153,7 +194,6 @@ static void get_paddle_state_wii_classic(const ContollerData *cd, Paddle *paddle
 
 uint8_t get_paddle_enabled_wii_classic(void) {
   switch (led_get_state()) {
-    case LED_BLINK1:
     case LED_BLINK2:
       return TRUE;
 

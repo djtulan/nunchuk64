@@ -61,7 +61,8 @@ extern void joystick_init(void);
 *
 * The bit (see Joystick_State) are set inside the respective parameter
 */
-extern void joystick_update(Joystick port_a, Joystick port_b);
+extern void joystick_update(Joystick port_a, uint8_t ext_a,
+                            Joystick port_b, uint8_t ext_b);
 
 /**
 * @brief poll joystick routines (for autofire)

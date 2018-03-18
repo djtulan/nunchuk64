@@ -43,7 +43,8 @@
 #include "driver_nunchuk.h"
 #include "driver_wii_classic.h"
 
-Driver *driver[NUMBER_PORTS] = {NULL, NULL};
+static volatile Driver *driver[NUMBER_PORTS] = {NULL, NULL};
+static volatile uint8_t ext[NUMBER_PORTS] = {1, 1};
 
 static Driver *GetDriver(ControllerID id) {
   switch (id) {
@@ -108,9 +109,11 @@ static void handle_paddle_enabled(uint8_t switched_ports) {
     }
 
     if (driver[p] != NULL && driver[p]->get_paddle_enabled() == TRUE) {
+      ext[p] = 0;
       paddle_start(setport);
     } else {
       paddle_stop(setport);
+      ext[p] = 1;
     }
   }
 }
@@ -197,10 +200,11 @@ int main(void) {
 
     // switched mode?
     if (switched_ports == FALSE) {
-      joystick_update(joystick[PORT_A], joystick[PORT_B]);
+
+      joystick_update(joystick[PORT_A], ext[PORT_A], joystick[PORT_B], ext[PORT_B]);
       paddle_update(&paddle[PORT_A], &paddle[PORT_B]);
     } else {
-      joystick_update(joystick[PORT_B], joystick[PORT_A]);
+      joystick_update(joystick[PORT_B], ext[PORT_B], joystick[PORT_A], ext[PORT_A]);
       paddle_update(&paddle[PORT_B], &paddle[PORT_A]);
     }
   }

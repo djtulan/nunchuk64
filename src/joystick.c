@@ -68,7 +68,16 @@ static volatile uint8_t  autofire2_b = 0;
 static volatile uint8_t  autofire3_a = 0;
 static volatile uint8_t  autofire3_b = 0;
 
-void joystick_update(Joystick port_a, Joystick port_b) {
+void joystick_update(Joystick port_a, uint8_t ext_a,
+                     Joystick port_b, uint8_t ext_b) {
+
+  if (ext_a == 0) {
+    autofire2_a = autofire3_a = 0;
+  }
+
+  if (ext_b == 0) {
+    autofire2_b = autofire3_b = 0;
+  }
 
   // look if same change?
   if (port_a == port_a_old && port_b == port_b_old) {
@@ -126,23 +135,44 @@ void joystick_update(Joystick port_a, Joystick port_b) {
       BIT_CLEAR(DDR_BUTTON_A, BIT_BUTTON_A);
     }
   }
-/*
-  // BUTTON2
-  if (port_a & BUTTON2) {
-    BIT_SET(DDR_BUTTON2_A, BIT_BUTTON2_A);
-  } else {
 
-    // AUTOFIRE2 BUTTON
-    if (port_a & AUTOFIRE2) {
-      autofire2_a = 1;
-
-      // neither AUTOFIRE2 nor FIRE BUTTON2
+  if (ext_a) {
+    // BUTTON2
+    if (port_a & BUTTON2) {
+      BIT_SET(DDR_BUTTON2_A, BIT_BUTTON2_A);
+      BIT_SET(PORT_BUTTON2_A, BIT_BUTTON2_A);
     } else {
-      autofire2_a = 0;
-      BIT_CLEAR(DDR_BUTTON2_A, BIT_BUTTON2_A);
+
+      // AUTOFIRE2 BUTTON
+      if (port_a & AUTOFIRE2) {
+        autofire2_a = 1;
+
+        // neither AUTOFIRE2 nor FIRE BUTTON2
+      } else {
+        autofire2_a = 0;
+        BIT_CLEAR(DDR_BUTTON2_A, BIT_BUTTON2_A);
+        BIT_CLEAR(PORT_BUTTON2_A, BIT_BUTTON2_A);
+      }
+    }
+
+    // BUTTON3
+    if (port_a & BUTTON3) {
+      BIT_SET(DDR_BUTTON3_A, BIT_BUTTON3_A);
+      BIT_SET(PORT_BUTTON3_A, BIT_BUTTON3_A);
+    } else {
+
+      // AUTOFIRE4 BUTTON
+      if (port_a & AUTOFIRE3) {
+        autofire3_a = 1;
+
+        // neither AUTOFIRE3 nor FIRE BUTTON3
+      } else {
+        autofire3_a = 0;
+        BIT_CLEAR(DDR_BUTTON3_A, BIT_BUTTON3_A);
+        BIT_CLEAR(PORT_BUTTON3_A, BIT_BUTTON3_A);
+      }
     }
   }
-*/
 
   // ===================================
   //  CONTROL PORT B
@@ -192,28 +222,51 @@ void joystick_update(Joystick port_a, Joystick port_b) {
     }
   }
 
-/*
-  // BUTTON2
-  if (port_b & BUTTON2) {
-    BIT_SET(DDR_BUTTON2_B, BIT_BUTTON2_B);
-    BIT_SET(PORT_BUTTON2_B, BIT_BUTTON2_B);
-  } else {
-
-    // AUTOFIRE2 BUTTON
-    if (port_b & AUTOFIRE2) {
-      autofire2_b = 1;
-
-      // neither AUTOFIRE2 nor FIRE BUTTON2
+  if (ext_b) {
+    // BUTTON2
+    if (port_b & BUTTON2) {
+      BIT_SET(DDR_BUTTON2_B, BIT_BUTTON2_B);
+      BIT_SET(PORT_BUTTON2_B, BIT_BUTTON2_B);
     } else {
-      autofire2_b = 0;
-      BIT_CLEAR(DDR_BUTTON2_B, BIT_BUTTON2_B);
-      BIT_CLEAR(PORT_BUTTON2_B, BIT_BUTTON2_B);
+
+      // AUTOFIRE2 BUTTON
+      if (port_b & AUTOFIRE2) {
+        autofire2_b = 1;
+
+        // neither AUTOFIRE2 nor FIRE BUTTON2
+      } else {
+        autofire2_b = 0;
+        BIT_CLEAR(DDR_BUTTON2_B, BIT_BUTTON2_B);
+        BIT_CLEAR(PORT_BUTTON2_B, BIT_BUTTON2_B);
+      }
+    }
+
+    // BUTTON3
+    if (port_b & BUTTON3) {
+      BIT_SET(DDR_BUTTON3_B, BIT_BUTTON3_B);
+      BIT_SET(PORT_BUTTON3_B, BIT_BUTTON3_B);
+    } else {
+
+      // AUTOFIRE3 BUTTON
+      if (port_b & AUTOFIRE3) {
+        autofire3_b = 1;
+
+        // neither AUTOFIRE3 nor FIRE BUTTON3
+      } else {
+        autofire3_b = 0;
+        BIT_CLEAR(DDR_BUTTON3_B, BIT_BUTTON3_B);
+        BIT_CLEAR(PORT_BUTTON3_B, BIT_BUTTON3_B);
+      }
     }
   }
-*/
 }
 
 void joystick_poll(void) {
+
+  // ===================================
+  //  CONTROL PORT A
+  // ===================================
+
   if (autofire_a == 1) {
     // toggle FIRE A
     if (bit_is_set(DDR_BUTTON_A, BIT_BUTTON_A)) {
@@ -224,13 +277,30 @@ void joystick_poll(void) {
   }
 
   if (autofire2_a == 1) {
-    // toggle FIRE A
+    // toggle FIRE2 A
     if (bit_is_set(DDR_BUTTON2_A, BIT_BUTTON2_A)) {
       BIT_CLEAR(DDR_BUTTON2_A, BIT_BUTTON2_A);
+      BIT_CLEAR(PORT_BUTTON2_A, BIT_BUTTON2_A);
     } else {
       BIT_SET(DDR_BUTTON2_A, BIT_BUTTON2_A);
+      BIT_SET(PORT_BUTTON2_A, BIT_BUTTON2_A);
     }
   }
+
+  if (autofire3_a == 1) {
+    // toggle FIRE3 A
+    if (bit_is_set(DDR_BUTTON3_A, BIT_BUTTON3_A)) {
+      BIT_CLEAR(DDR_BUTTON3_A, BIT_BUTTON3_A);
+      BIT_CLEAR(PORT_BUTTON3_A, BIT_BUTTON3_A);
+    } else {
+      BIT_SET(DDR_BUTTON3_A, BIT_BUTTON3_A);
+      BIT_SET(PORT_BUTTON3_A, BIT_BUTTON3_A);
+    }
+  }
+
+  // ===================================
+  //  CONTROL PORT B
+  // ===================================
 
   if (autofire_b == 1) {
     // toggle FIRE B
@@ -242,11 +312,24 @@ void joystick_poll(void) {
   }
 
   if (autofire2_b == 1) {
-    // toggle FIRE B
+    // toggle FIRE2 B
     if (bit_is_set(DDR_BUTTON2_B, BIT_BUTTON2_B)) {
       BIT_CLEAR(DDR_BUTTON2_B, BIT_BUTTON2_B);
+      BIT_CLEAR(PORT_BUTTON2_B, BIT_BUTTON2_B);
     } else {
       BIT_SET(DDR_BUTTON2_B, BIT_BUTTON2_B);
+      BIT_SET(PORT_BUTTON2_B, BIT_BUTTON2_B);
+    }
+  }
+
+  if (autofire3_b == 1) {
+    // toggle FIRE3 B
+    if (bit_is_set(DDR_BUTTON3_B, BIT_BUTTON3_B)) {
+      BIT_CLEAR(DDR_BUTTON3_B, BIT_BUTTON3_B);
+      BIT_CLEAR(PORT_BUTTON3_B, BIT_BUTTON3_B);
+    } else {
+      BIT_SET(DDR_BUTTON3_B, BIT_BUTTON3_B);
+      BIT_SET(PORT_BUTTON3_B, BIT_BUTTON3_B);
     }
   }
 }

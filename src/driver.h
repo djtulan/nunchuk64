@@ -28,10 +28,12 @@
 #include "paddle.h"
 #include "led.h"
 
-inline int16_t scale(int16_t val, float factor) {
+/*
+inline int16_t scale(int16_t val, int16_t factor) {
   int16_t ret = ((val - 512) * factor) + 512;
   return ret;
 }
+*/
 
 /// \driver struct
 typedef struct {
