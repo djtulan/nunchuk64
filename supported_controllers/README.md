@@ -98,18 +98,18 @@ DRIVER: [driver_wii_classic.c]
 
 | Item          |Mode OFF  |Mode ON   |Mode F1   |Mode F2   |
 | --------------|----------|----------|----------|----------|
-| Joystick UP   |UP        |UP        |UP        |UP        |
-| Joystick DOWN |DOWN      |DOWN      |DOWN      |DOWN      |
-| Joystick LEFT |LEFT      |LEFT      |LEFT      |LEFT      |
-| Joystick RIGHT|RIGHT     |RIGHT     |RIGHT     |RIGHT     |
-| A             |UP        |UP        |UP        |UP        |
-| B             |FIRE      |FIRE      |FIRE      |FIRE      |
-| X             |FIRE      |FIRE      |FIRE      |FIRE      |
-| Y             |AUTOFIRE  |AUTOFIRE  |AUTOFIRE  |AUTOFIRE  |
+| Joystick UP   |UP        |UP        |-         |-         |
+| Joystick DOWN |DOWN      |DOWN      |-         |-         |
+| Joystick LEFT |LEFT      |LEFT      |LEFT      |-         |
+| Joystick RIGHT|RIGHT     |RIGHT     |RIGHT     |-         |
+| A             |UP        |FIRE2     |DOWN      |RIGHT     |
+| B             |FIRE      |FIRE      |UP        |LEFT      |
+| X             |FIRE2     |FIRE3     |FIRE      |FIRE      |
+| Y             |AUTOFIRE  |UP        |AUTOFIRE  |-         |
 | SELECT        |FIRE      |FIRE      |FIRE      |FIRE      |
 | START         |SPACE     |SPACE     |SPACE     |SPACE     |
-| L             |LEFT      |LEFT      |LEFT      |LEFT      |
-| R             |RIGHT     |RIGHT     |RIGHT     |RIGHT     |
+| L             |LEFT      |LEFT      |FIRE      |-         |
+| R             |RIGHT     |RIGHT     |FIRE      |-         |
 
 ## Wii classic controller
 Wii Classic Controller for Nintendo Wii Remote. (Wired)
@@ -124,20 +124,20 @@ DRIVER: [driver_wii_classic.c]
 
 | Item          |Mode OFF  |Mode ON   |Mode F1   |Mode F2   |
 | --------------|----------|----------|----------|----------|
-| Joystick UP   |UP        |UP        |UP        |UP        |
-| Joystick DOWN |DOWN      |DOWN      |DOWN      |DOWN      |
-| Joystick LEFT |LEFT      |LEFT      |LEFT      |LEFT      |
-| Joystick RIGHT|RIGHT     |RIGHT     |RIGHT     |RIGHT     |
-| A             |UP        |UP        |UP        |UP        |
-| B             |FIRE      |FIRE      |FIRE      |FIRE      |
-| X             |FIRE      |FIRE      |FIRE      |FIRE      |
-| Y             |AUTOFIRE  |AUTOFIRE  |AUTOFIRE  |AUTOFIRE  |
+| Joystick UP   |UP        |UP        |-         |-         |
+| Joystick DOWN |DOWN      |DOWN      |-         |-         |
+| Joystick LEFT |LEFT      |LEFT      |LEFT      |-         |
+| Joystick RIGHT|RIGHT     |RIGHT     |RIGHT     |-         |
+| A             |UP        |FIRE2     |DOWN      |RIGHT     |
+| B             |FIRE      |FIRE      |UP        |LEFT      |
+| X             |FIRE2     |FIRE3     |FIRE      |FIRE      |
+| Y             |AUTOFIRE  |UP        |AUTOFIRE  |-         |
 | SELECT        |FIRE      |FIRE      |FIRE      |FIRE      |
-| HOME          |-         |-         |-         |-         |
+| HOME          |FIRE2     |FIRE2     |FIRE2     |-         |
 | START         |SPACE     |SPACE     |SPACE     |SPACE     |
-| L             |LEFT      |LEFT      |LEFT      |LEFT      |
+| L             |LEFT      |LEFT      |FIRE      |-         |
 | ZL            |-         |-         |-         |-         |
-| R             |RIGHT     |RIGHT     |RIGHT     |RIGHT     |
+| R             |RIGHT     |RIGHT     |FIRE      |-         |
 | ZR            |-         |-         |-         |-         |
 | LX (Analog)   |LEFT/RIGHT|LEFT/RIGHT|LEFT/RIGHT|PADDLE X  |
 | LY (Analog)   |UP/DOWN   |UP/DOWN   |UP/DOWN   |PADDLE Y  |
