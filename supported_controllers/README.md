@@ -15,22 +15,22 @@ Depending on the mode the controllers behaves differently.
 ### Possible Controls
 Nunchuk64 can perform these different controls on each individual C64 Control Port:
 
-- UP
-- DOWN
-- LEFT
-- RIGHT
-- FIRE
-- AUTOFIRE
+- UP (Joystick Up)
+- DOWN (Joystick Down)
+- LEFT (Joystick Left)
+- RIGHT (Joystick Right)
+- FIRE (Fire Button)
+- AUTOFIRE  (automatic Fire Button)
 - PADDLE X
 - PADDLE Y
-- SECOND FIRE BUTTON
-- SECOND AUTOFIRE BUTTON
-- THIRD FIRE BUTTON
-- THIRD AUTOFIRE BUTTON
+- FIRE2 (5V on Paddle X)
+- AUTOFIRE2 BUTTON
+- FIRE3 (5V on Paddle Y)
+- AUTOFIRE3
 
 An extra function is SPACE, which triggers FIRE on controller port 1.
 This is very handy because you can use it to press the space bar.
-For SECOND FIRE / THIRD FIRE C64s analog paddle input X,Y are used, 
+For FIRE2 / FIRE3 C64s analog paddle input X,Y are used,
 similar the Cheetah Annihilator Joystick.
 See https://www.c64-wiki.de/wiki/Joystick#Weitere_Feuerkn.C3.B6pfe
 
@@ -60,6 +60,24 @@ DRIVER: [driver_nes_classic.c]
 | B             |FIRE      |FIRE      |FIRE      |FIRE      |
 | A+            |UP        |UP        |UP        |UP        |
 | B+            |FIRE      |FIRE      |FIRE      |FIRE      |
+| SELECT        |FIRE      |FIRE      |FIRE      |FIRE      |
+| START         |SPACE     |SPACE     |SPACE     |SPACE     |
+
+## Original NESS Classic Mini
+Wired Controller for Nintendo NES Mini Classic Edition.
+
+![NES Classic Mini](nes_classic_mini.jpg)
+
+DRIVER: [driver_wii_classic.c]
+
+| Item          |Mode OFF  |Mode ON   |Mode F1   |Mode F2   |
+| --------------|----------|----------|----------|----------|
+| Joystick UP   |UP        |UP        |-         |-         |
+| Joystick DOWN |DOWN      |DOWN      |-         |-         |
+| Joystick LEFT |LEFT      |LEFT      |LEFT      |-         |
+| Joystick RIGHT|RIGHT     |RIGHT     |RIGHT     |-         |
+| A             |UP        |FIRE2     |UP        |LEFT      |
+| B             |FIRE      |FIRE      |DOWN      |RIGHT     |
 | SELECT        |FIRE      |FIRE      |FIRE      |FIRE      |
 | START         |SPACE     |SPACE     |SPACE     |SPACE     |
 
