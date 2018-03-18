@@ -3,7 +3,7 @@ Nunchuk64 is a converter or adapter to connect a Wii Nunchuk or a Nindendo NES C
 to a Commodore 64. The circuit converts two Nintendo Controllers into two Commodore 64 ones.
 All types of the Commodore 64 inputs, which means digital and analog inputs, are available.
 
-![Work in Progress](work.gif) ![Picture](in_action.jpg)
+![Picture](in_action.jpg)
 
 ## Introduction Video
 User [dukestah] from [Forum64](https://www.forum64.de) made a nice introduction video.
