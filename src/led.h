@@ -28,8 +28,8 @@
 typedef enum {
   LED_OFF,      ///< LED is OFF
   LED_ON,       ///< LED is ON
-  LED_BLINK1,   ///< LED blinks once
-  LED_BLINK2,   ///< LED blinks twice
+  LED_BLINK1,   ///< LED flashes once
+  LED_BLINK2,   ///< LED flashes twice
   // LED_BLINK3,   ///< LED blinks tree times
 
   NUMBER_LED_STATES
@@ -59,6 +59,11 @@ extern void led_setnextstate(void);
 * @return state of led
 */
 extern LED_State led_get_state(void);
+
+/**
+* @brief quick flash
+*/
+extern void led_quick_blink(uint8_t number);
 
 /**
 * @brief poll led routines (for flashing)

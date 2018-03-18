@@ -157,6 +157,8 @@ int main(void) {
       switched_ports = (switched_ports == FALSE) ? TRUE : FALSE;
 
       handle_paddle_enabled(switched_ports); // handle paddle disabled
+
+      led_quick_blink(switched_ports ? 2 : 1);
     }
 
     // ===================================

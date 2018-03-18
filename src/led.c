@@ -21,6 +21,8 @@
 /// @brief  led
 //=============================================================================
 #include <avr/pgmspace.h>
+#include <avr/wdt.h>
+#include <util/delay.h>
 
 #include "ioconfig.h"
 
@@ -32,12 +34,12 @@ const uint8_t FLASH_DATA[NUMBER_LED_STATES][7] PROGMEM = {
   {0,  0,  0,  0,  0,  0,  0}, ///< ON
   {2, 12,  0,  0,  0,  0,  0}, ///< F1
   {2,  4,  2, 12,  0,  0,  0}  ///< F2
-//{2,  4,  2,  4,  2, 12,  0}
 };
 
 static LED_State led_state = LED_OFF;
 static uint8_t led_flash_index = 0;
 static uint8_t led_flash_timer = 0;
+static uint8_t led_lock = 0;
 
 static void led_set(uint8_t on) {
   if (on) {
@@ -69,10 +71,6 @@ void led_switch(LED_State state) {
       led_set(1);
       break;
 
-//     case LED_BLINK3:
-//       led_set(1);
-//       break;
-
     case NUMBER_LED_STATES:
       break;
   }
@@ -85,6 +83,7 @@ void led_setnextstate(void) {
   LED_State s = led_get_state();
 
   s ++;
+
   if (s == NUMBER_LED_STATES)
     s = LED_OFF;
 
@@ -95,10 +94,35 @@ LED_State led_get_state(void) {
   return (led_state);
 }
 
+void led_quick_blink(uint8_t number) {
+  led_lock = 1;
+
+  led_set(0);
+  _delay_ms(200);
+  wdt_reset();
+
+  for (uint8_t i = 0; i < number; i++) {
+    led_set(1);
+    _delay_ms(50);
+
+    wdt_reset();
+
+    led_set(0);
+    _delay_ms(50);
+  }
+
+  _delay_ms(400);
+   wdt_reset();
+
+  led_lock = 0;
+
+  led_switch(led_state);
+}
+
 void led_poll(void) {
 
   // if ON or OFF do nothing
-  if (led_state == LED_OFF || led_state == LED_ON)
+  if (led_state == LED_OFF || led_state == LED_ON || led_lock)
     return;
 
   // set timer
@@ -112,7 +136,7 @@ void led_poll(void) {
       led_set(1);
     }
 
-  // count down timer
+    // count down timer
   } else {
 
     led_flash_timer --;
