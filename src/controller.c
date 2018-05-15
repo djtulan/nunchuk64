@@ -21,8 +21,10 @@
 /// @brief  i2c controller
 //=============================================================================
 #include <string.h>
+#include <avr/pgmspace.h>
 
 // #include <util/delay.h>
+#include "ioconfig.h"
 
 #include "enums.h"
 #include "i2c_master.h"
@@ -43,6 +45,14 @@ void controller_init(void) {
   // send 0x00 to register 0xfb
   i2c_start(CONTROLLER_ADDR | I2C_WRITE);
   i2c_write(0xfb);
+  i2c_write(0x00);
+  i2c_stop();
+  // --------------------
+
+  // --------------------
+  // send 0x00 to register 0xfe
+  i2c_start(CONTROLLER_ADDR | I2C_WRITE);
+  i2c_write(0xfe);
   i2c_write(0x00);
   i2c_stop();
   // --------------------
@@ -120,14 +130,8 @@ uint8_t controller_read(ContollerData *cd) {
   return TRUE;
 }
 
-const uint8_t ID_MAP[MAX_IDs][6] = {
-  {0x00, 0x00, 0xa4, 0x20, 0x00, 0x00}, // ID_Nunchuck
-  {0x00, 0x00, 0xa4, 0x20, 0x01, 0x01}, // ID_Classic
-  {0x01, 0x00, 0xa4, 0x20, 0x01, 0x01}, // ID_Wii_Classic_Pro
-  {0x01, 0x00, 0xa4, 0x20, 0x01, 0x01}  // ID_NES_Classic_Mini_Clone
-};
 
-ControllerID get_id(void) {
+static void read_id(uint8_t id[6]) {
   // --------------------
   // send read request to 0xfa register
   i2c_start(CONTROLLER_ADDR | I2C_WRITE);
@@ -138,11 +142,10 @@ ControllerID get_id(void) {
   // --------------------
   // read 6 bytes
   if (i2c_start(CONTROLLER_ADDR | I2C_READ) != 0) {
-    return MAX_IDs; // if controller is not responsing, return MAX_IDs
+    return; // if controller is not responsing
   }
 
   uint8_t i = 0;
-  uint8_t id[6];
 
   for (i = 0; i < 5; i++) {
     id[i] = i2c_readAck(); // i2c_read(I2C_ACK);
@@ -151,28 +154,68 @@ ControllerID get_id(void) {
   id[i] = (i2c_readNak()); // i2c_read(I2C_NOACK);
   i2c_stop();
   // --------------------
+}
+
+const uint8_t ID_MAP[MAX_IDs][6] PROGMEM = {
+  {0x00, 0x00, 0xa4, 0x20, 0x00, 0x00}, // ID_Nunchuck
+  {0x00, 0x00, 0xa4, 0x20, 0x01, 0x01}, // ID_Classic
+  {0x01, 0x00, 0xa4, 0x20, 0x01, 0x01}, // ID_Wii_Classic_Pro
+  {0x01, 0x00, 0xa4, 0x20, 0x00, 0x01}, // ID_NES_Classic_Mini_Clone_Encrypted
+  {0x00, 0x00, 0xa4, 0x20, 0x00, 0x01}  // ID_8Bitdo_SF30
+};
+
+ControllerID get_id(void) {
+  uint8_t id[6];
+
+  memset(id, 0, 6);
+
+  read_id(id);
 
   // --------------------
   // compare the 6 bytes with known IDs
   for (uint8_t i = 0; i < MAX_IDs; i++) {
 
     // known controller found?
-    if (memcmp(&ID_MAP[i][0], &id[0], 6) == 0) {
+    if (memcmp_P(&id[0], &ID_MAP[i][0], 6) == 0) {
 
-      // HACK because fucking china clones use the same ID
-      if (i == ID_Wii_Classic_Pro) {
-        ContollerData data;
-        controller_read(&data);
+      switch (i) {
+        case ID_Wii_Classic_Pro: {
 
-        if (data.byte[4] == 0x00 && data.byte[5] == 0x00) {
-          controller_disable_encryption();
-          return ID_NES_Classic_Mini_Clone;
+          ContollerData data;
+          controller_read(&data);
+
+          // look if controller sends wired data
+          // NES Classic Mini Wireless Clone needs encryption & init afterwards
+          if (data.byte[4] == 0x00 && data.byte[5] == 0x00) {
+            controller_disable_encryption();
+            controller_init();
+          }
         }
+        break;
+
+        case ID_NES_Classic_Mini_Clone_Encrypted:
+          controller_disable_encryption();
+          controller_init();
+          break;
+
+        case ID_8Bitdo_SF30:
+          controller_disable_encryption();
+
+          read_id(id);
+
+          // if controller id has changed, then it is not a ID_8Bitdo_SF30
+          // Chinese Item# JYS-NS126 has also same ID, but doesn't need encryption
+          if (memcmp_P(&id[0], &ID_MAP[i][0], 6) != 0) {
+            controller_init();
+          }
+
+          break;
       }
 
       return i;
     }
   }
+
   // --------------------
 
   return MAX_IDs; // no known controller found, return MAX_IDs

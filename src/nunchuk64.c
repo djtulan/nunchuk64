@@ -53,10 +53,9 @@ static Driver *GetDriver(ControllerID id) {
 
     case ID_Wii_Classic:
     case ID_Wii_Classic_Pro:
+    case ID_NES_Classic_Mini_Clone_Encrypted:
+    case ID_8Bitdo_SF30:
       return &drv_wii_classic;
-
-    case ID_NES_Classic_Mini_Clone:
-      return &drv_nes_classic;
 
     case MAX_IDs:
       return NULL;
