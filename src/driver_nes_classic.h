@@ -20,6 +20,8 @@
 /// @date   December, 2017
 /// @brief  driver nes classic
 //=============================================================================
+#ifdef xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
 #ifndef _DRIVER_NES_CLASSIC_H_
 #define _DRIVER_NES_CLASSIC_H_
 
@@ -29,3 +31,5 @@
 extern Driver drv_nes_classic;
 
 #endif
+
+#endif // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx

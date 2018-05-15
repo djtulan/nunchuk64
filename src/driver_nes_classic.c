@@ -20,6 +20,9 @@
 /// @date   December, 2017
 /// @brief  driver nes classic
 //=============================================================================
+
+#ifdef xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
 #include "enums.h"
 #include "joystick.h"
 
@@ -254,3 +257,5 @@ Driver drv_nes_classic = {
   get_paddle_state_nes,
   get_paddle_enable_nes
 };
+
+#endif // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
