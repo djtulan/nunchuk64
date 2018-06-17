@@ -48,18 +48,18 @@ Seen here: https://www.ebay.com/itm/272765627224
 
 ![NES Classic Mini Clone](nes_classic_mini_clone.jpg)
 
-DRIVER: [driver_nes_classic.c]
+DRIVER: [driver_wii_classic.c]
 
 | Item          |Mode OFF  |Mode ON   |Mode F1   |Mode F2   |
 | --------------|----------|----------|----------|----------|
-| Joystick UP   |UP        |UP        |UP        |UP        |
-| Joystick DOWN |DOWN      |DOWN      |DOWN      |DOWN      |
-| Joystick LEFT |LEFT      |LEFT      |LEFT      |LEFT      |
-| Joystick RIGHT|RIGHT     |RIGHT     |RIGHT     |RIGHT     |
-| A             |UP        |UP        |UP        |UP        |
-| B             |FIRE      |FIRE      |FIRE      |FIRE      |
-| A+            |UP        |UP        |UP        |UP        |
-| B+            |FIRE      |FIRE      |FIRE      |FIRE      |
+| Joystick UP   |UP        |UP        |-         |-         |
+| Joystick DOWN |DOWN      |DOWN      |-         |-         |
+| Joystick LEFT |LEFT      |LEFT      |LEFT      |-         |
+| Joystick RIGHT|RIGHT     |RIGHT     |RIGHT     |-         |
+| A             |UP        |FIRE2     |UP        |LEFT      |
+| B             |FIRE      |FIRE      |DOWN      |RIGHT     |
+| A+            |UP        |FIRE2     |UP        |LEFT      |
+| B+            |FIRE      |FIRE      |DOWN      |RIGHT     |
 | SELECT        |FIRE      |FIRE      |FIRE      |FIRE      |
 | START         |SPACE     |SPACE     |SPACE     |SPACE     |
 
