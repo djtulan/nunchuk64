@@ -36,7 +36,7 @@ See https://www.c64-wiki.de/wiki/Joystick#Weitere_Feuerkn.C3.B6pfe
 
 ### Joystick Swapping
 A long press on the button changes the ports. Port 1 becomes 2 and Port 2 becomes 1.
-Another long press, changes them back.
+Another long press, changes them back. It is indicated by a two times flash or one time flash.
 
 ## NES Classic Mini Clone
 Wireless Controller for Nintendo NES Mini Classic Edition.
