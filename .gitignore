@@ -4,3 +4,14 @@
 *.eep
 *.elf
 *.hex
+*.kicad_pcb-bak
+*.bak
+gerber.zip
+*.gbl
+*.gbs
+*.gbo
+*.gm1
+*.gtl
+*.gts
+*.gto
+*.drl
