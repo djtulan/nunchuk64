@@ -1,0 +1,227 @@
+Cmp-Mod V01 Created by PcbNew   date = 25.06.2018 18:50:58
+
+BeginCmp
+TimeStamp = 5A382CA6
+Path = /5A1F1810
+Reference = J2;
+ValeurCmp = DB9_Female;
+IdModule  = Connectors_DSub:DSUB-9_Female_EdgeMount_Pitch2.77mm;
+EndCmp
+
+BeginCmp
+TimeStamp = 5A382C49
+Path = /5A1F1637
+Reference = J1;
+ValeurCmp = DB9_Female;
+IdModule  = Connectors_DSub:DSUB-9_Female_EdgeMount_Pitch2.77mm;
+EndCmp
+
+BeginCmp
+TimeStamp = 5A3976B0
+Path = /5A396B9A
+Reference = J3;
+ValeurCmp = Conn_02x03_Odd_Even;
+IdModule  = nunchuk_commodore:AVR-ISP-6-TH;
+EndCmp
+
+BeginCmp
+TimeStamp = 5A425A7E
+Path = /5A425516
+Reference = SW1;
+ValeurCmp = SW_Push;
+IdModule  = Buttons_Switches_ThroughHole:SW_PUSH_6mm_h13mm;
+EndCmp
+
+BeginCmp
+TimeStamp = 5A382D73
+Path = /5A1F23E7
+Reference = U2;
+ValeurCmp = ATMEGA328P-AU;
+IdModule  = Housings_QFP:TQFP-32_7x7mm_Pitch0.8mm;
+EndCmp
+
+BeginCmp
+TimeStamp = 5A382D3C
+Path = /5A205791
+Reference = U1;
+ValeurCmp = AMS1117-3V3;
+IdModule  = TO_SOT_Packages_SMD:SOT-223;
+EndCmp
+
+BeginCmp
+TimeStamp = 5A382E04
+Path = /5A2729BC
+Reference = R4;
+ValeurCmp = 10K;
+IdModule  = Resistors_SMD:R_0805_HandSoldering;
+EndCmp
+
+BeginCmp
+TimeStamp = 5A382E15
+Path = /5A272A9F
+Reference = R5;
+ValeurCmp = 10K;
+IdModule  = Resistors_SMD:R_0805_HandSoldering;
+EndCmp
+
+BeginCmp
+TimeStamp = 5A382E26
+Path = /5A272B87
+Reference = R6;
+ValeurCmp = 10K;
+IdModule  = Resistors_SMD:R_0805_HandSoldering;
+EndCmp
+
+BeginCmp
+TimeStamp = 5A382E37
+Path = /5A272C30
+Reference = R7;
+ValeurCmp = 10K;
+IdModule  = Resistors_SMD:R_0805_HandSoldering;
+EndCmp
+
+BeginCmp
+TimeStamp = 5A385D0A
+Path = /5A231895
+Reference = C3;
+ValeurCmp = 100nF;
+IdModule  = Capacitors_SMD:C_0805_HandSoldering;
+EndCmp
+
+BeginCmp
+TimeStamp = 5A385D10
+Path = /5A231954
+Reference = C4;
+ValeurCmp = 100nF;
+IdModule  = Capacitors_SMD:C_0805_HandSoldering;
+EndCmp
+
+BeginCmp
+TimeStamp = 5A385D21
+Path = /5A21F426
+Reference = R1;
+ValeurCmp = 2k2;
+IdModule  = Resistors_SMD:R_0805_HandSoldering;
+EndCmp
+
+BeginCmp
+TimeStamp = 5A385D32
+Path = /5A21F3B2
+Reference = R2;
+ValeurCmp = 2k2;
+IdModule  = Resistors_SMD:R_0805_HandSoldering;
+EndCmp
+
+BeginCmp
+TimeStamp = 5A385D43
+Path = /5A21CCA1
+Reference = R3;
+ValeurCmp = 2k2;
+IdModule  = Resistors_SMD:R_0805_HandSoldering;
+EndCmp
+
+BeginCmp
+TimeStamp = 5A385D54
+Path = /5A21CD22
+Reference = R8;
+ValeurCmp = 2k2;
+IdModule  = Resistors_SMD:R_0805_HandSoldering;
+EndCmp
+
+BeginCmp
+TimeStamp = 5A425A70
+Path = /5A425420
+Reference = D1;
+ValeurCmp = LED;
+IdModule  = LEDs:LED_1206_HandSoldering;
+EndCmp
+
+BeginCmp
+TimeStamp = 5A425A76
+Path = /5A4254C7
+Reference = R9;
+ValeurCmp = 220;
+IdModule  = Resistors_SMD:R_0805_HandSoldering;
+EndCmp
+
+BeginCmp
+TimeStamp = 5A96FF14
+Path = /5A96FBD6
+Reference = C5;
+ValeurCmp = 100nF;
+IdModule  = Capacitors_SMD:C_0805_HandSoldering;
+EndCmp
+
+BeginCmp
+TimeStamp = 5A96FF25
+Path = /5A96FB59
+Reference = R10;
+ValeurCmp = 10k;
+IdModule  = Resistors_SMD:R_0805_HandSoldering;
+EndCmp
+
+BeginCmp
+TimeStamp = 5B2E7F96
+Path = /5A39946A
+Reference = C1;
+ValeurCmp = 22uF;
+IdModule  = Capacitors_Tantalum_SMD:CP_Tantalum_Case-A_EIA-3216-18_Hand;
+EndCmp
+
+BeginCmp
+TimeStamp = 5B2E7FA9
+Path = /5A3994D1
+Reference = C2;
+ValeurCmp = 22uF;
+IdModule  = Capacitors_Tantalum_SMD:CP_Tantalum_Case-A_EIA-3216-18_Hand;
+EndCmp
+
+BeginCmp
+TimeStamp = 5B2E7FD7
+Path = /5A21E744
+Reference = Q1;
+ValeurCmp = BSS138;
+IdModule  = TO_SOT_Packages_SMD:SOT-23_Handsoldering;
+EndCmp
+
+BeginCmp
+TimeStamp = 5B2E7FEB
+Path = /5A21E82C
+Reference = Q2;
+ValeurCmp = BSS138;
+IdModule  = TO_SOT_Packages_SMD:SOT-23_Handsoldering;
+EndCmp
+
+BeginCmp
+TimeStamp = 5B2E7FFF
+Path = /5A21C557
+Reference = Q3;
+ValeurCmp = BSS138;
+IdModule  = TO_SOT_Packages_SMD:SOT-23_Handsoldering;
+EndCmp
+
+BeginCmp
+TimeStamp = 5B2E8013
+Path = /5A21C68C
+Reference = Q4;
+ValeurCmp = BSS138;
+IdModule  = TO_SOT_Packages_SMD:SOT-23_Handsoldering;
+EndCmp
+
+BeginCmp
+TimeStamp = 5A382CD2
+Path = /5A205781
+Reference = P2;
+ValeurCmp = CONN_WII;
+IdModule  = Connectors_WII:CONN_WII;
+EndCmp
+
+BeginCmp
+TimeStamp = 5B311CA8
+Path = /5A2056EE
+Reference = P1;
+ValeurCmp = CONN_WII;
+IdModule  = Connectors_WII:CONN_WII;
+EndCmp
+
+EndListe
