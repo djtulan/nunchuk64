@@ -32,11 +32,12 @@ typedef struct {
 
 /// \brief enumeration of different controller IDs
 typedef enum {
-  ID_Nunchuck,                          ///< 0 Nunchuck
-  ID_Wii_Classic,                       ///< 1 Wii Classic
-  ID_Wii_Classic_Pro,                   ///< 2 Wii Classic Pro
-  ID_NES_Classic_Mini_Clone_Encrypted,  ///< 3 NES Classic Mini Clone encrypted
-  ID_8Bitdo_SF30,                       ///< 4 8Bitdo SF30
+  ID_Unknown,                           ///< 0 unknown
+  ID_Nunchuck,                          ///< 1 Nunchuck
+  ID_Wii_Classic,                       ///< 2 Wii Classic
+  ID_Wii_Classic_Pro,                   ///< 3 Wii Classic Pro
+  ID_NES_Classic_Mini_Clone_Encrypted,  ///< 4 NES Classic Mini Clone encrypted
+  ID_8Bitdo_SF30,                       ///< 5 8Bitdo SF30
   // room for new IDs
   MAX_IDs           ///< number of different supported ids
 } ControllerID;

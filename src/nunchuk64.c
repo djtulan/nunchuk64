@@ -58,6 +58,7 @@ static Driver *GetDriver(ControllerID id) {
       return &drv_wii_classic;
 
     case MAX_IDs:
+    case ID_Unknown:
       return NULL;
   }
 
@@ -172,7 +173,6 @@ int main(void) {
       // detect controller type, set driver
       // ===================================
       if (driver[p] == NULL) {
-        controller_init();
         driver[p] = GetDriver(get_id());
 
         // new driver found

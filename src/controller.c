@@ -157,8 +157,9 @@ static void read_id(uint8_t id[6]) {
 }
 
 const uint8_t ID_MAP[MAX_IDs][6] PROGMEM = {
+  {0xff, 0xff, 0xff, 0xff, 0xff, 0xff}, // ID_Unknown
   {0x00, 0x00, 0xa4, 0x20, 0x00, 0x00}, // ID_Nunchuck
-  {0x00, 0x00, 0xa4, 0x20, 0x01, 0x01}, // ID_Classic
+  {0x00, 0x00, 0xa4, 0x20, 0x01, 0x01}, // ID_Wii_Classic
   {0x01, 0x00, 0xa4, 0x20, 0x01, 0x01}, // ID_Wii_Classic_Pro
   {0x01, 0x00, 0xa4, 0x20, 0x00, 0x01}, // ID_NES_Classic_Mini_Clone_Encrypted
   {0x00, 0x00, 0xa4, 0x20, 0x00, 0x01}  // ID_8Bitdo_SF30
@@ -168,7 +169,6 @@ ControllerID get_id(void) {
   uint8_t id[6];
 
   memset(id, 0, 6);
-
   read_id(id);
 
   // --------------------
@@ -179,8 +179,25 @@ ControllerID get_id(void) {
     if (memcmp_P(&id[0], &ID_MAP[i][0], 6) == 0) {
 
       switch (i) {
-        case ID_Wii_Classic_Pro: {
+        case ID_Unknown:
+          controller_init();
+          read_id(id); // update id
+          continue;
 
+        case ID_Wii_Classic: {
+          ContollerData data;
+          controller_read(&data);
+
+          // look if controller sends wired data (8Bitdo_SF30)
+          // needs init & encryption afterwards
+          if (data.byte[4] == 0x00 && data.byte[5] == 0x00) {
+            controller_init();
+            controller_disable_encryption();
+          }
+        }
+        break;
+
+        case ID_Wii_Classic_Pro: {
           ContollerData data;
           controller_read(&data);
 
@@ -199,6 +216,7 @@ ControllerID get_id(void) {
           break;
 
         case ID_8Bitdo_SF30:
+          controller_init();
           controller_disable_encryption();
 
           read_id(id);
@@ -210,7 +228,8 @@ ControllerID get_id(void) {
           }
 
           break;
-      }
+
+      } // switch
 
       return i;
     }
