@@ -65,12 +65,20 @@ static inline uint16_t map_dpad(DPads dpad) {
   return pgm_read_word(&dpad_map[led_get_state()][dpad]);
 }
 
-static inline uint16_t left_x(const ContollerData *cd) {
+static inline uint8_t left_x(const ContollerData *cd) {
   return (cd->byte[0] & 0x3f);
 }
 
-static inline uint16_t left_y(const ContollerData *cd) {
+static inline uint8_t left_y(const ContollerData *cd) {
   return (cd->byte[1] & 0x3f);
+}
+
+static inline uint8_t analog_rt(const ContollerData *cd) {
+  return (cd->byte[3] & 0x1f);
+}
+
+static inline uint8_t analog_lt(const ContollerData *cd) {
+  return (((cd->byte[2] & 0x60) >> 2) + ((cd->byte[3] & 0xe0) >> 5));
 }
 
 static void get_joystick_state_wii_classic(const ContollerData *cd, Joystick *joystick) {
@@ -135,6 +143,18 @@ static void get_joystick_state_wii_classic(const ContollerData *cd, Joystick *jo
 
   // ------------------------------
 
+  // LT - Button left (trigger)
+  if ((cd->byte[4] & 0x20) == 0) {
+    (*joystick) |= map_dpad(D_TL);
+  }
+
+  // RT - Button right (trigger)
+  if ((cd->byte[4] & 0x02) == 0) {
+    (*joystick) |= map_dpad(D_TR);
+  }
+
+  // ------------------------------
+
   // B+ - Button Start
   if ((cd->byte[4] & 0x04) == 0) {
     (*joystick) |= map_buttons(START);
@@ -172,6 +192,15 @@ static void get_joystick_state_wii_classic(const ContollerData *cd, Joystick *jo
       (*joystick) |= UP;
     } else if (ly < 20) {
       (*joystick) |= DOWN;
+    }
+
+
+    if (analog_lt(cd) > 16) {
+      (*joystick) |= LEFT;
+    }
+
+    if (analog_rt(cd) > 16) {
+      (*joystick) |= RIGHT;
     }
   }
 }
