@@ -82,7 +82,7 @@ static void init(void) {
   // ===================================
   // enable watchdog, woof
   // ===================================
-  wdt_enable(WDTO_500MS);
+  wdt_enable(WDTO_1S);
 
   // ===================================
   // enable interrupts
