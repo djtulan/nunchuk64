@@ -15,7 +15,9 @@ He gives a short introduction how the thing works in basic and demonstrates the 
 
 ## Layout and PCB
 The whole KiCad project is provided inside subfolder ["hardware"](./hardware).
+
 Please feel free to order your own PCBs, Gerber files are here ["gerber"](./hardware/nunchuk64/gerber).
+
 I would be pleased about a small donation: [PAYPAL.ME](https://www.paypal.me/RobertGrasboeck)
 
 ## 3D Picture
