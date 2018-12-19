@@ -8,7 +8,7 @@ BOM
 | Name           |Quantity|Value         |Footprint                     |
 | ---------------|--------|--------------|------------------------------|
 | U1             | 1      |AMS1117-3V3   |SOT-223                       |
-| U2             | 1      |SPACE         |TQFP-32_7x7mm_Pitch0.8mm      |
+| U2             | 1      |ATMEGA328P-AU |TQFP-32_7x7mm_Pitch0.8mm      |
 | C1,C2          | 2      |22uF Tantalum |Tantalum_Case-A_EIA-3216-18   |
 | C3,C4,C5       | 3      |100n          |0805                          |
 | D1             | 1      |LED           |LED_1206                      |
