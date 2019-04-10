@@ -1,4 +1,4 @@
-﻿# Hey Emacs, this is a -*- makefile -*-
+# Hey Emacs, this is a -*- makefile -*-
 #----------------------------------------------------------------------------
 # AVR-GCC Makefile template, derived from the WinAVR template (public domain)
 #
