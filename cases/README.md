@@ -7,7 +7,9 @@ Case by hackup (https://www.hackup.net/)
 ----------------------------------------
 A realy nice case for friends of 3D printing.
 https://www.thingiverse.com/thing:3560915
-
+![3d_1](3d_print_1.jpg)
+![3d_2](3d_print_2.jpg)
+![3d_3](3d_print_3.jpg)
 
 Case by plexilaser (Michael Schön)
 ----------------------------------
