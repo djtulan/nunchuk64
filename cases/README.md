@@ -15,6 +15,7 @@ Case by plexilaser (Michael Schön)
 ----------------------------------
 A case made from acrylic glass is available at the plexolaser shop:
 https://www.plexilaser.de/Acrylgehaeuse-fuer-Nunchuck64-Adapter-Teilesatz
+
 ![plexi_1](plexi_1.jpg)
 ![plexi_2](plexi_2.jpg)
 
