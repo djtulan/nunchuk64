@@ -13,8 +13,10 @@ https://www.thingiverse.com/thing:3560915
 
 Case by plexilaser (Michael Schön)
 ----------------------------------
+A case made from acrylic glass is available at the plexolaser shop:
 https://www.plexilaser.de/Acrylgehaeuse-fuer-Nunchuck64-Adapter-Teilesatz
-
+![plexi1_1](plexi1_1.jpg)
+![plexi1_2](plexi1_2.jpg)
 
 Case made from a universal case by Dirk Willke
 ----------------------------------------------
