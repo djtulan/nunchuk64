@@ -1,4 +1,4 @@
-update=Di 19 Dez 2017 21:18:39 CET
+update=Mi 14 Nov 2018 22:38:32 CET
 version=1
 last_client=kicad
 [pcbnew]
@@ -38,38 +38,3 @@ LabSize=60
 [eeschema]
 version=1
 LibDir=
-[eeschema/libraries]
-LibName1=conn_wii
-LibName2=AMS1117-3V3
-LibName3=power
-LibName4=switches
-LibName5=device
-LibName6=conn
-LibName7=relays
-LibName8=motors
-LibName9=transistors
-LibName10=linear
-LibName11=regul
-LibName12=74xx
-LibName13=cmos4000
-LibName14=adc-dac
-LibName15=memory
-LibName16=xilinx
-LibName17=microcontrollers
-LibName18=dsp
-LibName19=microchip
-LibName20=analog_switches
-LibName21=motorola
-LibName22=texas
-LibName23=intel
-LibName24=audio
-LibName25=interface
-LibName26=digital-audio
-LibName27=philips
-LibName28=display
-LibName29=cypress
-LibName30=siliconi
-LibName31=opto
-LibName32=atmel
-LibName33=contrib
-LibName34=valves

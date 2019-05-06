@@ -1,4 +1,4 @@
-# Hey Emacs, this is a -*- makefile -*-
+﻿# Hey Emacs, this is a -*- makefile -*-
 #----------------------------------------------------------------------------
 # AVR-GCC Makefile template, derived from the WinAVR template (public domain)
 #
@@ -114,7 +114,8 @@ LDFLAGS = $(EXTMEMOPTS) $(LDMAP) $(PRINTF_LIB) $(SCANF_LIB) $(MATH_LIB)
 
 # Programming support using avrdude. Settings and variables.
 
-AVRDUDE_PROGRAMMER = usbtiny
+#AVRDUDE_PROGRAMMER = usbtiny
+AVRDUDE_PROGRAMMER = usbasp
 AVRDUDE_PORT = /dev/ttyUSB0
 
 AVRDUDE_WRITE_FLASH = -U flash:w:$(TARGET).hex
