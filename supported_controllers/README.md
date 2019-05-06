@@ -117,10 +117,8 @@ Wii Classic Controller for Nintendo Wii Remote. (Wired)
 Seen here: https://www.ebay.com/itm/291645811767
 
 ![Wii Classic Clone](wii_classic.jpg)
-ID: 0x01, 0x00, 0xa4, 0x20, 0x01, 0x01
 
 ![Wii Classic](wii_original_classic.jpg)
-ID: 0x01, 0x00, 0xa4, 0x20, 0x01, 0x01
 
 DRIVER: [driver_wii_classic.c]
 
