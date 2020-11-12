@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name nunchuk64-rescue)(type Legacy)(uri ${KIPRJMOD}/nunchuk64-rescue.lib)(options "")(descr ""))
+)
