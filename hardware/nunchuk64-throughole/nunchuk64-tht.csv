@@ -1,0 +1,15 @@
+"Item","Qty",Reference(s),Value,Footprint,Mouser
+"1","2","C1, C2",22uF,Capacitor_THT:CP_Radial_D5.0mm_P2.50mm,667-ECE-A1CKS220I
+"2","2","C3, C5",100nF,Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm,594-K104K15X7RF53H5
+"3","1",D1,LED,LED_THT:LED_D3.0mm,859-LTL-4291N
+"4","2","J1, J2",DB9_Female,Connectors_DSub:DSUB-9_Female_EdgeMount_Pitch2.77mm,523-L77SDEH09SOL2RM5
+"5","1",J3,Not Used,nunchuk_commodore:AVR-ISP-6-TH,
+"6","2","P1, P2",CONN_WII,Connector_Wii:CONN_WII,
+"7","4","Q1, Q2, Q3, Q4",2N7000,Package_TO_SOT_THT:TO-92,512-2N7000
+"8","1",R9,220,Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal,71-CCF07220RJKE36
+"9","1",R10,10k,Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal,71-CCF0710K0JKE36
+"10","1",RN1,2K2,Resistor_THT:R_Array_SIP5 BUSSED,652-4605XAP1-222LF
+"11","1",RN2,10K_Pack04_SIP,Resistor_THT:R_Array_SIP8 BUSSED,652-4608M-2LF-10K
+"12","1",SW1,SW_Push,Buttons_Switches_ThroughHole:SW_PUSH_6mm_h13mm,706-95C06B3T
+"13","1",U1,LP2950-3.3_TO92,Package_TO_SOT_THT:TO-92_Inline,595-LP2950-33LPRE3
+"14","1",U2,ATmega328P-PU,Package_DIP:DIP-28_W7.62mm,556-ATMEGA328P-PN

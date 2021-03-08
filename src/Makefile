@@ -166,6 +166,7 @@ ALL_ASFLAGS = -mmcu=$(MCU) -I. -x assembler-with-cpp $(ASFLAGS)
 all: build
 
 build: elf hex eep
+	$(SIZE) -C --mcu=$(MCU) $(TARGET).elf
 
 elf: $(TARGET).elf
 hex: $(TARGET).hex
