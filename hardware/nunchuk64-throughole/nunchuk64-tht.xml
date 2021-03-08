@@ -1,0 +1,657 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="D">
+  <design>
+    <source>/home/hans/bwack-git/nunchuk64/hardware/nunchuk64-throughole/nunchuk64-tht.sch</source>
+    <date>ma. 22. feb. 2021 kl. 21.59 +0100</date>
+    <tool>Eeschema 5.1.5+dfsg1-2build2</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title>Nunchuk64</title>
+        <company>Robert Grasböck</company>
+        <rev>1.0</rev>
+        <date>2017-12-30</date>
+        <source>nunchuk64-tht.sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="J1">
+      <value>DB9_Female</value>
+      <footprint>Connectors_DSub:DSUB-9_Female_EdgeMount_Pitch2.77mm</footprint>
+      <libsource lib="nunchuk64-rescue" part="DB9_Female-nunchuk64-rescue" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A1F1637</tstamp>
+    </comp>
+    <comp ref="J2">
+      <value>DB9_Female</value>
+      <footprint>Connectors_DSub:DSUB-9_Female_EdgeMount_Pitch2.77mm</footprint>
+      <libsource lib="nunchuk64-rescue" part="DB9_Female-nunchuk64-rescue" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A1F1810</tstamp>
+    </comp>
+    <comp ref="P1">
+      <value>CONN_WII</value>
+      <footprint>Connector_Wii:CONN_WII</footprint>
+      <libsource lib="nunchuk64-rescue" part="CONN_WII-conn_wii" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A2056EE</tstamp>
+    </comp>
+    <comp ref="P2">
+      <value>CONN_WII</value>
+      <footprint>Connector_Wii:CONN_WII</footprint>
+      <libsource lib="nunchuk64-rescue" part="CONN_WII-conn_wii" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A205781</tstamp>
+    </comp>
+    <comp ref="Q1">
+      <value>2N7000</value>
+      <footprint>Package_TO_SOT_THT:TO-92</footprint>
+      <libsource lib="Transistor_FET" part="2N7000" description="0.2A Id, 200V Vds, N-Channel MOSFET, 2.6V Logic Level, TO-92"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A21E744</tstamp>
+    </comp>
+    <comp ref="Q2">
+      <value>2N7000</value>
+      <footprint>Package_TO_SOT_THT:TO-92</footprint>
+      <libsource lib="Transistor_FET" part="2N7000" description="0.2A Id, 200V Vds, N-Channel MOSFET, 2.6V Logic Level, TO-92"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A21E82C</tstamp>
+    </comp>
+    <comp ref="J3">
+      <value>Conn_02x03_Odd_Even</value>
+      <footprint>nunchuk_commodore:AVR-ISP-6-TH</footprint>
+      <libsource lib="nunchuk64-rescue" part="Conn_02x03_Odd_Even-nunchuk64-rescue" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A396B9A</tstamp>
+    </comp>
+    <comp ref="C1">
+      <value>22uF</value>
+      <footprint>Capacitor_THT:CP_Radial_D5.0mm_P2.50mm</footprint>
+      <libsource lib="nunchuk64-rescue" part="CP1-nunchuk64-rescue" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A39946A</tstamp>
+    </comp>
+    <comp ref="C2">
+      <value>22uF</value>
+      <footprint>Capacitor_THT:CP_Radial_D5.0mm_P2.50mm</footprint>
+      <libsource lib="nunchuk64-rescue" part="CP1-nunchuk64-rescue" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A3994D1</tstamp>
+    </comp>
+    <comp ref="D1">
+      <value>LED</value>
+      <footprint>LED_THT:LED_D3.0mm</footprint>
+      <libsource lib="nunchuk64-rescue" part="LED-nunchuk64-rescue" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A425420</tstamp>
+    </comp>
+    <comp ref="R9">
+      <value>220</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal</footprint>
+      <libsource lib="nunchuk64-rescue" part="R-nunchuk64-rescue" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A4254C7</tstamp>
+    </comp>
+    <comp ref="SW1">
+      <value>SW_Push</value>
+      <footprint>Buttons_Switches_ThroughHole:SW_PUSH_6mm_h13mm</footprint>
+      <libsource lib="nunchuk64-rescue" part="SW_Push-nunchuk64-rescue" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A425516</tstamp>
+    </comp>
+    <comp ref="R10">
+      <value>10k</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal</footprint>
+      <libsource lib="nunchuk64-rescue" part="R-nunchuk64-rescue" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A96FB59</tstamp>
+    </comp>
+    <comp ref="C5">
+      <value>100nF</value>
+      <footprint>Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm</footprint>
+      <libsource lib="nunchuk64-rescue" part="C-nunchuk64-rescue" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A96FBD6</tstamp>
+    </comp>
+    <comp ref="U2">
+      <value>ATmega328P-PU</value>
+      <footprint>Package_DIP:DIP-28_W7.62mm</footprint>
+      <datasheet>http://ww1.microchip.com/downloads/en/DeviceDoc/ATmega328_P%20AVR%20MCU%20with%20picoPower%20Technology%20Data%20Sheet%2040001984A.pdf</datasheet>
+      <libsource lib="MCU_Microchip_ATmega" part="ATmega328P-PU" description="20MHz, 32kB Flash, 2kB SRAM, 1kB EEPROM, DIP-28"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5F991CFF</tstamp>
+    </comp>
+    <comp ref="U1">
+      <value>LP2950-3.3_TO92</value>
+      <footprint>Package_TO_SOT_THT:TO-92_Inline</footprint>
+      <datasheet>http://www.ti.com/lit/ds/symlink/lp2950-n.pdf</datasheet>
+      <libsource lib="Regulator_Linear" part="LP2950-3.3_TO92" description="Positive 100mA 30V Linear Micropower Voltage Regulator, Fixed Output 3.3V, TO-92"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5FA2C370</tstamp>
+    </comp>
+    <comp ref="Q3">
+      <value>2N7000</value>
+      <footprint>Package_TO_SOT_THT:TO-92</footprint>
+      <libsource lib="Transistor_FET" part="2N7000" description="0.2A Id, 200V Vds, N-Channel MOSFET, 2.6V Logic Level, TO-92"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A21C557</tstamp>
+    </comp>
+    <comp ref="Q4">
+      <value>2N7000</value>
+      <footprint>Package_TO_SOT_THT:TO-92</footprint>
+      <libsource lib="Transistor_FET" part="2N7000" description="0.2A Id, 200V Vds, N-Channel MOSFET, 2.6V Logic Level, TO-92"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A21C68C</tstamp>
+    </comp>
+    <comp ref="RN1">
+      <value>2K2</value>
+      <footprint>Resistor_THT:R_Array_SIP5</footprint>
+      <datasheet>http://www.vishay.com/docs/31509/csc.pdf</datasheet>
+      <libsource lib="Device" part="R_Network04" description="4 resistor network, star topology, bussed resistors, small symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5FA24D37</tstamp>
+    </comp>
+    <comp ref="RN2">
+      <value>10K_Pack04_SIP</value>
+      <footprint>Resistor_THT:R_Array_SIP8</footprint>
+      <datasheet>http://www.vishay.com/docs/31509/csc.pdf</datasheet>
+      <libsource lib="Device" part="R_Pack04_SIP" description="4 resistor network, parallel topology, SIP package"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5FAE4A17</tstamp>
+    </comp>
+    <comp ref="C3">
+      <value>100nF</value>
+      <footprint>Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm</footprint>
+      <libsource lib="nunchuk64-rescue" part="C-nunchuk64-rescue" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A231895</tstamp>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="Device" part="R_Network04">
+      <description>4 resistor network, star topology, bussed resistors, small symbol</description>
+      <docs>http://www.vishay.com/docs/31509/csc.pdf</docs>
+      <footprints>
+        <fp>R?Array?SIP*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">RN</field>
+        <field name="Value">R_Network04</field>
+        <field name="Footprint">Resistor_THT:R_Array_SIP5</field>
+      </fields>
+      <pins>
+        <pin num="1" name="common" type="passive"/>
+        <pin num="2" name="R1" type="passive"/>
+        <pin num="3" name="R2" type="passive"/>
+        <pin num="4" name="R3" type="passive"/>
+        <pin num="5" name="R4" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="R_Pack04_SIP">
+      <description>4 resistor network, parallel topology, SIP package</description>
+      <docs>http://www.vishay.com/docs/31509/csc.pdf</docs>
+      <footprints>
+        <fp>R?Array?SIP*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">RN</field>
+        <field name="Value">R_Pack04_SIP</field>
+        <field name="Footprint">Resistor_THT:R_Array_SIP8</field>
+      </fields>
+      <pins>
+        <pin num="1" name="R1.1" type="passive"/>
+        <pin num="2" name="R1.2" type="passive"/>
+        <pin num="3" name="R2.1" type="passive"/>
+        <pin num="4" name="R2.2" type="passive"/>
+        <pin num="5" name="R3.1" type="passive"/>
+        <pin num="6" name="R3.2" type="passive"/>
+        <pin num="7" name="R4.1" type="passive"/>
+        <pin num="8" name="R4.2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="MCU_Microchip_ATmega" part="ATmega48PV-10PU">
+      <aliases>
+        <alias>ATmega48P-20PU</alias>
+        <alias>ATmega48A-PU</alias>
+        <alias>ATmega48PA-PU</alias>
+        <alias>ATmega88PV-10PU</alias>
+        <alias>ATmega88P-20PU</alias>
+        <alias>ATmega88A-PU</alias>
+        <alias>ATmega88PA-PU</alias>
+        <alias>ATmega168PV-10PU</alias>
+        <alias>ATmega168P-20PU</alias>
+        <alias>ATmega168A-PU</alias>
+        <alias>ATmega168PA-PU</alias>
+        <alias>ATmega328-PU</alias>
+        <alias>ATmega328P-PU</alias>
+      </aliases>
+      <description>10MHz, 4kB Flash, 512B SRAM, 256B EEPROM, DIP-28</description>
+      <docs>http://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-8025-8-bit-AVR-Microcontroller-ATmega48P-88P-168P_Datasheet.pdf</docs>
+      <footprints>
+        <fp>DIP*W7.62mm*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">ATmega48PV-10PU</field>
+        <field name="Footprint">Package_DIP:DIP-28_W7.62mm</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~RESET~/PC6" type="BiDi"/>
+        <pin num="2" name="PD0" type="BiDi"/>
+        <pin num="3" name="PD1" type="BiDi"/>
+        <pin num="4" name="PD2" type="BiDi"/>
+        <pin num="5" name="PD3" type="BiDi"/>
+        <pin num="6" name="PD4" type="BiDi"/>
+        <pin num="7" name="VCC" type="power_in"/>
+        <pin num="8" name="GND" type="power_in"/>
+        <pin num="9" name="XTAL1/PB6" type="BiDi"/>
+        <pin num="10" name="XTAL2/PB7" type="BiDi"/>
+        <pin num="11" name="PD5" type="BiDi"/>
+        <pin num="12" name="PD6" type="BiDi"/>
+        <pin num="13" name="PD7" type="BiDi"/>
+        <pin num="14" name="PB0" type="BiDi"/>
+        <pin num="15" name="PB1" type="BiDi"/>
+        <pin num="16" name="PB2" type="BiDi"/>
+        <pin num="17" name="PB3" type="BiDi"/>
+        <pin num="18" name="PB4" type="BiDi"/>
+        <pin num="19" name="PB5" type="BiDi"/>
+        <pin num="20" name="AVCC" type="power_in"/>
+        <pin num="21" name="AREF" type="passive"/>
+        <pin num="22" name="GND" type="passive"/>
+        <pin num="23" name="PC0" type="BiDi"/>
+        <pin num="24" name="PC1" type="BiDi"/>
+        <pin num="25" name="PC2" type="BiDi"/>
+        <pin num="26" name="PC3" type="BiDi"/>
+        <pin num="27" name="PC4" type="BiDi"/>
+        <pin num="28" name="PC5" type="BiDi"/>
+      </pins>
+    </libpart>
+    <libpart lib="Regulator_Linear" part="MC78L05_TO92">
+      <aliases>
+        <alias>LM78L05_TO92</alias>
+        <alias>MC78L06_TO92</alias>
+        <alias>MC78L08_TO92</alias>
+        <alias>MC78L12_TO92</alias>
+        <alias>LM78L12_TO92</alias>
+        <alias>MC78L15_TO92</alias>
+        <alias>MC78L18_TO92</alias>
+        <alias>MC78L24_TO92</alias>
+        <alias>LM2931AZ-5.0_TO92</alias>
+        <alias>LM2936-3.0_TO92</alias>
+        <alias>LM2936-3.3_TO92</alias>
+        <alias>LM2936-5.0_TO92</alias>
+        <alias>LP2950-3.0_TO92</alias>
+        <alias>LP2950-3.3_TO92</alias>
+        <alias>LP2950-5.0_TO92</alias>
+        <alias>L78L33_TO92</alias>
+        <alias>L78L05_TO92</alias>
+        <alias>L78L06_TO92</alias>
+        <alias>L78L08_TO92</alias>
+        <alias>L78L09_TO92</alias>
+        <alias>L78L10_TO92</alias>
+        <alias>L78L12_TO92</alias>
+        <alias>L78L15_TO92</alias>
+        <alias>L78L18_TO92</alias>
+        <alias>L78L24_TO92</alias>
+      </aliases>
+      <description>Positive 100mA 30V Linear Regulator, Fixed Output 5V, TO-92</description>
+      <docs>http://www.fairchildsemi.com/ds/LM/LM78L05A.pdf</docs>
+      <footprints>
+        <fp>TO?92*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">MC78L05_TO92</field>
+        <field name="Footprint">Package_TO_SOT_THT:TO-92_Inline</field>
+      </fields>
+      <pins>
+        <pin num="1" name="VO" type="power_out"/>
+        <pin num="2" name="GND" type="power_in"/>
+        <pin num="3" name="VI" type="power_in"/>
+      </pins>
+    </libpart>
+    <libpart lib="Transistor_FET" part="2N7000">
+      <description>0.2A Id, 200V Vds, N-Channel MOSFET, 2.6V Logic Level, TO-92</description>
+      <docs>https://www.fairchildsemi.com/datasheets/2N/2N7000.pdf</docs>
+      <footprints>
+        <fp>TO?92*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">Q</field>
+        <field name="Value">2N7000</field>
+        <field name="Footprint">Package_TO_SOT_THT:TO-92_Inline</field>
+      </fields>
+      <pins>
+        <pin num="1" name="S" type="passive"/>
+        <pin num="2" name="G" type="input"/>
+        <pin num="3" name="D" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="nunchuk64-rescue" part="C-nunchuk64-rescue">
+      <footprints>
+        <fp>C_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">C-nunchuk64-rescue</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="nunchuk64-rescue" part="CONN_WII-conn_wii">
+      <fields>
+        <field name="Reference">P</field>
+        <field name="Value">CONN_WII-conn_wii</field>
+      </fields>
+      <pins>
+        <pin num="1" name="3V3" type="power_in"/>
+        <pin num="2" name="SCL" type="BiDi"/>
+        <pin num="3" name="DET" type="BiDi"/>
+        <pin num="4" name="NC" type="NotConnected"/>
+        <pin num="5" name="SDA" type="BiDi"/>
+        <pin num="6" name="GND" type="power_in"/>
+      </pins>
+    </libpart>
+    <libpart lib="nunchuk64-rescue" part="CP1-nunchuk64-rescue">
+      <footprints>
+        <fp>CP_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">CP1-nunchuk64-rescue</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="nunchuk64-rescue" part="Conn_02x03_Odd_Even-nunchuk64-rescue">
+      <footprints>
+        <fp>Connector*:*2x??x*mm*</fp>
+        <fp>Connector*:*2x???Pitch*</fp>
+        <fp>Pin_Header_Straight_2X*</fp>
+        <fp>Pin_Header_Angled_2X*</fp>
+        <fp>Socket_Strip_Straight_2X*</fp>
+        <fp>Socket_Strip_Angled_2X*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_02x03_Odd_Even-nunchuk64-rescue</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+        <pin num="4" name="Pin_4" type="passive"/>
+        <pin num="5" name="Pin_5" type="passive"/>
+        <pin num="6" name="Pin_6" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="nunchuk64-rescue" part="DB9_Female-nunchuk64-rescue">
+      <footprints>
+        <fp>DB*F*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">DB9_Female-nunchuk64-rescue</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+        <pin num="3" name="3" type="passive"/>
+        <pin num="4" name="4" type="passive"/>
+        <pin num="5" name="5" type="passive"/>
+        <pin num="6" name="6" type="passive"/>
+        <pin num="7" name="7" type="passive"/>
+        <pin num="8" name="8" type="passive"/>
+        <pin num="9" name="9" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="nunchuk64-rescue" part="LED-nunchuk64-rescue">
+      <footprints>
+        <fp>LED*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Value">LED-nunchuk64-rescue</field>
+      </fields>
+      <pins>
+        <pin num="1" name="K" type="passive"/>
+        <pin num="2" name="A" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="nunchuk64-rescue" part="R-nunchuk64-rescue">
+      <footprints>
+        <fp>R_*</fp>
+        <fp>R_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">R-nunchuk64-rescue</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="nunchuk64-rescue" part="SW_Push-nunchuk64-rescue">
+      <fields>
+        <field name="Reference">SW</field>
+        <field name="Value">SW_Push-nunchuk64-rescue</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="Device">
+      <uri>/usr/share/kicad/library/Device.lib</uri>
+    </library>
+    <library logical="MCU_Microchip_ATmega">
+      <uri>/usr/share/kicad/library/MCU_Microchip_ATmega.lib</uri>
+    </library>
+    <library logical="Regulator_Linear">
+      <uri>/usr/share/kicad/library/Regulator_Linear.lib</uri>
+    </library>
+    <library logical="Transistor_FET">
+      <uri>/usr/share/kicad/library/Transistor_FET.lib</uri>
+    </library>
+    <library logical="nunchuk64-rescue">
+      <uri>/home/hans/bwack-git/nunchuk64/hardware/nunchuk64-throughole/nunchuk64-rescue.lib</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="/Joy_B3">
+      <node ref="U2" pin="13"/>
+      <node ref="J2" pin="4"/>
+    </net>
+    <net code="2" name="/Joy_A0">
+      <node ref="J1" pin="1"/>
+      <node ref="U2" pin="3"/>
+    </net>
+    <net code="3" name="/Joy_A1">
+      <node ref="J1" pin="2"/>
+      <node ref="U2" pin="2"/>
+    </net>
+    <net code="4" name="/Joy_A3">
+      <node ref="U2" pin="25"/>
+      <node ref="J1" pin="4"/>
+    </net>
+    <net code="5" name="/Joy_B2">
+      <node ref="J2" pin="3"/>
+      <node ref="U2" pin="14"/>
+    </net>
+    <net code="6" name="GND">
+      <node ref="U1" pin="2"/>
+      <node ref="U2" pin="8"/>
+      <node ref="C3" pin="2"/>
+      <node ref="J3" pin="6"/>
+      <node ref="D1" pin="1"/>
+      <node ref="P1" pin="6"/>
+      <node ref="P2" pin="6"/>
+      <node ref="C2" pin="2"/>
+      <node ref="C1" pin="2"/>
+      <node ref="J1" pin="8"/>
+      <node ref="J2" pin="8"/>
+      <node ref="SW1" pin="1"/>
+      <node ref="U2" pin="22"/>
+      <node ref="C5" pin="2"/>
+    </net>
+    <net code="7" name="/Button_A">
+      <node ref="J1" pin="6"/>
+      <node ref="U2" pin="10"/>
+    </net>
+    <net code="8" name="/Button_B">
+      <node ref="J3" pin="1"/>
+      <node ref="U2" pin="18"/>
+      <node ref="J2" pin="6"/>
+    </net>
+    <net code="9" name="/Joy_B1">
+      <node ref="J3" pin="4"/>
+      <node ref="U2" pin="17"/>
+      <node ref="J2" pin="2"/>
+    </net>
+    <net code="10" name="/Joy_B0">
+      <node ref="J2" pin="1"/>
+      <node ref="U2" pin="19"/>
+      <node ref="J3" pin="3"/>
+    </net>
+    <net code="11" name="/Pot_AY_">
+      <node ref="RN2" pin="4"/>
+      <node ref="U2" pin="16"/>
+    </net>
+    <net code="12" name="/Pot_AX_">
+      <node ref="U2" pin="15"/>
+      <node ref="RN2" pin="2"/>
+    </net>
+    <net code="13" name="/SEL2">
+      <node ref="Q2" pin="2"/>
+      <node ref="U2" pin="24"/>
+    </net>
+    <net code="14" name="/SEL1">
+      <node ref="Q1" pin="2"/>
+      <node ref="U2" pin="23"/>
+    </net>
+    <net code="15" name="Net-(U2-Pad21)">
+      <node ref="U2" pin="21"/>
+    </net>
+    <net code="16" name="/Pot_BX_">
+      <node ref="U2" pin="12"/>
+      <node ref="RN2" pin="6"/>
+    </net>
+    <net code="17" name="/Pot_BY_">
+      <node ref="U2" pin="11"/>
+      <node ref="RN2" pin="7"/>
+    </net>
+    <net code="18" name="/LED">
+      <node ref="U2" pin="6"/>
+      <node ref="R9" pin="2"/>
+    </net>
+    <net code="19" name="+5V">
+      <node ref="U2" pin="20"/>
+      <node ref="J1" pin="7"/>
+      <node ref="C1" pin="1"/>
+      <node ref="R10" pin="1"/>
+      <node ref="J3" pin="2"/>
+      <node ref="J2" pin="7"/>
+      <node ref="U2" pin="7"/>
+      <node ref="C3" pin="1"/>
+      <node ref="U1" pin="3"/>
+    </net>
+    <net code="20" name="/RESET">
+      <node ref="J3" pin="5"/>
+      <node ref="U2" pin="1"/>
+      <node ref="C5" pin="1"/>
+      <node ref="R10" pin="2"/>
+    </net>
+    <net code="21" name="/Joy_A2">
+      <node ref="J1" pin="3"/>
+      <node ref="U2" pin="26"/>
+    </net>
+    <net code="22" name="/SDA_">
+      <node ref="Q4" pin="3"/>
+      <node ref="U2" pin="27"/>
+    </net>
+    <net code="23" name="/SCL_">
+      <node ref="Q3" pin="3"/>
+      <node ref="U2" pin="28"/>
+    </net>
+    <net code="24" name="+3V3">
+      <node ref="C2" pin="1"/>
+      <node ref="U1" pin="1"/>
+      <node ref="Q3" pin="2"/>
+      <node ref="P2" pin="1"/>
+      <node ref="Q4" pin="2"/>
+      <node ref="RN1" pin="1"/>
+      <node ref="P1" pin="1"/>
+    </net>
+    <net code="25" name="/BTN">
+      <node ref="SW1" pin="2"/>
+      <node ref="U2" pin="9"/>
+    </net>
+    <net code="26" name="/SDA">
+      <node ref="Q1" pin="1"/>
+      <node ref="RN1" pin="4"/>
+      <node ref="Q4" pin="1"/>
+      <node ref="Q2" pin="1"/>
+    </net>
+    <net code="27" name="/SCL">
+      <node ref="P1" pin="2"/>
+      <node ref="Q3" pin="1"/>
+      <node ref="P2" pin="2"/>
+      <node ref="RN1" pin="5"/>
+    </net>
+    <net code="28" name="Net-(P2-Pad3)">
+      <node ref="P2" pin="3"/>
+    </net>
+    <net code="29" name="Net-(P1-Pad3)">
+      <node ref="P1" pin="3"/>
+    </net>
+    <net code="30" name="Net-(P1-Pad4)">
+      <node ref="P1" pin="4"/>
+    </net>
+    <net code="31" name="/Pot_BX">
+      <node ref="J2" pin="9"/>
+      <node ref="RN2" pin="5"/>
+    </net>
+    <net code="32" name="/Pot_BY">
+      <node ref="RN2" pin="8"/>
+      <node ref="U2" pin="5"/>
+      <node ref="J2" pin="5"/>
+    </net>
+    <net code="33" name="/Pot_AX">
+      <node ref="U2" pin="4"/>
+      <node ref="J1" pin="9"/>
+      <node ref="RN2" pin="1"/>
+    </net>
+    <net code="34" name="/Pot_AY">
+      <node ref="J1" pin="5"/>
+      <node ref="RN2" pin="3"/>
+    </net>
+    <net code="35" name="Net-(P2-Pad4)">
+      <node ref="P2" pin="4"/>
+    </net>
+    <net code="36" name="/SDA2">
+      <node ref="P2" pin="5"/>
+      <node ref="Q2" pin="3"/>
+      <node ref="RN1" pin="3"/>
+    </net>
+    <net code="37" name="Net-(D1-Pad2)">
+      <node ref="D1" pin="2"/>
+      <node ref="R9" pin="1"/>
+    </net>
+    <net code="38" name="/SDA1">
+      <node ref="P1" pin="5"/>
+      <node ref="RN1" pin="2"/>
+      <node ref="Q1" pin="3"/>
+    </net>
+  </nets>
+</export>
