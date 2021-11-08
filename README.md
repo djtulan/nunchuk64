@@ -35,5 +35,5 @@ Currently the following hardware is supported (see [Supported Controllers](./sup
 - ☑ Tested with different other NES/SNES Classic Mini clones
 
 ## Dependecies
-- KiCad to work in schematic and layout (see [KiCad](http://kicad-pcb.org/))
+- KiCad to work in schematic and layout (see [KiCad](http://kicad.org/))
 - avr-gcc toolchain for compiling the firmware
